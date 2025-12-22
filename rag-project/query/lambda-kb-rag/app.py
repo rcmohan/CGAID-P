@@ -1,5 +1,7 @@
 import os
 import json
+import logging
+import time
 import boto3
 from botocore.exceptions import ClientError
 
@@ -24,6 +26,9 @@ JSON Output Format
 
 """
 
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
 def lambda_handler(event, context):
     # Attempt to parse input from event directly (flat JSON)
     # The user's test event uses "input" for the question
@@ -31,6 +36,7 @@ def lambda_handler(event, context):
     sessionId = event.get('sessionId')
     topK = event.get('topK', 5)
     filters = event.get('filters')
+    model_tier = event.get('modelTier', 'balanced')
 
     # Handle case where input might be in 'body' (API Gateway)
     if not question and 'body' in event:
@@ -42,16 +48,33 @@ def lambda_handler(event, context):
         topK = body.get('topK', 5)
         filters = body.get('filters')
 
-    response = call_bedrock(question, sessionId, topK, filters)
+    model_id = decide_model_tier(question, model_tier)
+
+    response = call_bedrock(question, sessionId, topK, filters, model_id)
     parsed_response = parse_response(response)
     return parsed_response
 
-def call_bedrock(question, sessionId, topK, filters):
+def decide_model_tier(question, model_tier):
+    if model_tier == "cheap":
+        model_id = os.environ["MODEL_NOVA_MICRO"]
+    elif model_tier == "performance":
+        model_id = os.environ["MODEL_NOVA_LITE"]
+    elif model_tier == "deep":
+        model_id = os.environ["MODEL_CLAUDE_HAIKU"]
+    else:
+        model_id = os.environ["MODEL_NOVA_LITE"]  # default
+    return model_id
+
+def call_bedrock(question, sessionId, topK, filters, model_id):
+
+    logger.info(f"Calling Bedrock with question: {question}, sessionId: {sessionId}, topK: {topK}, filters: {filters}, modelTier: {model_id}")
     # Use bedrock-agent-runtime for Knowledge Base RAG operations
-    bedrock_agent_runtime = boto3.client('bedrock-agent-runtime')
-    knowledge_base = os.environ['KNOWLEDGE_BASE_ID']
-    model_id = os.environ['BEDROCK_MODEL_ID']
-    
+    bedrock_agent_runtime = boto3.client(
+        "bedrock-agent-runtime",
+        region_name=os.environ.get("AWS_REGION", "us-east-1")
+    )
+
+    knowledge_base_id = os.environ["KNOWLEDGE_BASE_ID"]
     # Configure vector search
     vector_search_config = {
         "numberOfResults": topK
@@ -66,7 +89,7 @@ def call_bedrock(question, sessionId, topK, filters):
         },
         'retrieveAndGenerateConfiguration': {
             'knowledgeBaseConfiguration': {
-                'knowledgeBaseId': knowledge_base,
+                'knowledgeBaseId': knowledge_base_id,
                 'modelArn': model_id,
                 'retrievalConfiguration': {
                     'vectorSearchConfiguration': vector_search_config
@@ -81,9 +104,37 @@ def call_bedrock(question, sessionId, topK, filters):
         kwargs['sessionId'] = sessionId
 
     # Call the RetrieveAndGenerate API
-    response = bedrock_agent_runtime.retrieve_and_generate(**kwargs)
+    logger.info(f"Calling RetrieveAndGenerate with kwargs: {kwargs}")
+    try_backup = false
+    try:
+        response = bedrock_agent_runtime.retrieve_and_generate(**kwargs)
+    except ThrottlingException as e:
+        logger.error(f"RetrieveAndGenerate throttled: {e}")
+        try_backup = true
+    except ModelTimeoutException as e:
+        logger.error(f"RetrieveAndGenerate timed out: {e}")
+        try_backup = true
+    logger.info(f"RetrieveAndGenerate response: {response}")
+    if try_backup:
+        return try_backup(kwargs)
     return response
     
+def try_backup(kwargs):
+    model_id = decide_model_tier(input=None, modelTier=None)
+    kwargs['retrieveAndGenerateConfiguration']['knowledgeBaseConfiguration']['modelArn'] = model_id
+    try:
+        return bedrock_agent_runtime.retrieve_and_generate(**kwargs)
+    except ThrottlingException as e:
+        msg = f"RetrieveAndGenerate throttled: {e}"
+        logger.error(msg)
+        return msg
+    except ModelTimeoutException as e:
+        msg = f"RetrieveAndGenerate timed out: {e}"
+        logger.error(msg)
+        return None
+    
+
+
 def parse_response(response):
     # Extract the answer from the output
     answer = response.get('output', {}).get('text', '')
