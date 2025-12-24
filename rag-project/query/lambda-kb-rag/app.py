@@ -107,32 +107,23 @@ def call_bedrock(question, sessionId, topK, filters, model_id):
     logger.info(f"Calling RetrieveAndGenerate with kwargs: {kwargs}")
     try_backup = false
     try:
-        response = bedrock_agent_runtime.retrieve_and_generate(**kwargs)
-    except ThrottlingException as e:
-        logger.error(f"RetrieveAndGenerate throttled: {e}")
-        try_backup = true
-    except ModelTimeoutException as e:
-        logger.error(f"RetrieveAndGenerate timed out: {e}")
-        try_backup = true
-    logger.info(f"RetrieveAndGenerate response: {response}")
-    if try_backup:
-        return try_backup(kwargs)
-    return response
-    
-def try_backup(kwargs):
-    model_id = decide_model_tier(input=None, modelTier=None)
-    kwargs['retrieveAndGenerateConfiguration']['knowledgeBaseConfiguration']['modelArn'] = model_id
-    try:
+        logger.info(f"Attempting Primary Model: {model_id}")
         return bedrock_agent_runtime.retrieve_and_generate(**kwargs)
-    except ThrottlingException as e:
-        msg = f"RetrieveAndGenerate throttled: {e}"
-        logger.error(msg)
-        return msg
-    except ModelTimeoutException as e:
-        msg = f"RetrieveAndGenerate timed out: {e}"
-        logger.error(msg)
-        return None
+    except ClientError as e:
+        error_code = e.response['Error']['Code']
+        if error_code in ['ThrottlingException', 'ModelTimeoutException']:
+            logger.warning(f"Primary model failed ({error_code}). Switch to Backup.")
+            return try_backup(bedrock_agent_runtime, kwargs) # PASS THE CLIENT
+        else:
+            raise e
+
+def try_backup(client, kwargs):
+    # Hardcode a cheaper/faster model for backup
+    backup_model_id = os.environ.get("MODEL_NOVA_MICRO") 
+    kwargs['retrieveAndGenerateConfiguration']['knowledgeBaseConfiguration']['modelArn'] = backup_model_id
     
+    logger.info(f"Attempting Backup Model: {backup_model_id}")
+    return client.retrieve_and_generate(**kwargs)
 
 
 def parse_response(response):
