@@ -171,7 +171,7 @@ As a GenAI developer, you need to understand how to assess and choose FMs.
   * Analyze cost-performance tradeoffs between different FMs by considering inference costs, throughput requirements, and latency constraints to optimize for both business value and technical efficiency.
 	
 	
-###	Creating flexible architecture patterns
+####	Creating flexible architecture patterns
 As a GenAI developer, you need to understand how to create flexible architecture patterns. 
 	
 **Ensure you understand how to do the following:**
@@ -187,7 +187,7 @@ As a GenAI developer, you need to understand how to create flexible architecture
   * Develop feature flag systems using AWS AppConfig that enable gradual rollout of new models, A/B testing between models, and quick rollbacks if performance issues arise.
 	
 	
-### Designing resilient AI systems
+#### Designing resilient AI systems
 As a GenAI developer, you need to understand how to design resilient AI systems. 
 	
 **Ensure you understand how to do the following:**
@@ -203,7 +203,7 @@ As a GenAI developer, you need to understand how to design resilient AI systems.
   * Implement comprehensive monitoring using CloudWatch with custom metrics and alarms to detect model performance degradation and trigger automated remediation actions.
 	
 	
-### Implementing FM customization and lifecycle management
+#### Implementing FM customization and lifecycle management
 As a GenAI developer, you need to understand how to design implement FM customization and lifecycle management.
 	
 **Ensure you understand how to do the following:**
@@ -220,6 +220,24 @@ As a GenAI developer, you need to understand how to design implement FM customiz
 	
   * Establish lifecycle management processes for FMs, including regular evaluation, scheduled updates, and retirement criteria to ensure that models remain current and effective.
 
+### Self Assessment
+1.2.1 **Your team needs to adapt a foundation model for a specialized medical domain without extensive retraining.**
+
+**Which parameter-efficient adaptation technique would be most appropriate for this scenario?**
+
+- Full model fine-tuning with gradient descent
+- Low-Rank Adaptation (LoRA)
+- Prompt engineering with few-shot examples
+- Creating a new model from scratch using transfer learning
+
+1.2.2 **Your company is deploying a critical AI application that uses Amazon Bedrock models. The application must remain operational even if a single AWS region experiences an outage.**
+
+**Which approach would provide the most effective cross-region resilience?**
+
+- Deploy the application in a single region with multiple Availability Zones
+- Implement Amazon Bedrock Cross-Region Inference with automatic failover
+- Create separate, independent deployments in multiple regions with DNS-based routing
+- Use AWS Global Accelerator to route requests to the nearest available region
 
 ### Review AWS Skills
 This lesson reviews AWS skills to select and configure FMs.
@@ -300,8 +318,920 @@ Ensure you understand how to configure and implement the following steps:
 
 8. Create lifecycle management procedures including evaluation schedules, update criteria, and retirement processes to ensure that FMs remain current and effective throughout their lifecycle.
 
+### Use Case
 
-### Task 1.3: Implement data validation and processing pipelines for FM consumption.
+**Extract information and create reports**
+
+A large healthcare provider with operations across North America needs to develop an Al system to analyze medical documents, extract key clinical information, and generate structured reports for their electronic health record (EHR) system. \
+The solution needs to handle diverse document types including clinical notes, lab reports, radiology findings, and patient histories while maintaining strict compliance with Health Insurance Portability and Accountability Act of 1996 (HIPAA) regulations. \
+The system requires 99.9% availability, high accuracy in medical terminology extraction, and the ability to adapt to evolving medical practices and terminology. 
+
+**Architecture**
+![alt text](1.2.model.eval.png)
+
+Step 1. FM Evaluation using Bedrock Model Evaluation to benchmark multiple FMs. 
+
+Step 2. Consider performance metrics, Accuracy, privacyy, performance, etc.,
+
+Step 3. Analyze results alongside operational constaraints, such as cost, latency, and scalability.
+
+Step 4. Find the best FM for the use case, based on hallucination, knowledge cutoff, etc.,
+
+**Architecture Patterns**
+![alt text](1.2.arch.patt.png)
+- Use AWS Lambda, API Gateway, and AWS AppConfig to create a serverless application.
+- Use AWS Step Functions, Amazon Bedrock, and Amazon Route 53 to build a resilient AI system.
+- Use Amazon CloudWatch to monitor and alert on AI system performance.
+
+**Optimize Performance**
+- SageMaker AI - configure and run fine-tuning jobs to adapt FMs to specialized medical use cases to conform with the requiremenst of the healthcare provider.
+  - Low-Rank Adaptation (LoRA) - To reduce compute requirements while achieving comparable performance to full fine-tuning, use LoRA to adapt FMs to specialized medical use cases.
+
+**Lifecycle Management**
+- Use Amazon Sagemaker Model Registry to version customized models, track lineage, and manage approval workflows for model deployment.
+- Use AWS CodePipeline and AWS CodeBuild to systematically test, validate, and deploy updated FMs.
+- Use AWS Lambda aliases to enable seamless transitions between model versions and quick rollbacks when necessary.
+- Use Amazon SageMaker Model Monitor to track drift, performance degradation, and other indicators that signal the need for model updates.
+- Use Amazon CloudWatch to monitor and alert on AI system performance.
+
+To complete model lifecycle management, create lifecycle management proceduresimplement knowledge management procedures to track and manage FM knowledge and updates, and implement evaluation schedules, update criteria, and retirement processes to ensure that FMs remain current and effective throughout their lifecycle.
+
+#### Knowledge Check
+
+### KNOWLEDGE CHECK
+
+01/05
+**In a system using AWS Step Functions for generative AI (GenAI) operations, which pattern BEST implements a circuit breaker for handling model failures?**
+
+- Implementing exponential backoff within AWS Lambda functions
+- Using Step Functions Choice states with error counts and timeouts
+- Adding retries to Amazon API Gateway endpoints
+- Implementing Amazon DynamoDB based error tracking
+- Using Amazon EventBridge to trigger alternative workflows
+
+02/05
+
+**Which methods effectively support graceful degradation in a generative AI (GenAI) system? (Select TWO.)**
+
+- Implementing fallback to more basic models with reduced capabilities
+- Maintaining multiple model versions with capability tiering
+- Returning cached responses for all requests during degradation
+- Complete system shutdown during any model unavailability
+- Switching to rule-based responses for all queries during degradation
+- Routing all traffic to a single, generic model regardless of the original use case
+
+03/05
+
+**Which architectural patterns support dynamic model switching without code deployment when using Amazon Bedrock? (Select TWO.)**
+
+- Using AWS AppConfig to store model configurations and AWS Lambda environment variables
+- Implementing direct API calls with hardcoded model endpoints
+- Using Amazon API Gateway with AWS Lambda integration and feature flags in AWS AppConfig
+- Storing model selections in Amazon DynamoDB with direct access from applications
+- Use AWS CloudFormation for model configuration
+
+04/05
+
+**Which combination of AWS services BEST supports Regional resilience for a mission-critical generative AI (GenAI) application?**
+
+- Amazon Bedrock with multi-Region deployment and Amazon Route 53 health checks
+- Cross-Region read replicas without active failover
+- Amazon CloudFront distribution without Regional model deployment
+- AWS Global Accelerator without Regional model redundancy
+
+05/05
+
+**When evaluating text summarization models in Amazon Bedrock for a production system that requires consistent performance, which evaluation result would indicate the BEST model selection?**
+- The model demonstrates moderate fluctuation with a robustness score of 25.3%, producing notably different summaries when input text contains minor variations.
+- The model shows minimal variation with a robustness score of 8.5%, maintaining consistent summary quality even when input text has slight variations or noise.
+- The model exhibits high sensitivity with a robustness score of 42.1%, generating significantly different summaries for slightly modified input text.
+- The model shows intermediate variation with a robustness score of 15.7%, with summary quality varying based on input text modifications.
+- The model displays substantial inconsistency with a robustness score of 33.9%, producing unpredictable summaries when input text is slightly altered.
+
+
+### Bonus Assignment
+
+Now, you will have an opportunity to build a resilient AI system that dynamically selects between different foundation models based on performance, availability, and use case requirements.
+
+You'll implement a flexible architecture that allows for seamless model switching and ensures continuous operation during service disruptions.
+
+Bonus assignments are an open-ended way for you to assess your overall knowledge of this task. You can share your answers on social media and tag #awsexamprep for us to review.
+
+
+#### Scenario
+
+You're building a customer service AI assistant for a financial services company. The assistant needs to:
+
+- Answer product questions based on company documentation
+- Generate personalized responses to customer inquiries
+- Maintain high availability and consistent performance
+- Comply with financial industry regulations
+
+#### Part 1: Foundation Model assessment and benchmarking
+
+Set up a benchmarking framework to evaluate different Amazon Bedrock models
+
+Compare models based on:
+
+- Response quality for financial domain questions
+- Latency and throughput
+- Cost per request
+- Compliance with guardrails
+
+#### Step 2. Flexible architecture for dynamic model selection
+
+- Implement a model abstraction layer using AWS Lambda
+- Configure AWS AppConfig for dynamic model selection rules
+- Create an API Gateway endpoint for consistent client access
+
+#### Step 3. Resilient system design
+
+- Implement AWS Step Functions with circuit breaker patterns
+- Set up cross-region model deployment for high availability
+- Create graceful degradation strategies for service disruptions
+
+#### Step 4. Model customization and lifecycle management
+
+- Fine-tune a model for financial domain using Amazon SageMaker
+- Implement model versioning and deployment workflows
+- Create automated testing and rollback strategies
+
+#### Part 1: Foundation Model assessment and benchmarking
+
+Step 1: Set up evaluation framework
+
+Create a Python script to evaluate models using Amazon Bedrock:
+
+```python
+import boto3
+import json
+import time
+import pandas as pd
+from concurrent.futures import ThreadPoolExecutor
+
+# Initialize Bedrock client
+bedrock_runtime = boto3.client('bedrock-runtime')
+
+# Models to evaluate
+models = [
+    "anthropic.claude-3-sonnet-20240229-v1:0",
+    "anthropic.claude-instant-v1",
+    "amazon.titan-text-express-v1"
+]
+
+# Test cases with ground truth answers
+test_cases = [
+    {
+        "question": "What is a 401(k) retirement plan?",
+        "context": "Financial services",
+        "ground_truth": "A 401(k) is a tax-advantaged retirement savings plan offered by employers."
+    },
+    # Add more test cases...
+]
+
+def invoke_model(model_id, prompt, max_tokens=500):
+    """Invoke a model with the given prompt and return the response and metrics."""
+    start_time = time.time()
+    
+    # Prepare request body based on model provider
+    if "anthropic" in model_id:
+        body = json.dumps({
+            "anthropic_version": "bedrock-2023-05-31",
+            "max_tokens": max_tokens,
+            "messages": [
+                {"role": "user", "content": prompt}
+            ]
+        })
+    elif "amazon" in model_id:
+        body = json.dumps({
+            "inputText": prompt,
+            "textGenerationConfig": {
+                "maxTokenCount": max_tokens,
+                "temperature": 0.7,
+                "topP": 0.9
+            }
+        })
+    # Add more model providers as needed
+    
+    try:
+        # Invoke the model
+        response = bedrock_runtime.invoke_model(
+            modelId=model_id,
+            body=body
+        )
+        
+        # Parse the response
+        response_body = json.loads(response['body'].read().decode())
+        
+        if "anthropic" in model_id:
+            output = response_body['content'][0]['text']
+        elif "amazon" in model_id:
+            output = response_body['results'][0]['outputText']
+        
+        # Calculate metrics
+        latency = time.time() - start_time
+        token_count = len(output.split())  # Rough estimate
+        
+        return {
+            "success": True,
+            "output": output,
+            "latency": latency,
+            "token_count": token_count
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "latency": time.time() - start_time
+        }
+
+def evaluate_models():
+    """Evaluate all models on all test cases and return results."""
+    results = []
+    
+    for test_case in test_cases:
+        prompt = f"Question: {test_case['question']}\nContext: {test_case['context']}"
+        
+        for model_id in models:
+            print(f"Evaluating {model_id} on: {test_case['question']}")
+            response = invoke_model(model_id, prompt)
+            
+            if response["success"]:
+                # Calculate similarity score with ground truth (simplified)
+                similarity = calculate_similarity(response["output"], test_case["ground_truth"])
+                
+                results.append({
+                    "model_id": model_id,
+                    "question": test_case["question"],
+                    "output": response["output"],
+                    "latency": response["latency"],
+                    "token_count": response["token_count"],
+                    "similarity_score": similarity
+                })
+            else:
+                results.append({
+                    "model_id": model_id,
+                    "question": test_case["question"],
+                    "error": response["error"],
+                    "latency": response["latency"]
+                })
+    
+    return pd.DataFrame(results)
+
+def calculate_similarity(output, ground_truth):
+    """Calculate similarity between model output and ground truth (simplified)."""
+    # In a real implementation, use more sophisticated NLP techniques
+    # This is a very simplified version
+    output_words = set(output.lower().split())
+    truth_words = set(ground_truth.lower().split())
+    
+    if not truth_words:
+        return 0.0
+        
+    common_words = output_words.intersection(truth_words)
+    return len(common_words) / len(truth_words)
+
+# Run evaluation
+if __name__ == "__main__":
+    results_df = evaluate_models()
+    
+    # Save results to CSV
+    results_df.to_csv("model_evaluation_results.csv", index=False)
+    
+    # Print summary
+    print("\nEvaluation Summary:")
+    summary = results_df.groupby("model_id").agg({
+        "latency": "mean",
+        "similarity_score": "mean",
+        "token_count": "mean"
+    }).reset_index()
+    
+    print(summary)
+Step 2: Analyze results and create a model selection strategy
+
+Create a selection strategy based on your benchmark results:
+
+
+def create_model_selection_strategy(results_df):
+    """Create a model selection strategy based on evaluation results."""
+    # Calculate overall scores
+    model_scores = results_df.groupby("model_id").agg({
+        "latency": "mean",
+        "similarity_score": "mean"
+    }).reset_index()
+    
+    # Normalize scores (lower latency is better, higher similarity is better)
+    max_latency = model_scores["latency"].max()
+    model_scores["latency_score"] = 1 - (model_scores["latency"] / max_latency)
+    
+    # Calculate weighted score (adjust weights based on priorities)
+    model_scores["overall_score"] = (
+        0.7 * model_scores["similarity_score"] + 
+        0.3 * model_scores["latency_score"]
+    )
+    
+    # Sort by overall score
+    model_scores = model_scores.sort_values("overall_score", ascending=False)
+    
+    # Create strategy
+    strategy = {
+        "primary_model": model_scores.iloc[0]["model_id"],
+        "fallback_models": model_scores.iloc[1:]["model_id"].tolist(),
+        "model_scores": model_scores.to_dict(orient="records")
+    }
+    
+    return strategy
+
+# Generate strategy
+strategy = create_model_selection_strategy(results_df)
+print(json.dumps(strategy, indent=2))
+
+# Save strategy to file for AppConfig
+with open("model_selection_strategy.json", "w") as f:
+    json.dump(strategy, f, indent=2)
+
+```
+
+#### Part 2: Flexiable architecture for dynamic model selection
+
+**Step 1: Create AWS AppConfig for model configuration**
+
+Set up AWS AppConfig using AWS CLI or console:
+
+
+```bash
+# Create application
+aws appconfig create-application --name "AIAssistantApp"
+
+# Create environment
+aws appconfig create-environment --application-id YOUR_APP_ID --name "Production"
+
+# Create configuration profile
+aws appconfig create-configuration-profile \
+    --application-id YOUR_APP_ID \
+    --name "ModelSelectionStrategy" \
+    --location-uri "hosted" \
+    --type "AWS.AppConfig.FeatureFlags"
+
+# Create and deploy configuration
+aws appconfig create-hosted-configuration-version \
+    --application-id YOUR_APP_ID \
+    --configuration-profile-id YOUR_PROFILE_ID \
+    --content-type "application/json" \
+    --content file://model_selection_strategy.json
+
+# Deploy configuration
+aws appconfig start-deployment \
+    --application-id YOUR_APP_ID \
+    --environment-id YOUR_ENV_ID \
+    --configuration-profile-id YOUR_PROFILE_ID \
+    --configuration-version 1 \
+    --deployment-strategy-id YOUR_STRATEGY_ID
+
+```
+Step 2: Create model abstraction Lambda
+
+Create a Lambda function for model abstraction:
+
+```python
+import boto3
+import json
+import os
+
+def lambda_handler(event, context):
+    # Get AppConfig configuration
+    appconfig_client = boto3.client('appconfig')
+    config_response = appconfig_client.get_configuration(
+        Application='AIAssistantApp',
+        Environment='Production',
+        Configuration='ModelSelectionStrategy',
+        ClientId='AIAssistantLambda'
+    )
+    
+    # Parse configuration
+    config = json.loads(config_response['Content'].read().decode('utf-8'))
+    
+    # Extract request details
+    body = json.loads(event.get('body', '{}'))
+    prompt = body.get('prompt', '')
+    use_case = body.get('use_case', 'general')
+    
+    # Select model based on use case and configuration
+    model_id = select_model(config, use_case)
+    
+    # Invoke selected model
+    response = invoke_model(model_id, prompt)
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps({
+            'model_used': model_id,
+            'response': response
+        })
+    }
+
+def select_model(config, use_case):
+    """Select appropriate model based on configuration and use case."""
+    # Check if there's a use case specific model
+    use_case_models = config.get('use_case_models', {})
+    if use_case in use_case_models:
+        return use_case_models[use_case]
+    
+    # Default to primary model
+    return config.get('primary_model')
+
+def invoke_model(model_id, prompt):
+    """Invoke the selected model with error handling."""
+    bedrock_runtime = boto3.client('bedrock-runtime')
+    
+    try:
+        # Prepare request body based on model provider
+        if "anthropic" in model_id:
+            body = json.dumps({
+                "anthropic_version": "bedrock-2023-05-31",
+                "max_tokens": 500,
+                "messages": [
+                    {"role": "user", "content": prompt}
+                ]
+            })
+        elif "amazon" in model_id:
+            body = json.dumps({
+                "inputText": prompt,
+                "textGenerationConfig": {
+                    "maxTokenCount": 500,
+                    "temperature": 0.7,
+                    "topP": 0.9
+                }
+            })
+        # Add more model providers as needed
+        
+        # Invoke the model
+        response = bedrock_runtime.invoke_model(
+            modelId=model_id,
+            body=body
+        )
+        
+        # Parse the response
+        response_body = json.loads(response['body'].read().decode())
+        
+        if "anthropic" in model_id:
+            return response_body['content'][0]['text']
+        elif "amazon" in model_id:
+            return response_body['results'][0]['outputText']
+        
+    except Exception as e:
+        print(f"Error invoking model {model_id}: {str(e)}")
+        # Return error message or try fallback model
+        return f"Error generating response: {str(e)}"
+
+```
+
+Step 3: Set Up API Gateway
+
+Create an API Gateway REST API:
+
+```bash
+# Create API
+aws apigateway create-rest-api --name "AIAssistantAPI"
+
+# Get root resource ID
+ROOT_ID=$(aws apigateway get-resources --rest-api-id YOUR_API_ID --query 'items[0].id' --output text)
+
+# Create resource
+aws apigateway create-resource --rest-api-id YOUR_API_ID --parent-id $ROOT_ID --path-part "generate"
+
+# Create POST method
+aws apigateway put-method --rest-api-id YOUR_API_ID --resource-id YOUR_RESOURCE_ID --http-method POST --authorization-type "NONE"
+
+# Set up Lambda integration
+aws apigateway put-integration --rest-api-id YOUR_API_ID --resource-id YOUR_RESOURCE_ID --http-method POST --type AWS_PROXY --integration-http-method POST --uri "arn:aws:apigateway:REGION:lambda:path/2015-03-31/functions/YOUR_LAMBDA_ARN/invocations"
+
+# Deploy API
+aws apigateway create-deployment --rest-api-id YOUR_API_ID --stage-name "prod"
+```
+
+#### Part 3: Resilient system design
+
+**Step 1: Create Step Functions workflow with circuit breaker**
+
+Create a Step Functions state machine definition:
+
+```json
+{
+  "Comment": "AI Assistant with Circuit Breaker Pattern",
+  "StartAt": "TryPrimaryModel",
+  "States": {
+    "TryPrimaryModel": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${PrimaryModelLambdaArn}",
+        "Payload": {
+          "prompt.$": "$.prompt",
+          "use_case.$": "$.use_case"
+        }
+      },
+      "Retry": [
+        {
+          "ErrorEquals": ["States.TaskFailed"],
+          "IntervalSeconds": 1,
+          "MaxAttempts": 2,
+          "BackoffRate": 2
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "TryFallbackModel"
+        }
+      ],
+      "Next": "SuccessState"
+    },
+    "TryFallbackModel": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${FallbackModelLambdaArn}",
+        "Payload": {
+          "prompt.$": "$.prompt",
+          "use_case.$": "$.use_case",
+          "is_fallback": true
+        }
+      },
+      "Retry": [
+        {
+          "ErrorEquals": ["States.TaskFailed"],
+          "IntervalSeconds": 1,
+          "MaxAttempts": 2,
+          "BackoffRate": 2
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "GracefulDegradation"
+        }
+      ],
+      "Next": "SuccessState"
+    },
+    "GracefulDegradation": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${DegradationLambdaArn}",
+        "Payload": {
+          "prompt.$": "$.prompt",
+          "use_case.$": "$.use_case"
+        }
+      },
+      "Next": "SuccessState"
+    },
+    "SuccessState": {
+      "Type": "Succeed"
+    }
+  }
+}
+```
+
+Create the fallback model Lambda:
+
+```python
+import boto3
+import json
+
+def lambda_handler(event, context):
+    """Fallback model handler that uses a simpler, more reliable model."""
+    prompt = event.get('prompt', '')
+    use_case = event.get('use_case', 'general')
+    
+    # Use a simpler, more reliable model
+    model_id = "amazon.titan-text-express-v1"  # Example fallback model
+    
+    try:
+        # Invoke the model with simplified parameters
+        bedrock_runtime = boto3.client('bedrock-runtime')
+        response = bedrock_runtime.invoke_model(
+            modelId=model_id,
+            body=json.dumps({
+                "inputText": prompt,
+                "textGenerationConfig": {
+                    "maxTokenCount": 300,  # Reduced for reliability
+                    "temperature": 0.5,
+                    "topP": 0.9
+                }
+            })
+        )
+        
+        response_body = json.loads(response['body'].read().decode())
+        output = response_body['results'][0]['outputText']
+        
+        return {
+            'statusCode': 200,
+            'body': json.dumps({
+                'model_used': f"FALLBACK:{model_id}",
+                'response': output
+            })
+        }
+    except Exception as e:
+        # Let Step Functions catch this and move to graceful degradation
+        raise Exception(f"Fallback model failed: {str(e)}")
+
+```
+
+Create the graceful degradation Lambda:
+
+```python
+import json
+
+def lambda_handler(event, context):
+    """Graceful degradation handler that returns a predefined response."""
+    prompt = event.get('prompt', '')
+    use_case = event.get('use_case', 'general')
+    
+    # Provide a graceful response based on the use case
+    responses = {
+        "general": "I'm sorry, but I'm currently experiencing technical difficulties. Please try again later or contact customer service for immediate assistance.",
+        "product_question": "I apologize, but I can't access product information right now. Please refer to our product documentation or contact customer service at 1-800-555-1234.",
+        "account_inquiry": "I'm unable to process account inquiries at the moment. For urgent matters, please call our customer service line at 1-800-555-1234."
+    }
+    
+    default_response = "I'm sorry, but I'm currently experiencing technical difficulties. Please try again later."
+    response_text = responses.get(use_case, default_response)
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps({
+            'model_used': "DEGRADED_SERVICE",
+            'response': response_text
+        })
+    }
+```
+
+**Step 2: Set up cross-Region deployment**
+
+Create a CloudFormation template for cross-Region deployment:
+
+```yaml
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'AI Assistant Cross-Region Deployment'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: prod
+    AllowedValues:
+      - dev
+      - prod
+    Description: Deployment environment
+
+Resources:
+  ModelAbstractionLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "ai-assistant-model-abstraction-${Environment}"
+      Handler: index.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: python3.9
+      Timeout: 30
+      MemorySize: 256
+      Code:
+        ZipFile: |
+          import boto3
+          import json
+          import os
+          
+          def lambda_handler(event, context):
+              # Implementation as shown earlier
+              pass
+  
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+      Policies:
+        - PolicyName: BedrockAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'bedrock:InvokeModel'
+                  - 'bedrock-runtime:InvokeModel'
+                Resource: '*'
+        - PolicyName: AppConfigAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'appconfig:GetConfiguration'
+                Resource: '*'
+  
+  ApiGateway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: !Sub "ai-assistant-api-${Environment}"
+      Description: API for AI Assistant
+  
+  ApiResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref ApiGateway
+      ParentId: !GetAtt ApiGateway.RootResourceId
+      PathPart: "generate"
+  
+  ApiMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref ApiGateway
+      ResourceId: !Ref ApiResource
+      HttpMethod: POST
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ModelAbstractionLambda.Arn}/invocations"
+  
+  ApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn: ApiMethod
+    Properties:
+      RestApiId: !Ref ApiGateway
+      StageName: !Ref Environment
+
+Outputs:
+  ApiEndpoint:
+    Description: API Gateway endpoint URL
+    Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${Environment}/generate"
+  LambdaArn:
+    Description: Lambda function ARN
+    Value: !GetAtt ModelAbstractionLambda.Arn
+Deploy the CloudFormation template to multiple Regions:
+
+
+# Deploy to primary region
+aws cloudformation deploy \
+    --template-file template.yaml \
+    --stack-name ai-assistant-stack \
+    --parameter-overrides Environment=prod \
+    --region us-east-1 \
+    --capabilities CAPABILITY_IAM
+
+# Deploy to secondary region
+aws cloudformation deploy \
+    --template-file template.yaml \
+    --stack-name ai-assistant-stack \
+    --parameter-overrides Environment=prod \
+    --region us-west-2 \
+    --capabilities CAPABILITY_IAM
+Set up Route 53 for cross-Region routing:
+
+
+# Create health check for primary region
+aws route53 create-health-check \
+    --caller-reference $(date +%s) \
+    --health-check-config "Port=443,Type=HTTPS,ResourcePath=/prod/generate,FullyQualifiedDomainName=YOUR_API_ID.execute-api.us-east-1.amazonaws.com,RequestInterval=30,FailureThreshold=3"
+
+# Create hosted zone (if you don't have one)
+aws route53 create-hosted-zone \
+    --name yourdomain.com \
+    --caller-reference $(date +%s)
+
+# Create DNS records with failover routing policy
+aws route53 change-resource-record-sets \
+    --hosted-zone-id YOUR_HOSTED_ZONE_ID \
+    --change-batch '{
+        "Changes": [
+            {
+                "Action": "CREATE",
+                "ResourceRecordSet": {
+                    "Name": "ai-assistant.yourdomain.com",
+                    "Type": "A",
+                    "SetIdentifier": "Primary",
+                    "Failover": "PRIMARY",
+                    "AliasTarget": {
+                        "HostedZoneId": "Z1UJRXOUMOOFQ8",
+                        "DNSName": "YOUR_API_ID.execute-api.us-east-1.amazonaws.com",
+                        "EvaluateTargetHealth": true
+                    },
+                    "HealthCheckId": "YOUR_HEALTH_CHECK_ID"
+                }
+            },
+            {
+                "Action": "CREATE",
+                "ResourceRecordSet": {
+                    "Name": "ai-assistant.yourdomain.com",
+                    "Type": "A",
+                    "SetIdentifier": "Secondary",
+                    "Failover": "SECONDARY",
+                    "AliasTarget": {
+                        "HostedZoneId": "Z2OJLYMUO9EFXC",
+                        "DNSName": "YOUR_API_ID.execute-api.us-west-2.amazonaws.com",
+                        "EvaluateTargetHealth": true
+                    }
+                }
+            }
+        ]
+    }'
+```
+
+#### Part 4: Model customization and lifecycle management
+
+**Step 1: Fine-tune a model with SageMaker**
+
+Prepare a fine-tuning dataset:
+
+```python
+import pandas as pd
+import json
+
+# Create a financial Q&A dataset
+data = [
+    {"question": "What is a 401(k)?", "answer": "A 401(k) is a tax-advantaged retirement savings plan offered by employers."},
+    {"question": "How does compound interest work?", "answer": "Compound interest is when you earn interest on both the money you've saved and the interest you earn."},
+    # Add more examples...
+]
+
+# Convert to DataFrame
+df = pd.DataFrame(data)
+
+# Save to CSV for SageMaker training
+df.to_csv("financial_qa_dataset.csv", index=False)
+
+# Create SageMaker training script
+with open("train.py", "w") as f:
+    f.write("""
+import argparse
+import os
+import json
+import pandas as pd
+from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainingArguments
+from datasets import Dataset
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model-dir", type=str, default=os.environ.get("SM_MODEL_DIR"))
+    parser.add_argument("--training-dir", type=str, default=os.environ.get("SM_CHANNEL_TRAINING"))
+    return parser.parse_args()
+
+if __name__ == "__main__":
+    args = parse_args()
+    
+    # Load dataset
+    data_path = os.path.join(args.training_dir, "financial_qa_dataset.csv")
+    df = pd.read_csv(data_path)
+    
+    # Prepare dataset
+    def format_instruction(row):
+        return f"Question: {row['question']}\\nAnswer: {row['answer']}"
+    
+    df["text"] = df.apply(format_instruction, axis=1)
+    dataset = Dataset.from_pandas(df[["text"]])
+    
+    # Load model and tokenizer
+    model_name = "distilgpt2"  # Use a smaller model for example purposes
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForCausalLM.from_pretrained(model_name)
+    
+    # Tokenize dataset
+    def tokenize_function(examples):
+        return tokenizer(examples
+
+```
+Share your work with the AWS community
+
+When you share your bonus assignments, the AWS Exam Prep team and others will be able to endorse you on LinkedIn for the skills you demonstrated in this project and in your preparations for your certification exam.
+
+Write a short blog post explaining your learnings and your approach to the challenge.
+
+Link to your project on GitHub.
+
+Tag #awsexamprep, and the AWS Exam Prep team will review it.
+
+**Disclaimer:**
+
+This project is for educational purposes only and might lead to AWS service charges.\
+You assume any risk associated with this project. You are responsible for any costs associated with your AWS account.
+
+**Remember to do the following:**
+
+Monitor your usage limits.
+
+Set up billing alerts to avoid unexpected charges.
+
+Clean up any test environments after completion.
+
+
+
+## Task 1.3: Implement data validation and processing pipelines for FM consumption.
 
 **AWS services overview**
 
@@ -451,6 +1381,982 @@ For the exam, ensure you understand how to enhance input data quality.
 5. Implement content enrichment workflows that augment input data with additional context from knowledge bases or reference data to provide foundation models with more comprehensive information.
 
 6. Design quality monitoring systems that track the relationship between input data quality metrics and foundation model output quality to continuously refine enhancement strategies.
+
+
+### Self Assessment
+
+1.3.1. You're preparing to send a request to the Claude model in Amazon Bedrock.
+
+**Which of the following JSON request formats is correctly structured?**
+
+1. 
+```json
+{
+
+ "prompt": "Summarize the benefits of cloud computing",
+
+ "max_tokens_to_sample": 500,
+
+ "temperature": 0.7
+
+}
+```
+
+2. 
+```json
+{
+
+ "anthropic_version": "bedrock-2023-05-31",
+
+ "max_tokens": 500,
+
+ "messages": [
+
+   {
+
+     "role": "user",
+
+     "content": "Summarize the benefits of cloud computing"
+
+   }
+
+ ]
+
+}
+```
+
+3. 
+```json
+{
+
+ "inputs": "Summarize the benefits of cloud computing",
+
+ "parameters": {
+
+   "max_length": 500,
+
+   "temperature": 0.7
+
+ }
+
+}
+```
+
+4. 
+```json
+{
+
+ "text": "Summarize the benefits of cloud computing",
+
+ "model": "claude-v2",
+
+ "max_tokens": 500
+
+}
+```
+
+1.3.2. You're developing a chatbot application using Amazon Bedrock.
+
+**Which conversation formatting approach would produce the most consistent responses from the Claude model?**
+
+1. Concatenate all previous messages with the current query
+
+2. Send only the most recent user query to the model
+
+3. Use the messages array with alternating user and assistant roles
+
+4. Convert the conversation to a bullet-point summary before sending
+
+
+### Use Case - Claims Processing
+
+Use case 
+A leading insurance company needs to modernize its claims processing system by implementing an Al solution that can analyze diverse data sources, including claim forms, damage photos, customer call recordings, and historical claim data. 
+
+The goal is to develop an intelligent claims assessment system that can evaluate claim validity, estimate repair costs, detect potential fraud, and provide adjusters with comprehensive insights. 
+
+**Architecture**
+
+![alt text](1.3.dataflow.png)
+
+**Data Validation Workflow Components**
+1. Use **AWS Glue Data Quality** to perform rule based validation on structured data/semi-structured data, validate damage dates against dates and claim amounts are within policy limits.
+2. Use **Amazon SageMaker Data Wrangler** to visually explore data distributions and relationships, and identify anomalous patterns.
+3. Use custom **AWS Lambda** functions to perform insurance specific validation rules (match policy numbers to customer names, validate damage dates against dates and daamage images show damage).
+4. Use **Amazon CloudWatch** to monitor data quality metrics and alert on data quality issues.
+
+**Data Processing Workflow Components**
+1. Use **AWS Step Functions** to create a workflow that orchestrates the data processing pipeline.
+2. Use **Amazon Comprehend** to perform natural language processing (NLP) on the data such as textual descriptions to detect language, sentiment, and entities.
+2. Use **AWS Lambda** to perform insurance specific text normalization/.
+3. Use **Amazon Rekognition** for image processing workflows to detect objects, damage patterns, and picture quality.
+4. Use **Amazon SageMaker AI** processing jobs to perform insurance specific image processing workflows.
+5. Use **Amazon Transcribe** to perform insurance specific audio processing workflows to transcribe audio to text and detect sentiment analysis and fraud detection.
+6. Use **Amazon Transcribe** to create coherent comprehensive claim representations of the data for FM processing.
+
+
+**Formatting input data for FM processing**
+1. Implement conversation history management to maintain context across multiple interactions, while managing total context length.
+2. Build a dynamic prompt construction that assembles contextual information about claims based on their characteristics, such as policy number, claim number, and damage location. This will significantly improve the quality and accuracy of responses from the foundation model.
+
+**Data quality inpu**
+1. Incosistent formatting, incomplete accident descriptions, missing damage photos - use Amazon Bedrock to normalize input, correct grammatical errors, and fill in missing information before sending to FM
+2. Use **Amazon Comprehend** for entity extraction.
+
+For content enrichment workflows, augment claims data with additional information such as vehicle specs, repair cost benchmarks, etc., for auto claim.
+
+### Knowledge Check
+
+01/05
+**Which approach is the MOST operationally efficient for implementing a data validation workflow for foundation model data?**
+
+- Use AWS Glue Data Quality for automated validation and connect it with Amazon CloudWatch for monitoring.
+- Use AWS Lambda functions to validate each data field individually.
+- Implement all validations in Amazon SageMaker Data Wrangler.
+- Write custom validation scripts in Amazon EC2 instances.
+
+02/05
+
+**You're designing a system that prepares customer interaction data from multiple sources for foundation model analysis.**
+
+**Which approaches are the MOST operationally efficient for ensuring proper data formatting and validation? (Select TWO.)**
+
+- Create a standardized formatting layer using AWS Lambda with caching and implement model-specific validation.
+- Store all data in Amazon DynamoDB with JSON formatting.
+- Implement centralized formatting with Amazon SageMaker AI endpoints and proper error handling.
+- Use Amazon Aurora to format and validate all inputs.
+- Process all inputs through Amazon EMR for formatting and validation.
+
+
+03/05
+Your team needs to process large volumes of multimodal data (text, images, and audio) for a foundation model.
+
+**Which approach is MOST operationally efficient for handling this complex data processing?**
+
+- Use separate AWS Lambda functions for each data type and coordinate with AWS Step Functions.
+- Process all data types using Amazon EMR clusters.
+- Implement Amazon SageMaker Processing jobs with custom containers for each modality.
+- Use the multimodal capabilities of  Amazon Bedrock with Amazon SageMaker Processing for pre/post-processing.
+- Store all data in Amazon S3 and process using Amazon Athena.
+
+
+04/05
+
+**You're developing a system to analyze customer service interactions that include both audio recordings and text chat logs.**
+
+**Which approach is the MOST operationally efficient for extracting insights from both data sources?**
+
+- Process all data through Amazon Comprehend only.
+- Use Amazon Transcribe for audio and Amazon Comprehend for both transcribed and text data.
+- Process audio with Amazon Polly and text with AWS Lambda functions.
+- Use Amazon Translate for all text processing.
+- Implement custom speech-to-text processing in Amazon EC2 instances.
+
+
+05/05
+
+**You're implementing a customer service system that needs to handle both one-time queries and multi-turn conversations with memory.**
+
+**Which Amazon Bedrock API approaches can meet these requirements? (Select TWO.)**
+
+- Use invokeModel for one-time queries and handle response parsing appropriately.
+- Implement createModelCustomization for conversation handling.
+- Use invokeModelWithResponseStream for multi-turn conversations with state management.
+- Implement getModelCustomizations for all interactions.
+- Use deleteModelCustomization for cleaning up conversations.
+
+
+### Bonus Assignment
+
+#### Project architecture and components
+
+**Step 1: Data validation workflow**
+
+- Set up AWS Glue Data Quality for validating structured customer feedback data
+- Create Lambda functions for custom validation of unstructured text reviews
+- Implement CloudWatch metrics to monitor data quality over time
+
+**Step 2. Multimodal data processing**
+
+- Process text reviews using Amazon Comprehend for entity extraction and sentiment analysis
+- Extract text from product images using Amazon Textract
+- Transcribe customer service calls using Amazon Transcribe
+- Transform tabular survey data into natural language summaries
+
+**Step 3. Data formatting for FMs**
+
+- Format processed data for Claude in Amazon Bedrock
+- Create conversation templates for dialog-based analysis
+- Implement multimodal request formatting for image and text analysis
+
+**Step 4. Data quality enhancement**
+
+- Use Amazon Comprehend to extract key entities and themes
+- Implement text normalization with Lambda functions
+- Create a feedback loop to improve data quality based on model responses
+
+**Implementation guide**
+
+**Prerequisites**
+
+- AWS account with appropriate permissions
+- Basic knowledge of Python and AWS services
+- Sample data (provided in the project repository)
+
+**Part 1: Data validation workflow**
+
+**Step 1: Set Up AWS Glue Data Catalog and Data Quality**
+
+Create an S3 bucket for your project data:
+
+```bash
+aws s3 mb s3://customer-feedback-analysis-<your-initials>
+```
+
+Upload the sample data files to your S3 bucket:
+
+```bash
+aws s3 cp sample-data/ s3://customer-feedback-analysis-<your-initials>/raw-data/ --recursive
+```
+
+Create an AWS Glue Crawler to catalog your data:
+
+```bash
+aws glue create-crawler \
+  --name customer-feedback-crawler \
+  --role AWSGlueServiceRole-CustomerFeedback \
+  --database-name customer_feedback_db \
+  --targets '{"S3Targets": [{"Path": "s3://customer-feedback-analysis-<your-initials>/raw-data/"}]}'
+```
+
+Run the crawler:
+
+```bash
+aws glue start-crawler --name customer-feedback-crawler
+```
+
+Create a Glue Data Quality ruleset for customer reviews:
+
+```python
+import boto3
+from awsglue.data_quality import DataQualityRule, DataQualityRulesetEvaluator
+
+# Define rules for customer reviews
+rules = [
+    # Check for completeness of required fields
+    DataQualityRule.is_complete("review_text"),
+    DataQualityRule.is_complete("product_id"),
+    DataQualityRule.is_complete("customer_id"),
+    
+    # Check for valid values
+    DataQualityRule.column_values_match_pattern("review_text", ".{10,}"),  # At least 10 chars
+    DataQualityRule.column_values_match_pattern("rating", "^[1-5]$"),  # Rating 1-5
+    
+    # Check for data consistency
+    DataQualityRule.column_values_match_pattern("review_date", "\\d{4}-\\d{2}-\\d{2}"),  # YYYY-MM-DD
+    
+    # Check for statistical properties
+    DataQualityRule.column_length_distribution_match("review_text", 
+                                                    min_length=10, 
+                                                    max_length=5000)
+]
+
+# Create ruleset
+glue_client = boto3.client('glue')
+response = glue_client.create_data_quality_ruleset(
+    Name='customer_reviews_ruleset',
+    Description='Data quality rules for customer reviews',
+    Ruleset='\n'.join([str(rule) for rule in rules]),
+    Tags={'Project': 'CustomerFeedbackAnalysis'}
+)
+
+print(f"Created ruleset: {response['Name']}")
+Create a Lambda function for custom text validation:
+
+
+import json
+import boto3
+import re
+from datetime import datetime
+
+def lambda_handler(event, context):
+    # Get the S3 object
+    s3_client = boto3.client('s3')
+    bucket = event['Records'][0]['s3']['bucket']['name']
+    key = event['Records'][0]['s3']['object']['key']
+    
+    # Only process text reviews
+    if not key.endswith('.txt') and not key.endswith('.json'):
+        return {
+            'statusCode': 200,
+            'body': json.dumps('Not a text review file')
+        }
+    
+    try:
+        response = s3_client.get_object(Bucket=bucket, Key=key)
+        content = response['Body'].read().decode('utf-8')
+        
+        # Parse the content (assuming JSON format)
+        if key.endswith('.json'):
+            review = json.loads(content)
+            text = review.get('review_text', '')
+        else:
+            text = content
+            
+        # Validation checks
+        validation_results = {
+            'file_name': key,
+            'timestamp': datetime.now().isoformat(),
+            'checks': {
+                'min_length': len(text) >= 10,
+                'has_product_reference': bool(re.search(r'product|item|purchase', text, re.IGNORECASE)),
+                'has_opinion': bool(re.search(r'like|love|hate|good|bad|great|terrible|excellent|poor|recommend', text, re.IGNORECASE)),
+                'no_profanity': not bool(re.search(r'badword1|badword2', text, re.IGNORECASE)),  # Add actual profanity list
+                'has_structure': text.count('.') >= 1  # At least one sentence
+            }
+        }
+        
+        # Calculate overall quality score (simple version)
+        passed_checks = sum(1 for check in validation_results['checks'].values() if check)
+        total_checks = len(validation_results['checks'])
+        validation_results['quality_score'] = passed_checks / total_checks
+        
+        # Send metrics to CloudWatch
+        cloudwatch = boto3.client('cloudwatch')
+        cloudwatch.put_metric_data(
+            Namespace='CustomerFeedback/TextQuality',
+            MetricData=[
+                {
+                    'MetricName': 'QualityScore',
+                    'Value': validation_results['quality_score'],
+                    'Unit': 'None',
+                    'Dimensions': [
+                        {
+                            'Name': 'Source',
+                            'Value': 'TextReviews'
+                        }
+                    ]
+                }
+            ]
+        )
+        
+        # Save validation results
+        validation_key = key.replace('raw-data', 'validation-results').replace('.txt', '.json').replace('.json', '_validation.json')
+        s3_client.put_object(
+            Bucket=bucket,
+            Key=validation_key,
+            Body=json.dumps(validation_results),
+            ContentType='application/json'
+        )
+        
+        return {
+            'statusCode': 200,
+            'body': json.dumps(validation_results)
+        }
+        
+    except Exception as e:
+        print(f"Error processing {key}: {str(e)}")
+        return {
+            'statusCode': 500,
+            'body': json.dumps(f"Error: {str(e)}")
+        }
+```
+
+Set up an S3 trigger for the Lambda function:
+
+```bash
+aws lambda create-event-source-mapping \
+  --function-name TextValidationFunction \
+  --batch-size 1 \
+  --event-source-arn arn:aws:s3:::customer-feedback-analysis-<your-initials> \
+  --events s3:ObjectCreated:*
+```
+Create a CloudWatch Dashboard for monitoring data quality:
+
+```python
+import boto3
+
+# Create CloudWatch dashboard
+cloudwatch = boto3.client('cloudwatch')
+
+dashboard_body = {
+    "widgets": [
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    ["CustomerFeedback/TextQuality", "QualityScore", "Source", "TextReviews"]
+                ],
+                "period": 86400,
+                "stat": "Average",
+                "region": "us-east-1",
+                "title": "Text Review Quality Score"
+            }
+        },
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 6,
+            "width": 12,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    ["CustomerFeedback/DataQuality", "RulesetPassRate", "Ruleset", "customer_reviews_ruleset"]
+                ],
+                "period": 86400,
+                "stat": "Average",
+                "region": "us-east-1",
+                "title": "Glue Data Quality Pass Rate"
+            }
+        }
+    ]
+}
+
+response = cloudwatch.put_dashboard(
+    DashboardName='CustomerFeedbackQuality',
+    DashboardBody=json.dumps(dashboard_body)
+)
+
+print(f"Created dashboard: {response['DashboardArn']}")
+```
+
+Step 2: Analyze results and create a model selection strategy
+
+Create a selection strategy based on your benchmark results:
+
+```python
+def create_model_selection_strategy(results_df):
+    """Create a model selection strategy based on evaluation results."""
+    # Calculate overall scores
+    model_scores = results_df.groupby("model_id").agg({
+        "latency": "mean",
+        "similarity_score": "mean"
+    }).reset_index()
+    
+    # Normalize scores (lower latency is better, higher similarity is better)
+    max_latency = model_scores["latency"].max()
+    model_scores["latency_score"] = 1 - (model_scores["latency"] / max_latency)
+    
+    # Calculate weighted score (adjust weights based on priorities)
+    model_scores["overall_score"] = (
+        0.7 * model_scores["similarity_score"] + 
+        0.3 * model_scores["latency_score"]
+    )
+    
+    # Sort by overall score
+    model_scores = model_scores.sort_values("overall_score", ascending=False)
+    
+    # Create strategy
+    strategy = {
+        "primary_model": model_scores.iloc[0]["model_id"],
+        "fallback_models": model_scores.iloc[1:]["model_id"].tolist(),
+        "model_scores": model_scores.to_dict(orient="records")
+    }
+    
+    return strategy
+
+# Generate strategy
+strategy = create_model_selection_strategy(results_df)
+print(json.dumps(strategy, indent=2))
+
+# Save strategy to file for AppConfig
+with open("model_selection_strategy.json", "w") as f:
+    json.dump(strategy, f, indent=2)
+
+```
+
+**Part 2: Multimodal data processing**
+
+**Step 1: Process text reviews with Amazon Comprehend**
+
+Create a Lambda function to process text reviews:
+
+```python
+import json
+import boto3
+import os
+
+def lambda_handler(event, context):
+    # Get the S3 object
+    s3_client = boto3.client('s3')
+    bucket = event['Records'][0]['s3']['bucket']['name']
+    key = event['Records'][0]['s3']['object']['key']
+    
+    # Only process validated text reviews
+    if not key.endswith('_validation.json'):
+        return {
+            'statusCode': 200,
+            'body': json.dumps('Not a validated review file')
+        }
+    
+    try:
+        # Get the validation results
+        response = s3_client.get_object(Bucket=bucket, Key=key)
+        validation_results = json.loads(response['Body'].read().decode('utf-8'))
+        
+        # Check if the quality score is sufficient
+        if validation_results['quality_score'] < 0.7:  # Threshold for processing
+            print(f"Quality score too low: {validation_results['quality_score']}")
+            return {
+                'statusCode': 200,
+                'body': json.dumps('Quality score too low')
+            }
+        
+        # Get the original review text
+        original_key = key.replace('validation-results', 'raw-data').replace('_validation.json', '.json')
+        response = s3_client.get_object(Bucket=bucket, Key=original_key)
+        review = json.loads(response['Body'].read().decode('utf-8'))
+        text = review.get('review_text', '')
+        
+        # Use Amazon Comprehend for entity extraction and sentiment analysis
+        comprehend = boto3.client('comprehend')
+        
+        # Detect entities
+        entity_response = comprehend.detect_entities(
+            Text=text,
+            LanguageCode='en'
+        )
+        
+        # Detect sentiment
+        sentiment_response = comprehend.detect_sentiment(
+            Text=text,
+            LanguageCode='en'
+        )
+        
+        # Detect key phrases
+        key_phrases_response = comprehend.detect_key_phrases(
+            Text=text,
+            LanguageCode='en'
+        )
+        
+        # Combine the results
+        processed_review = {
+            'original_text': text,
+            'entities': entity_response['Entities'],
+            'sentiment': sentiment_response['Sentiment'],
+            'sentiment_scores': sentiment_response['SentimentScore'],
+            'key_phrases': key_phrases_response['KeyPhrases'],
+            'metadata': {
+                'product_id': review.get('product_id', ''),
+                'customer_id': review.get('customer_id', ''),
+                'review_date': review.get('review_date', '')
+            }
+        }
+        
+        # Save processed results
+        processed_key = key.replace('validation-results', 'processed-data').replace('_validation.json', '_processed.json')
+        s3_client.put_object(
+            Bucket=bucket,
+            Key=processed_key,
+            Body=json.dumps(processed_review),
+            ContentType='application/json'
+        )
+        
+        return {
+            'statusCode': 200,
+            'body': json.dumps('Successfully processed review')
+        }
+        
+    except Exception as e:
+        print(f"Error processing {key}: {str(e)}")
+        return {
+            'statusCode': 500,
+            'body': json.dumps(f"Error: {str(e)}")
+        }
+```
+
+**Step 2: Process product images with Amazon Textract and Rekognition**
+
+Create a Lambda function to process product images:
+
+```python
+import json
+import boto3
+import os
+
+def lambda_handler(event, context):
+    # Get the S3 object
+    s3_client = boto3.client('s3')
+    bucket = event['Records'][0]['s3']['bucket']['name']
+    key = event['Records'][0]['s3']['object']['key']
+    
+    # Only process image files
+    if not key.lower().endswith(('.png', '.jpg', '.jpeg')):
+        return {
+            'statusCode': 200,
+            'body': json.dumps('Not an image file')
+        }
+    
+    try:
+        # Extract text from the image using Amazon Textract
+        textract = boto3.client('textract')
+        response = textract.detect_document_text(
+            Document={
+                'S3Object': {
+                    'Bucket': bucket,
+                    'Name': key
+                }
+            }
+        )
+        
+        # Extract the text
+        extracted_text = ""
+        for item in response['Blocks']:
+            if item['BlockType'] == 'LINE':
+                extracted_text += item['Text'] + "\n"
+        
+        # Analyze the image using Amazon Rekognition
+        rekognition = boto3.client('rekognition')
+        
+        # Detect labels
+        label_response = rekognition.detect_labels(
+            Image={
+                'S3Object': {
+                    'Bucket': bucket,
+                    'Name': key
+                }
+            },
+            MaxLabels=10,
+            MinConfidence=70
+        )
+        
+        # Detect text (as a backup to Textract)
+        text_response = rekognition.detect_text(
+            Image={
+                'S3Object': {
+                    'Bucket': bucket,
+                    'Name': key
+                }
+            }
+        )
+        
+        # Combine the results
+        processed_image = {
+            'image_key': key,
+            'extracted_text': extracted_text,
+            'labels': [label for label in label_response['Labels']],
+            'detected_text': [text for text in text_response['TextDetections'] if text['Type'] == 'LINE'],
+            'metadata': {
+                'product_id': os.path.basename(key).split('_')[0] if '_' in os.path.basename(key) else ''
+            }
+        }
+        
+        # Save processed results
+        processed_key = key.replace('raw-data', 'processed-data').replace(os.path.splitext(key)[1], '_processed.json')
+        s3_client.put_object(
+            Bucket=bucket,
+            Key=processed_key,
+            Body=json.dumps(processed_image),
+            ContentType='application/json'
+        )
+        
+        return {
+            'statusCode': 200,
+            'body': json.dumps('Successfully processed image')
+        }
+        
+    except Exception as e:
+        print(f"Error processing {key}: {str(e)}")
+        return {
+            'statusCode': 500,
+            'body': json.dumps(f"Error: {str(e)}")
+        }
+```
+
+**Step 3: Process customer service calls with Amazon Transcribe**
+
+Create a Lambda function to process audio recordings:
+
+```python
+import json
+import boto3
+import os
+import uuid
+import time
+
+def lambda_handler(event, context):
+    # Get the S3 object
+    s3_client = boto3.client('s3')
+    bucket = event['Records'][0]['s3']['bucket']['name']
+    key = event['Records'][0]['s3']['object']['key']
+    
+    # Only process audio files
+    if not key.lower().endswith(('.mp3', '.wav', '.flac')):
+        return {
+            'statusCode': 200,
+            'body': json.dumps('Not an audio file')
+        }
+    
+    try:
+        # Start a transcription job
+        transcribe = boto3.client('transcribe')
+        job_name = f"transcribe-{uuid.uuid4()}"
+        output_key = key.replace('raw-data', 'transcriptions').replace(os.path.splitext(key)[1], '.json')
+        output_uri = f"s3://{bucket}/{output_key}"
+        
+        transcribe.start_transcription_job(
+            TranscriptionJobName=job_name,
+            Media={
+                'MediaFileUri': f"s3://{bucket}/{key}"
+            },
+            MediaFormat=os.path.splitext(key)[1][1:],  # Remove the dot
+            LanguageCode='en-US',
+            OutputBucketName=bucket,
+            OutputKey=output_key,
+            Settings={
+                'ShowSpeakerLabels': True,
+                'MaxSpeakerLabels': 2  # Assuming customer and agent
+            }
+        )
+        
+        # Wait for the transcription job to complete (in production, use Step Functions or EventBridge)
+        while True:
+            status = transcribe.get_transcription_job(TranscriptionJobName=job_name)
+            if status['TranscriptionJob']['TranscriptionJobStatus'] in ['COMPLETED', 'FAILED']:
+                break
+            time.sleep(5)
+        
+        if status['TranscriptionJob']['TranscriptionJobStatus'] == 'COMPLETED':
+            # Process the transcription with Comprehend
+            # First, get the transcription file
+            response = s3_client.get_object(Bucket=bucket, Key=output_key)
+            transcription = json.loads(response['Body'].read().decode('utf-8'))
+            
+            # Extract the transcript text
+            transcript = transcription['results']['transcripts'][0]['transcript']
+            
+            # Use Amazon Comprehend for sentiment analysis
+            comprehend = boto3.client('comprehend')
+            sentiment_response = comprehend.detect_sentiment(
+                Text=transcript,
+                LanguageCode='en'
+            )
+            
+            # Detect key phrases
+            key_phrases_response = comprehend.detect_key_phrases(
+                Text=transcript,
+                LanguageCode='en'
+            )
+            
+            # Combine the results
+            processed_call = {
+                'audio_key': key,
+                'transcript': transcript,
+                'speakers': transcription['results'].get('speaker_labels', {}).get('segments', []),
+                'sentiment': sentiment_response['Sentiment'],
+                'sentiment_scores': sentiment_response['SentimentScore'],
+                'key_phrases': key_phrases_response['KeyPhrases'],
+                'metadata': {
+                    'call_id': os.path.basename(key).split('.')[0],
+                    'duration': status['TranscriptionJob']['MediaFormat']
+                }
+            }
+            
+            # Save processed results
+            processed_key = key.replace('raw-data', 'processed-data').replace(os.path.splitext(key)[1], '_processed.json')
+            s3_client.put_object(
+                Bucket=bucket,
+                Key=processed_key,
+                Body=json.dumps(processed_call),
+                ContentType='application/json'
+            )
+            
+            return {
+                'statusCode': 200,
+                'body': json.dumps('Successfully processed audio')
+            }
+        else:
+            return {
+                'statusCode': 500,
+                'body': json.dumps(f"Transcription failed: {status['TranscriptionJob']['FailureReason']}")
+            }
+        
+    except Exception as e:
+        print(f"Error processing {key}: {str(e)}")
+        return {
+            'statusCode': 500,
+            'body': json.dumps(f"Error: {str(e)}")
+        }
+```
+
+**Step 4: Process survey data with SageMaker Processing**
+
+Create a SageMaker Processing script for survey data:
+
+```python
+import pandas as pd
+import numpy as np
+import argparse
+import os
+import json
+
+def process_survey_data(input_path, output_path):
+    # Read the survey data
+    df = pd.read_csv(f"{input_path}/surveys.csv")
+    
+    # Basic data cleaning
+    df = df.dropna(subset=['customer_id', 'survey_date'])  # Drop rows with missing key fields
+    
+    # Convert categorical ratings to numerical
+    rating_map = {'Very Dissatisfied': 1, 'Dissatisfied': 2, 'Neutral': 3, 'Satisfied': 4, 'Very Satisfied': 5}
+    for col in df.columns:
+        if 'rating' in col.lower() or 'satisfaction' in col.lower():
+            df[col] = df[col].map(rating_map).fillna(df[col])
+    
+    # Calculate summary statistics
+    summary_stats = {
+        'total_surveys': len(df),
+        'avg_satisfaction': df['overall_satisfaction'].mean(),
+        'sentiment_distribution': df['overall_satisfaction'].value_counts().to_dict(),
+        'top_issues': df['improvement_area'].value_counts().head(3).to_dict()
+    }
+    
+    # Generate natural language summaries for each survey
+    summaries = []
+    for _, row in df.iterrows():
+        summary = {
+            'customer_id': row['customer_id'],
+            'survey_date': row['survey_date'],
+            'summary_text': generate_summary(row),
+            'ratings': {col: row[col] for col in df.columns if 'rating' in col.lower() or 'satisfaction' in col.lower()},
+            'comments': row.get('comments', '')
+        }
+        summaries.append(summary)
+    
+    # Save the processed data
+    with open(f"{output_path}/survey_summaries.json", 'w') as f:
+        json.dump(summaries, f)
+    
+    with open(f"{output_path}/survey_statistics.json", 'w') as f:
+        json.dump(summary_stats, f)
+
+def generate_summary(row):
+    """Generate a natural language summary of a survey response"""
+    satisfaction_level = "satisfied" if row['overall_satisfaction'] >= 4 else \
+                        "neutral" if row['overall_satisfaction'] == 3 else "dissatisfied"
+    
+    summary = f"Customer {row['customer_id']} was {satisfaction_level} overall with their experience. "
+    
+    # Add details about specific ratings
+    if 'product_rating' in row:
+        summary += f"They rated the product {row['product_rating']}/5. "
+    
+    if 'service_rating' in row:
+        summary += f"They rated the customer service {row['service_rating']}/5. "
+    
+    # Add improvement area if available
+    if 'improvement_area' in row and pd.notna(row['improvement_area']):
+        summary += f"They suggested improvements in the area of {row['improvement_area']}. "
+    
+    # Add comments if available
+    if 'comments' in row and pd.notna(row['comments']) and len(str(row['comments'])) > 0:
+        summary += f"Their comments: '{row['comments']}'"
+    
+    return summary
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input-path", type=str, default="/opt/ml/processing/input")
+    parser.add_argument("--output-path", type=str, default="/opt/ml/processing/output")
+    args = parser.parse_args()
+    
+    process_survey_data(args.input_path, args.output_path)
+```
+
+**Create a Python script to run the SageMaker Processing job:**
+
+```python
+import boto3
+import sagemaker
+from sagemaker.processing import ScriptProcessor, ProcessingInput, ProcessingOutput
+
+def run_survey_processing_job():
+    # Initialize SageMaker session
+    sagemaker_session = sagemaker.Session()
+    role = sagemaker.get_execution_role()
+    
+    # Define the processing job
+    script_processor = ScriptProcessor(
+        command=['python3'],
+        image_uri='737474898029.dkr.ecr.us-east-1.amazonaws.com/sagemaker-scikit-learn:0.23-1-cpu-py3',
+        role=role,
+        instance_count=1,
+        instance_type='ml.m5.xlarge',
+        sagemaker_session=sagemaker_session
+    )
+    
+    # Run the processing job
+    script_processor.run(
+        code='survey_processing.py',
+        inputs=[
+            ProcessingInput(
+                source='s3://customer-feedback-analysis-<your-initials>/raw-data/surveys.csv',
+                destination='/opt/ml/processing/input'
+            )
+        ],
+        outputs=[
+            ProcessingOutput(
+                output_name='survey_output',
+                source='/opt/ml/processing/output',
+                destination='s3://customer-feedback-analysis-<your-initials>/processed-data/surveys/'
+            )
+        ]
+    )
+    
+    print("Survey processing job started")
+
+if __name__ == "__main__":
+    run_survey_processing_job()
+```
+
+**Part 3: Data formatting for FMs**
+
+**Step 1: Create a Lambda Function for formatting data for Claude**
+
+```python
+import json
+import boto3
+import base64
+import os
+
+def lambda_handler(event, context):
+    # Get the S3 object
+    s3_client = boto3.client('s3')
+    bucket = event['Records'][0]['s3']['bucket']['name']
+    key = event['Records'][0]['s3']['object']['key']
+    
+    # Only process processed data files
+    if not key.endswith('_processed.json'):
+        return {
+            'statusCode': 200,
+            'body': json.dumps('Not a processed data file')
+        }
+    
+    try:
+        # Get the processed data
+        response = s3_client.get_object(Bucket=bucket, Key=key)
+        processed_data = json.loads(response['Body'].read().decode('utf-8'))
+        
+        # Determine the data type and format accordingly
+        if 'transcript' in processed_data:
+            # Audio data
+            formatted_data = format_audio_data(processed_data)
+        elif 'extracted_text' in processed_data:
+            # Image data
+            formatted_data = format_image_data(processed_data, bucket, key)
+        elif 'entities' in processed_data:
+            # Text review data
+            formatted_data = format_text_data(processed_data)
+        elif 'summary_text' in processed_data:
+            # Survey data
+            formatted_data = format_survey_data(processed_data)
+        else:
+
+```
 
 ---
 ---
@@ -641,8 +2547,802 @@ For the exam, ensure you understand how to design and deploy data maintenance sy
 5. Implement data quality monitoring using CloudWatch metrics and alarms that track vector store health indicators, including embedding quality, retrieval relevance, and synchronization latency.
 	
 6. Create automated remediation processes using Lambda and Amazon Simple Notification Service (Amazon SNS) that detect and address common vector store issues, including missing embeddings, outdated content, and index fragmentation.
-	
 
+
+### Use Case
+
+A global law firm with offices in 30 countries needs to develop an Al-powered legal research assistant to help attorneys quickly find relevant case law, statutes, regulations, and internal legal opinions across millions of documents in multiple languages. 
+
+The firm's existing search system relies on keyword matching, resulting in attorneys spending an average of 15 hours per week on research with inconsistent results. 
+
+#### Architecture
+
+The firm wants to use AI to improve the search experience for attorneys, making it faster and more accurate. 
+
+![alt text](1.4.vector.db.png)
+
+**Vector Database Architecture**
+- Use **Amazon Bedrock Knowledge Bases** to create a vector database of the firm's documents with hierarchical organization based on jurisdiction and legal domain, preserving document relationships and metadata. 
+- Use **Amazon OpenSearch Service** to store the vector database for sensitive documents with neural plugin enabling topic based segmentation while maintaingin strict document boundaries. It helps precise search results based on keywords and legal terminology.
+- Use **Amazon Relational Database Service** to for structured case metadata of the documents.
+- Use **Amazon S3** to store the documents.
+- Use **Amazon DynamoDB** to store the changing regulatory metadata of the documents, for example, changes in statutes and regulations. This helps to get the latest updates to the documents.
+
+**Metadata framework**
+- Use **Amazon S3** to store the documents and metadata such as jurisdiction, legal domain, document type, and document source. Also document timestamps and versioning information to help attorneys track changes and updates to legal documents and laws. 
+- Use **Amazon Comprehend** to extract metadata from the documents automtatically identifying key legal terms, statutes, and regulations, and hence classify documents.
+
+**High-performance vector database**
+- Use **Amazon OpenSearch Service** To handle this scale of legal documents while maintaining performance, you design OpenSearch cluster configurations with practice area-based sharding, and time-based sub-sharding, allowing recent documents within relevant practice areas to be retrieved more quickly. Building on this foundation, you establish a multi-index approach with specialized indices for different legal domains, each with custom similarity algorithms tuned for specific language patterns and citation structures.
+- Implement vector compression techniques and design a caching strategy using **Amazon ElastiCache**, which pre-computes vector similarities for common query patterns, significantly reducing latency for frequent research scenarios.
+
+**Component Integration**
+
+- To integrate with existing firm systems, you create **Lambda**-based connectors for multiple document management systems, configuring them to capture document events through **EventBridge**.
+- For the firm's knowledge management system, you develop **AWS Glue** jobs that transform curated legal insights into vector compatible formats. A unified search interface using **API Gateway** and **Lambda **aggregates results from multiple vector stores and traditional legal databases, incorporating query routing logic that directs different aspects of legal questions to appropriate data sources, and reranks results based on relevance and precedential value.
+- You also design an authentication framework using **Amazon Cognito** and **IAM** that respects client-matter boundaries and privilege destinations, supporting access controls so attorneys receive only search results they are authorized to access.
+
+**Data maintenance Systems**
+
+- To keep legal information current, you establish incremental update mechanisms using **EventBridge** rules and Lambda functions that process new cases as they're published. For legislative changes, you create real-time change detection systems that monitor official sources, and trigger immediate updates to affected documents.
+- For internal knowledge, you design synchronization workflow using **Step Functions** that orchestrate complex update processes from content extraction to vector storage. Scheduled refresh pipelines periodically reprocess the entire corpus using the latest embedding models and **CloudWatch** monitoring tracks retrieval precision and coverage of recent legal development.
+
+### Knowledge Check
+
+01/05
+
+**You're designing a vector database architecture for a large-scale foundation model (FM) project that requires efficient semantic retrieval.**
+
+**Which approaches are the MOST operationally efficient for this use case? (Select TWO.)**
+
+- Store vectors directly in Amazon Neptune Analytics with graph relationships.
+- Implement Amazon OpenSearch with Neural Plugin for topic-based segmentation and Amazon Bedrock integration.
+- Use Amazon RDS PostgreSQL with pgvector extension and Amazon S3 for hybrid storage.
+- Deploy Amazon DynamoDB with vector capabilities for metadata and embeddings management.
+- Store all vectors in Amazon Timestream for time-series analysis.
+
+
+02/05
+
+**You're building a document processing system for a legal firm that needs to maintain strict versioning, authorship tracking, and domain classification for millions of legal documents used with foundation models (FMs). The system must support real-time updates and efficient retrieval based on document attributes.**
+
+**Which approach is the MOST operationally efficient?**
+
+- Store all metadata in separate Amazon DynamoDB tables with global secondary indexes (GSIs) for each attribute type.
+- Use Amazon S3 Object Metadata with custom attributes and implement a tagging system for classification. 
+- Implement a separate Amazon RDS instance with JSON columns for flexible metadata storage.
+- Store metadata directly within document content using standardized headers.
+- Use Amazon Kendra with custom metadata fields for extraction and storage.
+
+
+03/05
+
+**A research organization needs to optimize its vector database to handle semantic search across multiple scientific domains (biology, chemistry, physics) with different embedding models and query patterns. Each domain contains millions of vectors that need sub-second query response times.**
+
+**Which approaches are MOST efficient for improving search performance? (Select TWO.)**
+
+- Implement a single, large OpenSearch index with composite fields for all domains.
+- Use OpenSearch sharding strategies based on domain-specific criteria with custom routing.
+- Store all vectors in Amazon Aurora with partitioned tables per domain.
+- Implement multi-index approaches in OpenSearch with specialized mappings for each domain.
+- Use Amazon Redshift with materialized views for vector storage and querying.
+
+
+04/05
+
+**A company needs to maintain vector stores for its foundation models (FMs) with real-time updates, automated synchronization, and scheduled refreshes. The solution must ensure data consistency across different vector stores and knowledge bases.**
+
+**Which approaches are most operationally efficient? (Select TWO.)**
+
+- Implement scheduled full refreshes using AWS Batch.
+- Use incremental update mechanisms with change detection in Amazon Bedrock Knowledge Bases.
+- Deploy manual update processes with version control.
+- Create automated synchronization workflows using AWS Glue with real-time triggers.
+- Use Amazon Kinesis for all updates.
+
+
+05/05
+
+**A multinational corporation needs to integrate its document management systems, knowledge bases, and internal wikis into a unified system for its foundation models (FMs). The solution must maintain data freshness and support both batch and real-time updates.**
+
+**Which approaches are MOST operationally efficient? (Select TWO.)**
+
+- Use AWS Lake Formation for centralized access control and data integration.
+- Implement individual AWS Lambda functions for each data source.
+- Create a unified data pipeline using AWS Glue with incremental processing.
+- Store all documents in Amazon OpenSearch for unified search.
+- Use Amazon Managed Streaming for Apache Kafka (Amazon MSK) for all data integration.
+
+
+### Bonus Assignment
+
+#### Project architecture overview
+
+**Phase 1: Set Up Foundation Model and vector database infrastructure**
+
+**Objective**: Create the core infrastructure for your RAG system using Amazon Bedrock and vector databases.
+
+**Tasks:**
+
+1. Set up Amazon Bedrock access:
+
+  - Enable Amazon Bedrock in your AWS account
+  - Request access to foundation models (Claude, Titan, etc.)
+  - Create an IAM role with appropriate permissions
+
+2. Create a vector database using Amazon Bedrock Knowledge Bases:
+
+  - Set up a new Knowledge Base in Amazon Bedrock
+
+- Configure storage options (S3 bucket for documents)
+
+- Select an appropriate embedding model
+
+- Configure retrieval settings (number of results, similarity threshold)
+
+3. Set up an alternative vector store using OpenSearch Service:
+
+  - Deploy an Amazon OpenSearch Service domain
+  - Enable the Neural Search plugin
+  - Configure appropriate instance types and storage
+  - Set up initial index settings and mappings for vector search
+
+4. Create a metadata database using DynamoDB:
+
+  - Design a schema for document metadata
+  - Create a DynamoDB table with appropriate partition and sort keys
+  - Configure capacity mode (on-demand or provisioned)
+
+**Phase 2: Develop document processing and embedding pipeline**
+
+**Objective**: Build a robust pipeline to process documents, extract metadata, and generate vector embeddings.
+
+Tasks:
+
+1. Create an S3 bucket for document storage:
+
+  - Set up appropriate bucket policies and encryption
+  - Create folders for different document types (technical docs, research papers, policies)
+
+2. Implement document processing with AWS Lambda:
+
+  - Create a Lambda function triggered by S3 object creation
+  - Extract text content from various document formats (PDF, DOCX, HTML)
+  - Implement chunking strategies (fixed size, semantic paragraphs, sliding window)
+  - Extract and generate metadata from documents
+
+3. Build an embedding generation pipeline:
+
+  - Use Amazon Bedrock embedding models to generate vector embeddings
+  - Store embeddings in your vector database (Knowledge Base or OpenSearch)
+  - Implement batch processing for efficient embedding generation
+  - Create a mechanism to track embedding status in DynamoDB
+
+4. Develop a metadata enrichment process:
+
+  - Extract document properties (creation date, author, title)
+  - Generate additional metadata (document length, reading level, topic classification)
+  - Store enriched metadata in DynamoDB
+  - Create relationships between chunks and parent documents
+
+**Phase 3: Implement advanced vector search capabilities**
+
+**Objective**: Optimize vector search performance and implement advanced retrieval strategies.
+
+Tasks:
+
+1. Configure hierarchical indexing in OpenSearch:
+
+  - Create parent-child relationships between document sections
+  - Implement nested fields for hierarchical document structures
+  - Configure appropriate mappings for efficient querying
+
+2. Implement multi-index search strategies:
+
+  - Create separate indices for different document types
+  - Develop a search coordinator that queries multiple indices
+  - Implement relevance scoring across indices
+  - Create a result merging strategy
+
+3. Optimize vector search performance:
+
+  - Configure appropriate sharding based on data volume
+  - Implement approximate nearest neighbor (ANN) search
+  - Set up caching mechanisms for frequent queries
+  - Create performance monitoring using CloudWatch
+
+4. Develop advanced query processing:
+
+  - Implement query expansion techniques
+  - Create filters based on metadata attributes
+  - Develop hybrid search combining keyword and semantic search
+  - Implement re-ranking of search results
+
+**Phase 4: Build integration components for multiple data sources**
+
+**Objective**: Create connectors to integrate various data sources into your vector store.
+
+Tasks:
+
+1. Implement a web crawler for public documentation:
+
+  - Create a Lambda function to crawl specified websites
+  - Extract content and metadata from web pages
+  - Process and store the extracted content in your pipeline
+  - Implement rate limiting and politeness policies
+
+2. Build a connector for internal wiki systems:
+
+  - Create an API integration with common wiki platforms (Confluence, MediaWiki)
+  - Implement authentication and authorization
+  - Set up webhook listeners for real-time updates
+  - Process wiki-specific formatting and structures
+
+3. Develop a document management system connector:
+
+  - Create integration with enterprise DMS systems (SharePoint, Documentum)
+  - Implement secure access patterns
+  - Extract document metadata and permissions
+  - Maintain document hierarchy and relationships
+
+4. Create a unified data catalog:
+
+  - Develop a central registry of all data sources
+  - Implement source-specific processing rules
+  - Create a unified metadata schema across sources
+  - Build a dashboard for data source management
+
+**Phase 5: Implement data maintenance and synchronization**
+
+**Objective**: Ensure your vector store remains current and accurate with automated maintenance.
+
+Tasks:
+
+1. Develop a change detection system:
+
+  - Create checksums or version tracking for documents
+  - Implement comparison logic to detect meaningful changes
+  - Set up notifications for detected changes
+  - Create a prioritization system for updates
+
+2. Build an incremental update pipeline:
+  - Develop logic to process only changed documents
+  - Implement delta updates for modified sections
+  - Create a system to track update status
+  - Set up error handling and retry mechanisms
+
+3. Create scheduled refresh workflows:
+
+  - Implement AWS Step Functions for orchestration
+  - Set up EventBridge rules for scheduling
+  - Create different schedules based on data source importance
+  - Implement resource-efficient batch processing
+
+4. Develop monitoring and alerting:
+
+  - Create CloudWatch dashboards for system health
+  - Set up alerts for failed updates or stale data
+  - Implement data freshness metrics
+  - Create audit logs for compliance
+
+**Phase 6: Build the RAG application**
+
+**Objective**: Create a complete RAG application that uses your vector store to augment foundation model responses.
+
+Tasks:
+
+1. Implement the retrieval component:
+
+  - Create a query processing pipeline
+  - Develop context window optimization
+  - Implement relevance filtering
+  - Create a caching mechanism for frequent queries
+
+2. Build the foundation model integration:
+
+  - Set up Amazon Bedrock API integration
+  - Implement prompt engineering techniques
+  - Create a context assembly mechanism
+  - Develop response generation logic
+
+3. Create a user interface:
+
+  - Build a simple web interface using AWS Amplify
+  - Implement conversation history
+  - Create visualization for source documents
+  - Add feedback mechanisms for response quality
+
+4. Implement analytics and improvement:
+
+  - Track query performance and relevance
+  - Create a feedback loop for continuous improvement
+  - Implement A/B testing for different retrieval strategies
+  - Develop user behavior analytics
+
+**Implementation details**
+
+**Phase 1: Vector database setup**
+
+**Amazon Bedrock Knowledge Base setup:**
+
+```python
+import boto3
+import json
+
+# Initialize Bedrock client
+bedrock = boto3.client('bedrock')
+
+# Create a Knowledge Base
+response = bedrock.create_knowledge_base(
+    name="TechnicalDocumentationKB",
+    description="Knowledge base for technical documentation",
+    roleArn="arn:aws:iam::123456789012:role/BedrockKBRole",
+    knowledgeBaseConfiguration={
+        "type": "VECTOR",
+        "vectorKnowledgeBaseConfiguration": {
+            "embeddingModelArn": "arn:aws:bedrock:us-east-1::embeddings/amazon.titan-embed-text-v1"
+        }
+    }
+)
+
+knowledge_base_id = response['knowledgeBase']['knowledgeBaseId']
+print(f"Created Knowledge Base with ID: {knowledge_base_id}")
+
+# Create a data source for the Knowledge Base
+response = bedrock.create_data_source(
+    knowledgeBaseId=knowledge_base_id,
+    name="TechnicalDocsSource",
+    description="Technical documentation source",
+    dataSourceConfiguration={
+        "type": "S3",
+        "s3Configuration": {
+            "bucketArn": "arn:aws:s3:::technical-docs-bucket",
+            "inclusionPrefixes": ["documentation/"]
+        }
+    },
+    vectorIngestionConfiguration={
+        "chunkingConfiguration": {
+            "chunkingStrategy": "SEMANTIC_CHUNKING",
+            "fixedSizeChunkingConfiguration": {
+                "maxTokens": 300,
+                "overlapPercentage": 10
+            }
+        }
+    }
+)
+
+data_source_id = response['dataSource']['dataSourceId']
+print(f"Created Data Source with ID: {data_source_id}")
+```
+
+**OpenSearch Service setup:**
+
+```yaml
+# CloudFormation template excerpt for OpenSearch Service
+Resources:
+  OpenSearchServiceDomain:
+    Type: AWS::OpenSearch::Domain
+    Properties:
+      DomainName: vector-search-domain
+      EngineVersion: OpenSearch_2.11
+      ClusterConfig:
+        InstanceType: r6g.large.search
+        InstanceCount: 3
+        ZoneAwarenessEnabled: true
+        ZoneAwarenessConfig:
+          AvailabilityZoneCount: 3
+      EBSOptions:
+        EBSEnabled: true
+        VolumeType: gp3
+        VolumeSize: 100
+      AdvancedOptions:
+        "rest.action.multi.allow_explicit_index": "true"
+        "plugins.ml_commons.only_run_on_ml_node": "false"
+      AccessPolicies:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !GetAtt LambdaExecutionRole.Arn
+            Action: "es:*"
+            Resource: !Sub "arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/vector-search-domain/*"
+      AdvancedSecurityOptions:
+        Enabled: true
+        InternalUserDatabaseEnabled: true
+        MasterUserOptions:
+          MasterUserName: admin
+          MasterUserPassword: !Ref MasterUserPassword
+      NodeToNodeEncryptionOptions:
+        Enabled: true
+      EncryptionAtRestOptions:
+        Enabled: true
+      DomainEndpointOptions:
+        EnforceHTTPS: true
+      PluginOptions:
+        - PluginName: "ml-commons"
+          Enabled: true
+        - PluginName: "neural-search"
+          Enabled: true
+```
+
+**DynamoDB metadata table setup:**
+
+```python
+import boto3
+
+# Initialize DynamoDB client
+dynamodb = boto3.client('dynamodb')
+
+# Create table for document metadata
+response = dynamodb.create_table(
+    TableName='DocumentMetadata',
+    KeySchema=[
+        {
+            'AttributeName': 'document_id',
+            'KeyType': 'HASH'  # Partition key
+        },
+        {
+            'AttributeName': 'chunk_id',
+            'KeyType': 'RANGE'  # Sort key
+        }
+    ],
+    AttributeDefinitions=[
+        {
+            'AttributeName': 'document_id',
+            'AttributeType': 'S'
+        },
+        {
+            'AttributeName': 'chunk_id',
+            'AttributeType': 'S'
+        },
+        {
+            'AttributeName': 'document_type',
+            'AttributeType': 'S'
+        },
+        {
+            'AttributeName': 'last_updated',
+            'AttributeType': 'S'
+        }
+    ],
+    GlobalSecondaryIndexes=[
+        {
+            'IndexName': 'DocumentTypeIndex',
+            'KeySchema': [
+                {
+                    'AttributeName': 'document_type',
+                    'KeyType': 'HASH'
+                },
+                {
+                    'AttributeName': 'last_updated',
+                    'KeyType': 'RANGE'
+                }
+            ],
+            'Projection': {
+                'ProjectionType': 'ALL'
+            },
+            'ProvisionedThroughput': {
+                'ReadCapacityUnits': 5,
+                'WriteCapacityUnits': 5
+            }
+        }
+    ],
+    BillingMode='PAY_PER_REQUEST'
+)
+
+print(f"Created DynamoDB table: {response['TableDescription']['TableName']}")
+```
+
+**Phase 2: Document processing pipeline**
+
+**Lambda Function for document processing**
+
+```python
+import boto3
+import json
+import os
+import uuid
+import hashlib
+from datetime import datetime
+import PyPDF2
+import docx
+import io
+import re
+
+s3 = boto3.client('s3')
+dynamodb = boto3.resource('dynamodb')
+bedrock = boto3.client('bedrock-runtime')
+
+metadata_table = dynamodb.Table('DocumentMetadata')
+
+def lambda_handler(event, context):
+    # Get the S3 bucket and key from the event
+    bucket = event['Records'][0]['s3']['bucket']['name']
+    key = event['Records'][0]['s3']['object']['key']
+    
+    # Generate a unique document ID
+    document_id = str(uuid.uuid4())
+    
+    # Extract file metadata
+    response = s3.head_object(Bucket=bucket, Key=key)
+    content_type = response.get('ContentType', '')
+    last_modified = response.get('LastModified').strftime('%Y-%m-%dT%H:%M:%S')
+    
+    # Download the document
+    response = s3.get_object(Bucket=bucket, Key=key)
+    document_content = response['Body'].read()
+    
+    # Extract text based on file type
+    if key.lower().endswith('.pdf'):
+        text = extract_text_from_pdf(document_content)
+        document_type = 'pdf'
+    elif key.lower().endswith('.docx'):
+        text = extract_text_from_docx(document_content)
+        document_type = 'docx'
+    elif key.lower().endswith('.txt'):
+        text = document_content.decode('utf-8')
+        document_type = 'txt'
+    else:
+        raise ValueError(f"Unsupported file type: {key}")
+    
+    # Generate document checksum for change detection
+    checksum = hashlib.md5(document_content).hexdigest()
+    
+    # Extract basic metadata
+    title = os.path.basename(key)
+    author = response.get('Metadata', {}).get('author', 'Unknown')
+    
+    # Create document chunks using semantic chunking
+    chunks = create_semantic_chunks(text)
+    
+    # Store document metadata in DynamoDB
+    base_metadata = {
+        'document_id': document_id,
+        'title': title,
+        'author': author,
+        'document_type': document_type,
+        'source_bucket': bucket,
+        'source_key': key,
+        'content_type': content_type,
+        'last_updated': last_modified,
+        'checksum': checksum,
+        'total_chunks': len(chunks)
+    }
+    
+    # Process each chunk
+    for i, chunk in enumerate(chunks):
+        chunk_id = f"{document_id}-{i}"
+        
+        # Generate embedding for the chunk
+        embedding = generate_embedding(chunk)
+        
+        # Store chunk metadata
+        chunk_metadata = base_metadata.copy()
+        chunk_metadata.update({
+            'chunk_id': chunk_id,
+            'chunk_index': i,
+            'chunk_text': chunk,
+            'chunk_length': len(chunk),
+            'embedding_status': 'completed'
+        })
+        
+        metadata_table.put_item(Item=chunk_metadata)
+        
+        # Store embedding in vector database (implementation depends on chosen vector store)
+        store_embedding_in_vector_db(chunk_id, embedding, chunk, chunk_metadata)
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps({
+            'document_id': document_id,
+            'chunks_processed': len(chunks)
+        })
+    }
+
+def extract_text_from_pdf(pdf_content):
+    pdf_file = io.BytesIO(pdf_content)
+    pdf_reader = PyPDF2.PdfReader(pdf_file)
+    text = ""
+    for page_num in range(len(pdf_reader.pages)):
+        text += pdf_reader.pages[page_num].extract_text()
+    return text
+
+def extract_text_from_docx(docx_content):
+    docx_file = io.BytesIO(docx_content)
+    doc = docx.Document(docx_file)
+    text = ""
+    for para in doc.paragraphs:
+        text += para.text + "\n"
+    return text
+
+def create_semantic_chunks(text, max_chunk_size=1000, overlap=100):
+    # Simple implementation - in production, use more sophisticated semantic chunking
+    chunks = []
+    sentences = re.split(r'(?<=[.!?])\s+', text)
+    current_chunk = ""
+    
+    for sentence in sentences:
+        if len(current_chunk) + len(sentence) <= max_chunk_size:
+            current_chunk += sentence + " "
+        else:
+            chunks.append(current_chunk.strip())
+            # Include overlap from the previous chunk
+            overlap_text = " ".join(current_chunk.split()[-overlap:]) if overlap > 0 else ""
+            current_chunk = overlap_text + " " + sentence + " "
+    
+    if current_chunk:
+        chunks.append(current_chunk.strip())
+    
+    return chunks
+
+def generate_embedding(text):
+    response = bedrock.invoke_model(
+        modelId="amazon.titan-embed-text-v1",
+        contentType="application/json",
+        accept="application/json",
+        body=json.dumps({
+            "inputText": text
+        })
+    )
+    
+    response_body = json.loads(response['body'].read())
+    return response_body['embedding']
+
+def store_embedding_in_vector_db(chunk_id, embedding, text, metadata):
+    # Implementation depends on chosen vector database (OpenSearch or Bedrock KB)
+    # This is a placeholder for the actual implementation
+    pass
+
+```
+
+**Phase 3: Advanced vector search implementation**
+
+**OpenSearch index configuration for hierarchical documents:**
+
+```python
+import boto3
+import requests
+from requests_aws4auth import AWS4Auth
+import json
+
+region = 'us-east-1'
+service = 'es'
+credentials = boto3.Session().get_credentials()
+awsauth = AWS4Auth(credentials.access_key, credentials.secret_key, 
+                   region, service, session_token=credentials.token)
+
+host = 'https://your-opensearch-domain.us-east-1.es.amazonaws.com'
+index_name = 'technical_documentation'
+url = host + '/' + index_name
+
+# Define the index mapping with hierarchical structure
+index_mapping = {
+    "settings": {
+        "index": {
+            "knn": True,
+            "knn.algo_param.ef_search": 100
+        }
+    },
+    "mappings": {
+        "properties": {
+            "document_id": {"type": "keyword"},
+            "parent_id": {"type": "keyword"},
+            "title": {"type": "text"},
+            "content": {"type": "text"},
+            "metadata": {
+                "properties": {
+                    "author": {"type": "keyword"},
+                    "created_date": {"type": "date"},
+                    "document_type": {"type": "keyword"},
+                    "department": {"type": "keyword"},
+                    "tags": {"type": "keyword"}
+                }
+            },
+            "embedding": {
+                "type": "knn_vector",
+                "dimension": 1536,
+                "method": {
+                    "name": "hnsw",
+                    "space_type": "cosinesimil",
+                    "engine": "nmslib",
+                    "parameters": {
+                        "ef_construction": 128,
+                        "m": 16
+                    }
+                }
+            },
+            "hierarchy": {
+                "type": "nested",
+                "properties": {
+                    "level": {"type": "keyword"},
+                    "path": {"type": "keyword"},
+                    "position": {"type": "integer"}
+                }
+            }
+        }
+    }
+}
+
+# Create the index
+response = requests.put(url, auth=awsauth, json=index_mapping, headers={"Content-Type": "application/json"})
+print(response.text)
+
+# Function to search across multiple indices with metadata filtering
+def search_documents(query_text, filters=None, indices=None):
+    if indices is None:
+        indices = ["technical_documentation", "research_papers", "company_policies"]
+    
+    # Generate embedding for the query
+    bedrock = boto3.client('bedrock-runtime')
+    embedding_response = bedrock.invoke_model(
+        modelId="amazon.titan-embed-text-v1",
+        contentType="application/json",
+        accept="application/json",
+        body=json.dumps({"inputText": query_text})
+    )
+    
+    embedding = json.loads(embedding_response['body'].read())['embedding']
+    
+    # Build the search query
+    search_query = {
+        "size": 10,
+        "query": {
+            "bool": {
+                "must": [
+                    {
+                        "knn": {
+                            "embedding": {
+                                "vector": embedding,
+                                "k": 10
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+    
+    # Add filters if provided
+    if filters:
+        filter_clauses = []
+        for key, value in filters.items():
+            if key.startswith("metadata."):
+                filter_clauses.append({"term": {key: value}})
+        
+        if filter_clauses:
+            search_query["query"]["bool"]["filter"] = filter_clauses
+    
+    # Execute search across multiple indices
+    search_url = host + '/' + ','.join(indices) + '/_search'
+    response = requests.post(search_url, auth=awsauth, json=search_query, headers={"Content-Type": "application/json"})
+    
+    return json.loads(response.text)
+```
+
+**Phase 4: Integration component for wiki systems**
+
+```python
+import boto3
+import requests
+import json
+import os
+import base64
+from datetime import datetime
+
+# Initialize AWS clients
+s3 = boto3.client('s3')
+dynamodb = boto3.resource('dynamodb')
+
+```
+
+---
+
+
+## Task 1.5: Design retrieval mechanisms for FM augmentation.
+
+### AWS services overview
+
+AWS offers services and tools to help design retrieval mechanisms for FM augmentation.. These include Amazon Bedrock, AWS Lambda, Amazon Titan, Amazon OpenSearch Service, Amazon Aurora, Amazon Bedrock Knowledge Bases, and more.
+research with inconsistent results. 
 
 ## Task 1.5: Design retrieval mechanisms for FM augmentation.
 
@@ -800,7 +3500,1001 @@ For the exam, ensure you understand how to design and deploy integration with FM
 3. Maintain mappings between vector embeddings and original documents to enable accurate information retrieval. 
 	
 4. Implement data preparation pipelines that collect, clean, transform, and structure data for optimal vector processing. 
-	
+
+
+### Self Assessment
+
+1. Your legal document retrieval system needs to process complex multi-part queries about case law and regulations, but users often submit broad questions that don't retrieve specific enough information.
+
+**Which query handling approach would be MOST effective for improving retrieval quality in this scenario?**
+
+- Implement a Lambda function that simplifies user queries by removing all but the most common legal terms
+- Create a Step Function workflow that decomposes complex legal queries into multiple sub-queries, executes them in parallel, and aggregates the results
+- Use Amazon Bedrock to expand user queries with relevant legal terminology and then perform vector search on the expanded queries
+- Configure a static list of legal terms to append to all user queries regardless of content
+
+2. Your team is developing a system that needs to integrate multiple foundation models with various vector stores for different use cases. Developers are struggling with inconsistent integration patterns.
+
+**Which approach would create the MOST consistent access mechanism for seamless integration?**
+
+- Create custom API endpoints for each foundation model and vector store combination
+- Implement a standardized function calling interface that abstracts vector search operations across all foundation models
+- Have each team develop their own integration approach based on their specific requirements
+- Store all vector embeddings in a single database regardless of their source or purpose
+
+### Use Case
+
+This lesson covers a use case for an AI-powered legal search assistant for a global law firm. Let's say that a global law firm with offices in 25 countries needs to modernize its legal research capabilities across millions of documents, including case law, legal opinions, contracts, and regulatory filings. Attorneys are struggling with finding relevant precedents and spending excessive time searching through disparate repositories. The law firm has the following business requirements. The law firm has the following business requirements:
+ - Provide accurate context-aware responses to complex legal queries. 
+ - Support multi-jurisdictional research across different legal systems. 
+ - Maintain strict confidentiality of client information. 
+ - Support citations to source documents for all responses. 
+ - Deliver responses within seconds to support attorney workflows. 
+
+**Solution Architecture**
+
+![alt text](1.5.doc.seg.png)
+
+**Document Segmentation**
+
+You can implement the following specialized segmentation approach for legal documents. 
+- Use **Amazon Bedrock** chunking capabilities for case law documents with custom configuration to preserve hierarchical relationships. 
+- Deploy **AWS Lambda** functions for structure-aware chunking of internal legal opinions based on document headings and paragraph boundaries. 
+- Develop hierarchical chunking for contracts and regulatory documents that maintains parent-child relationship between sections.
+- Extract document metadata, including jurisdiction, practice area, and precedential value for contextual filtering. 
+
+**Embedding Solution**
+
+You can also select and configure optimal embedding solutions by doing the following.
+ - Use **Amazon Titan Text Embeddings** for general legal content. 
+ - Fine-tune custom embedding models through **Amazon Bedrock** for specialized practice areas. 
+ - Create a batch processing system using AWS Lambda functions to parallel embedding generation. 
+Achieve 92% recall rate for relevant legal precedents, outperforming keyword-based search. 
+
+**Vector Search Solution**
+
+Next, you can deploy a hybrid vector search solution by using the following. 
+
+1. Knowledge Bases for public legal documents: 
+    - **OpenSearch Service** with vector search capabilities for sensitive internal documents. 
+    - **Amazon Aurora PostgreSQL**, compatible with pgvector for structured case metadata and relationships. 
+    - Unified search interface through **API Gateway** with security controls based on attorney permissions. 
+    
+2. You can also improve search relevance through the following:
+  - Hybrid search combining BM25 keyword matching with vector similarity.
+  - Citation network analysis to understand relationship between legal documents. 
+  - **Amazon Bedrock** reranker models to improve result ordering. 
+  - Jurisdiction-aware filtering based on query context and attorney profile.
+
+**Query Handling** 
+  
+Your query handling implementation can develop sophisticated query processing using the following:
+  - **Amazon Bedrock** for query expansion to identify related legal concepts with 23% improvement in recall. 
+  - **Lambda** functions for query decomposition of complex legal questions. 
+  - **Step Functions** to orchestrate parallel processing of decomposed queries, which could be 40% reduction in response time. 
+
+Continuous improvement through attorney feedback mechanisms. 
+
+**FM Integration**
+
+Your integration can create the following consistent access mechanisms. 
+ - Standardized API patterns for retrieval, augmentation with source citations and metadata. 
+ - Function calling interfaces, allowing FMs to request additional information. 
+ - Model Context Protocol (MCP) client, for standardized vector queries. 
+ - Comprehensive logging for auditability requirements. 
+
+
+### Knowledge Check
+
+01/05
+
+A publishing company needs to process diverse content types (books, articles, technical documentation) for its foundation model. The content varies greatly in structure and length, requiring adaptive chunking strategies.
+
+**Which approaches are MOST operationally efficient? (Select TWO.)**
+
+
+ - Use fixed-size chunking with Lambda functions for all document types.
+ - Implement Amazon Bedrock's chunking capabilities with content-aware segmentation.
+ - Store whole documents without segmentation.
+ - Deploy custom hierarchical chunking based on document structure with AWS Lambda.
+ - Use character-count-based splitting for all documents.
+
+02/05
+
+A financial services firm needs to implement embeddings for its market analysis documents, requiring high accuracy and domain-specific understanding.
+
+**Which approach provides the MOST efficient solution?**
+
+ - Use Amazon Titan Embeddings with domain-tuned parameters.
+ - Generate embeddings using custom machine learning (ML) models on Amazon EC2.
+ - Use pre-trained general-purpose embeddings.
+ - Implement custom embedding generation in Amazon SageMaker AI.
+
+03/05
+
+A healthcare organization needs to implement semantic search across medical documents, clinical trials, and patient records.
+
+**Which approach provides the MOST operationally efficient vector search solution?**
+
+- Deploy Amazon OpenSearch Service with Neural Search plugin and vector search capabilities.
+- Use Amazon Aurora with pgvector for all vector operations.
+- Implement custom vector search using Amazon DynamoDB.
+- Store vectors in Amazon RDS and implement search logic in AWS Lambda.
+- Use Amazon Elasticsearch without vector search features.
+
+
+04/05
+
+A legal firm needs to implement a hybrid search system that must handle both exact citation matches and semantic similarity for case law documents. The system processes over 10,000 searches daily and must maintain sub-second response times while ensuring result accuracy.
+
+**Which approach is MOST operationally efficient?**
+
+ - Implement OpenSearch with hybrid retrieval and Amazon Bedrock reranker for result optimization.
+ - Deploy separate Elasticsearch clusters for keyword and semantic search.
+ - Build a custom search solution using Amazon RDS and AWS Lambda functions.
+ - Implement pure vector search using pgvector in Amazon Aurora.
+
+ 05/05
+
+ A research organization needs to process complex queries across scientific papers and experimental data.
+
+**Which approach provides the MOST operationally efficient query handling system?**
+
+ - Use Amazon Bedrock for query expansion with AWS Step Functions orchestration.
+ - Implement all query processing in AWS Lambda functions.
+ - Process queries directly without transformation.
+ - Use Amazon Comprehend for query analysis.
+
+ 05/05
+
+A research organization needs to process complex queries across scientific papers and experimental data.
+
+**Which approach provides the MOST operationally efficient query handling system?**
+
+ - Use Amazon Bedrock for query expansion with AWS Step Functions orchestration.
+ - Implement all query processing in AWS Lambda functions.
+ - Process queries directly without transformation.
+ - Use Amazon Comprehend for query analysis.
+
+
+### Bonus Assignment
+
+
+Now, you will have an opportunity to build a complete Retrieval Augmented Generation (RAG) system that leverages advanced vector store solutions to augment foundation models.
+
+You'll create a knowledge assistant that can answer questions about technical documentation, research papers, and company policies while maintaining context awareness and providing accurate, up-to-date information.
+
+Bonus assignments are an open-ended way for you to assess your overall knowledge of this task. You can share your answers on social media and tag #awsexamprep for us to review.
+
+#### Project components
+
+
+**Document processing and segmentation**
+ - Implement and compare multiple chunking strategies
+ - Create a hierarchical document representation
+ - Evaluate retrieval performance across segmentation approaches
+
+**Embedding generation and optimization**
+ - Compare embedding models for technical documentation
+ - Implement batch processing for efficiency
+ - Evaluate embedding performance metrics
+
+**Vector store implementation**:
+ - Deploy multiple vector search solutions
+ - Configure and optimize each for performance
+ - Measure query latency and accuracy
+
+**Advanced search architecture**
+ - Implement hybrid search capabilities
+ - Add reranking for improved relevance
+ - Create evaluation metrics for search quality
+
+**Query processing system**
+
+ -  Build query expansion capabilities
+ - Implement query decomposition for complex questions
+ - Create a workflow for handling multi-part queries
+
+**Integration layer**
+ - Create standardized access patterns
+ - Implement function calling for vector search
+ - Build a consistent API layer for foundation model integration
+
+#### Project components
+
+**Phase 1: Document processing and segmentation**
+
+**Step 1: Setup:**
+
+Create an S3 bucket to store AWS documentation PDFs and text files
+
+Set up an AWS Lambda function for document processing
+
+**Implementation Tasks:**
+
+Implement three chunking strategies:
+
+```python
+# Strategy 1: Fixed-size chunking with overlap
+def fixed_size_chunking(text, chunk_size=1000, overlap=100):
+    chunks = []
+    start = 0
+    while start < len(text):
+        end = min(start + chunk_size, len(text))
+        # Find a good breaking point (end of sentence)
+        if end < len(text):
+            # Look for period, question mark, or exclamation point followed by space
+            for i in range(end-1, max(start+chunk_size//2, start), -1):
+                if text[i] in ['.', '?', '!'] and i+1 < len(text) and text[i+1] == ' ':
+                    end = i + 1
+                    break
+        chunks.append(text[start:end])
+        start = end - overlap
+    return chunks
+
+# Strategy 2: Hierarchical chunking based on document structure
+def hierarchical_chunking(text):
+    # Split by sections, then subsections
+    sections = re.split(r'\n## ', text)
+    chunks = []
+    
+    for section in sections:
+        if not section.strip():
+            continue
+            
+        # Add section as a chunk with metadata
+        section_title = section.split('\n')[0]
+        chunks.append({
+            'text': section,
+            'metadata': {'level': 'section', 'title': section_title}
+        })
+        
+        # Split into subsections
+        subsections = re.split(r'\n### ', section)
+        for i, subsection in enumerate(subsections):
+            if i == 0 or not subsection.strip():  # Skip the first one (it's the section intro)
+                continue
+                
+            subsection_title = subsection.split('\n')[0]
+            chunks.append({
+                'text': subsection,
+                'metadata': {
+                    'level': 'subsection', 
+                    'title': subsection_title,
+                    'parent_section': section_title
+                }
+            })
+            
+    return chunks
+
+# Strategy 3: Semantic chunking using Amazon Bedrock
+
+def semantic_chunking(text, bedrock_client):
+    # Use Amazon Bedrock to identify semantic boundaries
+    # This is a simplified version - actual implementation would use the Bedrock API
+    response = bedrock_client.invoke_model(
+        modelId="amazon.titan-text-express-v1",
+        contentType="application/json",
+        accept="application/json",
+        body=json.dumps({
+            "inputText": f"Split the following text into coherent chunks that preserve meaning:\n\n{text[:4000]}",
+            "textGenerationConfig": {
+                "maxTokenCount": 4096,
+                "temperature": 0,
+                "topP": 0.9
+            }
+        })
+    )
+    
+    result = json.loads(response.get('body').read())
+    # Process the response to extract chunks
+    # Implementation depends on the exact response format
+    
+    return chunks
+```
+
+**Step 2: Create a Lambda function to process documents:**
+
+
+ - Upload documents to S3
+ - Trigger Lambda on document upload
+ - Extract text and metadata
+ - Apply different chunking strategies
+ - Store results in S3 with metadata
+ 
+**Step 3: Create evaluation framework:**
+
+ - Create test queries relevant to the documentation
+ - Implement a simple retrieval mechanism
+ - Measure precision and recall for each chunking strategy
+ - Record which strategy performs best for different query types
+
+
+**Phase 2: Embedding generation and optimization**
+
+**Step 1: Setup:**
+
+ - Set up permissions for Amazon Bedrock
+ - Create a Lambda function for batch embedding generation
+
+Implementation Tasks:
+
+Compare embedding models:
+
+```python
+import boto3
+import json
+import numpy as np
+
+bedrock_runtime = boto3.client('bedrock-runtime')
+
+# Function to generate embeddings using Amazon Titan
+def generate_titan_embeddings(text_chunks):
+    embeddings = []
+    
+    for chunk in text_chunks:
+        response = bedrock_runtime.invoke_model(
+            modelId='amazon.titan-embed-text-v1',
+            contentType='application/json',
+            accept='application/json',
+            body=json.dumps({
+                'inputText': chunk
+            })
+        )
+        
+        embedding = json.loads(response['body'].read())['embedding']
+        embeddings.append(embedding)
+        
+    return embeddings
+    
+# Function to generate embeddings using Cohere
+def generate_cohere_embeddings(text_chunks):
+    embeddings = []
+    
+    for chunk in text_chunks:
+        response = bedrock_runtime.invoke_model(
+            modelId='cohere.embed-english-v3',
+            contentType='application/json',
+            accept='application/json',
+            body=json.dumps({
+                'texts': [chunk],
+                'input_type': 'search_document'
+            })
+        )
+        
+        embedding = json.loads(response['body'].read())['embeddings'][0]
+        embeddings.append(embedding)
+        
+    return embeddings
+
+```
+
+Step 2: Implement batch processing for efficiency:
+
+```python
+def batch_generate_embeddings(chunks, model_id, batch_size=20):
+    all_embeddings = []
+    
+    # Process in batches
+    for i in range(0, len(chunks), batch_size):
+        batch = chunks[i:i+batch_size]
+        
+        if model_id == 'amazon.titan-embed-text-v1':
+            # Titan processes one at a time
+            batch_embeddings = []
+            for text in batch:
+                response = bedrock_runtime.invoke_model(
+                    modelId=model_id,
+                    contentType='application/json',
+                    accept='application/json',
+                    body=json.dumps({
+                        'inputText': text
+                    })
+                )
+                embedding = json.loads(response['body'].read())['embedding']
+                batch_embeddings.append(embedding)
+        
+        elif model_id == 'cohere.embed-english-v3':
+            # Cohere can process batches natively
+            response = bedrock_runtime.invoke_model(
+                modelId=model_id,
+                contentType='application/json',
+                accept='application/json',
+                body=json.dumps({
+                    'texts': batch,
+                    'input_type': 'search_document'
+                })
+            )
+            batch_embeddings = json.loads(response['body'].read())['embeddings']
+        
+        all_embeddings.extend(batch_embeddings)
+        
+    return all_embeddings
+```
+
+**Step 3: Evaluate embedding performance:**
+
+ - Create pairs of semantically similar and dissimilar chunks
+ - Calculate cosine similarity between pairs
+
+Measure embedding quality using:
+  - **Contrast**: difference between similar and dissimilar pairs
+  - **Clustering quality**: how well embeddings group related content
+  - **Query-document relevance**: how well embeddings match queries to relevant chunks
+
+**Phase 3: Vector store implementation**
+
+**Step 1: Setup:**
+
+  - Deploy OpenSearch Service cluster with vector search capabilities
+  - Set up Amazon Aurora PostgreSQL with pgvector extension
+  - Configure Amazon Bedrock Knowledge Base
+
+**Implementation Tasks:**
+
+**Deploy OpenSearch Service:**
+
+```yaml
+# CloudFormation snippet for OpenSearch with vector search
+OpenSearchCluster:
+  Type: AWS::OpenSearchService::Domain
+  Properties:
+    DomainName: technical-docs-search
+    EngineVersion: OpenSearch_2.9
+    ClusterConfig:
+      InstanceType: r6g.large.search
+      InstanceCount: 2
+      DedicatedMasterEnabled: true
+      DedicatedMasterType: r6g.large.search
+      DedicatedMasterCount: 3
+    EBSOptions:
+      EBSEnabled: true
+      VolumeType: gp3
+      VolumeSize: 100
+    AdvancedOptions:
+      "rest.action.multi.allow_explicit_index": "true"
+      "plugins.security.disabled": "true"
+    AccessPolicies:
+      Version: "2012-10-17"
+      Statement:
+        - Effect: Allow
+          Principal:
+            AWS: !GetAtt LambdaExecutionRole.Arn
+          Action: "es:*"
+          Resource: !Sub "arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/technical-docs-search/*"
+
+```
+
+Step 2: Set up index mappings for vector search:
+
+
+```python
+# OpenSearch index creation with vector field
+def create_opensearch_index(client):
+    index_name = "technical-documentation"
+    index_body = {
+        "settings": {
+            "index": {
+                "number_of_shards": 4,
+                "number_of_replicas": 1,
+                "knn": True,
+                "knn.algo_param.ef_search": 100
+            }
+        },
+        "mappings": {
+            "properties": {
+                "text": {"type": "text"},
+                "title": {"type": "text"},
+                "document_id": {"type": "keyword"},
+                "chunk_id": {"type": "keyword"},
+                "metadata": {"type": "object"},
+                "vector_embedding": {
+                    "type": "knn_vector",
+                    "dimension": 1536,
+                    "method": {
+                        "name": "hnsw",
+                        "space_type": "cosinesimil",
+                        "engine": "nmslib",
+                        "parameters": {
+                            "ef_construction": 128,
+                            "m": 16
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    client.indices.create(index=index_name, body=index_body)
+```
+
+**Step 3: Configure Aurora with pgvector:**
+
+```sql
+-- SQL to set up pgvector in Aurora PostgreSQL
+CREATE EXTENSION IF NOT EXISTS vector;
+
+-- Create table for document chunks
+CREATE TABLE document_chunks (
+    id SERIAL PRIMARY KEY,
+    document_id VARCHAR(255) NOT NULL,
+    chunk_id VARCHAR(255) NOT NULL,
+    text TEXT NOT NULL,
+    title VARCHAR(255),
+    metadata JSONB,
+    embedding VECTOR(1536)
+);
+
+-- Create index for vector similarity search
+CREATE INDEX embedding_idx ON document_chunks 
+USING ivfflat (embedding vector_cosine_ops)
+WITH (lists = 100);
+```
+
+**Step 4: Set up Amazon Bedrock Knowledge Base:**
+
+```python
+# Python code to create a Bedrock Knowledge Base
+import boto3
+
+bedrock = boto3.client('bedrock')
+
+# Create a knowledge base
+response = bedrock.create_knowledge_base(
+    name="TechnicalDocsKB",
+    description="Knowledge base for AWS technical documentation",
+    roleArn="arn:aws:iam::123456789012:role/BedrockKBServiceRole",
+    knowledgeBaseConfiguration={
+        "type": "VECTOR",
+        "vectorKnowledgeBaseConfiguration": {
+            "embeddingModelArn": "arn:aws:bedrock:us-east-1::foundation-model/amazon.titan-embed-text-v1"
+        }
+    }
+)
+
+knowledge_base_id = response['knowledgeBase']['knowledgeBaseId']
+
+# Create a data source for the knowledge base
+response = bedrock.create_data_source(
+    knowledgeBaseId=knowledge_base_id,
+    name="TechnicalDocsSource",
+    description="AWS technical documentation source",
+    dataSourceConfiguration={
+        "type": "S3",
+        "s3Configuration": {
+            "bucketName": "technical-docs-bucket",
+            "inclusionPrefixes": ["processed/"]
+        }
+    },
+    vectorIngestionConfiguration={
+        "chunkingConfiguration": {
+            "chunkingStrategy": "HIERARCHICAL"
+        }
+    }
+)
+```
+
+**Step 5: Performance comparison:**
+
+  - Implement benchmark queries across all vector stores
+  - Measure query latency, recall, and precision
+  - Document strengths and weaknesses of each approach
+
+**Phase 4: Advanced search architecture**
+
+**Step 1: Setup:**
+  - Configure hybrid search in OpenSearch
+  - Set up reranking with Amazon Bedrock
+
+**Implementation Tasks:**
+
+Implement hybrid search:
+
+```python
+def hybrid_search(query_text, opensearch_client):
+    # Generate embedding for the query
+    query_embedding = generate_embedding(query_text)
+    
+    # Construct hybrid query with both keyword and vector components
+    search_query = {
+        "size": 20,
+        "query": {
+            "bool": {
+                "should": [
+                    # Vector similarity component (75% weight)
+                    {
+                        "knn": {
+                            "vector_embedding": {
+                                "vector": query_embedding,
+                                "k": 20
+                            }
+                        }
+                    },
+                    # Keyword match component (25% weight)
+                    {
+                        "multi_match": {
+                            "query": query_text,
+                            "fields": ["text^3", "title^5"],
+                            "fuzziness": "AUTO"
+                        }
+                    }
+                ]
+            }
+        },
+        "_source": ["text", "title", "document_id", "chunk_id", "metadata"]
+    }
+    
+    response = opensearch_client.search(
+        index="technical-documentation",
+        body=search_query
+    )
+    
+    return response['hits']['hits']
+```
+
+Step 2: Implement reranking with Bedrock:
+
+```python
+def rerank_results(query, search_results, bedrock_client, top_k=5):
+    # Extract texts from search results
+    texts = [result["_source"]["text"] for result in search_results]
+    
+    # Call Bedrock reranker
+    response = bedrock_client.invoke_model(
+        modelId="amazon.titan-rerank-v1",
+        contentType="application/json",
+        accept="application/json",
+        body=json.dumps({
+            "query": query,
+            "passages": texts
+        })
+    )
+    
+    reranked_results = json.loads(response['body'].read())
+    
+    # Sort original results based on reranking scores
+    scored_results = []
+    for i, score in enumerate(reranked_results["scores"]):
+        scored_results.append({
+            "score": score,
+            "original_result": search_results[i]
+        })
+    
+    # Sort by score descending and return top_k
+    scored_results.sort(key=lambda x: x["score"], reverse=True)
+    return scored_results[:top_k]
+```
+
+**Step 3: Create evaluation metrics:**
+
+  - Implement Mean Reciprocal Rank (MRR) calculation
+  - Measure Normalized Discounted Cumulative Gain (NDCG)
+  - Compare performance between vector-only, keyword-only, hybrid, and reranked approaches
+
+**Phase 5: Query processing system**
+
+**Step 1: Setup:**
+  - Create a Lambda function for query processing
+  - Set up Step Functions workflow for complex queries
+
+**Implementation Tasks:**
+
+**Implement query expansion:**
+
+```query
+def expand_query(query_text, bedrock_client):
+    # Use Bedrock to expand the query with relevant terms
+    response = bedrock_client.invoke_model(
+        modelId="anthropic.claude-3-sonnet-20240229-v1:0",
+        contentType="application/json",
+        accept="application/json",
+        body=json.dumps({
+            "anthropic_version": "bedrock-2023-05-31",
+            "max_tokens": 1024,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": f"""Given this technical query about AWS services: 
+                    "{query_text}"
+                    
+                    Generate 3-5 alternative ways to phrase this query that would help in a search system.
+                    Include relevant AWS terminology, service names, and technical concepts.
+                    Format your response as a JSON array of strings with no additional text."""
+                }
+            ]
+        })
+    )
+    
+    result = json.loads(response['body'].read())
+    expanded_queries = json.loads(result['content'][0]['text'])
+    
+    # Add the original query to the expanded queries
+    expanded_queries.insert(0, query_text)
+    
+    return expanded_queries
+```
+
+Step 2: Implement query decomposition:
+
+```python
+def decompose_complex_query(query_text, bedrock_client):
+    # Use Bedrock to break down complex queries
+    response = bedrock_client.invoke_model(
+        modelId="anthropic.claude-3-sonnet-20240229-v1:0",
+        contentType="application/json",
+        accept="application/json",
+        body=json.dumps({
+            "anthropic_version": "bedrock-2023-05-31",
+            "max_tokens": 1024,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": f"""Break down this complex technical query into simpler sub-queries that can be answered independently:
+                    "{query_text}"
+                    
+                    Format your response as a JSON object with:
+                    1. "sub_queries": an array of simpler questions
+                    2. "reasoning": explanation of how these sub-queries relate to the original question
+                    
+                    Return only the JSON with no additional text."""
+                }
+            ]
+        })
+    )
+    
+    result = json.loads(response['body'].read())
+    decomposition = json.loads(result['content'][0]['text'])
+    
+    return decomposition
+```
+
+Step 3: Create Step Functions workflow:
+
+```json
+{
+  "Comment": "Query Processing Workflow",
+  "StartAt": "AnalyzeQueryComplexity",
+  "States": {
+    "AnalyzeQueryComplexity": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:us-east-1:123456789012:function:AnalyzeQueryComplexity",
+        "Payload": {
+          "query": "$.query"
+        }
+      },
+      "ResultPath": "$.complexity",
+      "Next": "ComplexityChoice"
+    },
+    "ComplexityChoice": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.complexity.isComplex",
+          "BooleanEquals": true,
+          "Next": "DecomposeQuery"
+        }
+      ],
+      "Default": "ExpandQuery"
+    },
+    "DecomposeQuery": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:us-east-1:123456789012:function:DecomposeQuery",
+        "Payload": {
+          "query": "$.query"
+        }
+      },
+      "ResultPath": "$.subQueries",
+      "Next": "ProcessSubQueries"
+    },
+    "ProcessSubQueries": {
+      "Type": "Map",
+      "ItemsPath": "$.subQueries.sub_queries",
+      "Parameters": {
+        "subQuery.$": "$$.Map.Item.Value"
+      },
+      "Iterator": {
+        "StartAt": "ExpandSubQuery",
+        "States": {
+          "ExpandSubQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:us-east-1:123456789012:function:ExpandQuery",
+              "Payload": {
+                "query": "$.subQuery"
+              }
+            },
+            "ResultPath": "$.expandedQueries",
+            "Next": "SearchWithSubQuery"
+          },
+          "SearchWithSubQuery": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:us-east-1:123456789012:function:SearchDocuments",
+              "Payload": {
+                "queries": "$.expandedQueries"
+              }
+            },
+            "End": true
+          }
+        }
+      },
+      "ResultPath": "$.subQueryResults",
+      "Next": "AggregateResults"
+    },
+    "ExpandQuery": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:us-east-1:123456789012:function:ExpandQuery",
+        "Payload": {
+          "query": "$.query"
+        }
+      },
+      "ResultPath": "$.expandedQueries",
+      "Next": "SearchDocuments"
+    },
+    "SearchDocuments": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:us-east-1:123456789012:function:SearchDocuments",
+        "Payload": {
+          "queries": "$.expandedQueries"
+        }
+      },
+      "ResultPath": "$.searchResults",
+      "Next": "RerankResults"
+    },
+    "RerankResults": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:us-east-1:123456789012:function:RerankResults",
+        "Payload": {
+          "query": "$.query",
+          "results": "$.searchResults"
+        }
+      },
+      "ResultPath": "$.rankedResults",
+      "End": true
+    },
+    "AggregateResults": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:us-east-1:123456789012:function:AggregateResults",
+        "Payload": {
+          "originalQuery": "$.query",
+          "subQueryResults": "$.subQueryResults",
+          "decomposition": "$.subQueries"
+        }
+      },
+      "ResultPath": "$.aggregatedResults",
+      "Next": "RerankResults"
+    }
+  }
+}
+```
+
+**Phase 6: Integration layer**
+
+**Step 1: Setup:**
+
+  - Create API Gateway endpoints
+  - Implement function calling interfaces
+
+
+**Implementation Tasks:**
+
+Create standardized API for vector search:
+
+```py
+# Lambda function for API Gateway integration
+def lambda_handler(event, context):
+    try:
+        # Extract parameters from the request
+        body = json.loads(event['body'])
+        query = body.get('query')
+        search_type = body.get('search_type', 'hybrid')  # Default to hybrid search
+        top_k = body.get('top_k', 5)
+        rerank = body.get('rerank', True)
+        
+        # Validate input
+        if not query:
+            return {
+                'statusCode': 400,
+                'body': json.dumps({'error': 'Query parameter is required'})
+            }
+        
+        # Initialize clients
+        bedrock_client = boto3.client('bedrock-runtime')
+        opensearch_client = get_opensearch_client()
+        
+        # Process query based on search type
+        if search_type == 'vector':
+            # Vector search only
+            results = vector_search(query, opensearch_client, top_k)
+        elif search_type == 'keyword':
+            # Keyword search only
+            results = keyword_search(query, opensearch_client, top_k)
+        elif search_type == 'hybrid':
+            # Hybrid search
+            results = hybrid_search(query, opensearch_client, top_k)
+        else:
+            return {
+                'statusCode': 400,
+                'body': json.dumps({'error': f'Invalid search_type: {search_type}'})
+            }
+        
+        # Apply reranking if requested
+        if rerank and results:
+            results = rerank_results(query, results, bedrock_client, top_k)
+        
+        # Format and return results
+        formatted_results = format_search_results(results)
+        
+        return {
+            'statusCode': 200,
+            'body': json.dumps({
+                'query': query,
+                'search_type': search_type,
+                'results': formatted_results
+            })
+        }
+        
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return {
+            'statusCode': 500,
+            'body': json.dumps({'error': str(e)})
+        }
+Step 2: Implement function calling interface:
+
+
+def create_function_schema():
+    # Define the function schema for search capabilities
+    search_function = {
+        "name": "search_documentation",
+        "description": "Search technical documentation for relevant information",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "The search query or question"
+                },
+                "search_type": {
+                    "type": "string",
+                    "enum": ["vector", "keyword", "hybrid"],
+                    "description": "Type of search to perform"
+                },
+                "top_k": {
+                    "type": "integer",
+                    "description": "Number of results to return"
+                },
+                "rerank": {
+                    "type": "boolean",
+                    "description": "Whether to apply reranking to results"
+                }
+            },
+            "required": ["query"]
+        }
+    }
+    
+    return [search_function]
+
+def invoke_fm_with_function_calling(userSuccessfully transferred back to supervisor
+# left for implementation
+```
+
+---
+
 
 
 ## Task 1.6: Implement prompt engineering strategies and governance for FM interactions.
@@ -986,12 +4680,339 @@ For the exam, ensure you understand how to design complex prompt systems.
 	
 4. Configure integrated pre-processing and post-processing steps in Prompt Flows to transform inputs before they reach foundation models and refine outputs before they're returned to users, enhancing overall system quality. 
 
+
+### Self Assessment
+
+
+1. **Your team is implementing a customer service chatbot using Amazon Bedrock. You need to ensure the foundation model consistently maintains a professional tone, provides accurate information about your products, and never discusses competitor offerings.**
+
+**Which combination of services would BEST implement these requirements?**
+
+ - Use Amazon Bedrock Guardrails for tone enforcement and Amazon Bedrock Prompt Management with role definitions
+ - Use Amazon Comprehend for sentiment analysis and DynamoDB to store approved responses
+ - Use AWS Lambda to filter responses and CloudWatch to monitor for violations
+ - Use Amazon S3 to store response templates and Step Functions to select appropriate responses
+
+
+2. **Your company is implementing a content moderation system using foundation models. You need to ensure that all prompts adhere to company guidelines, are versioned appropriately, and can be audited.**
+
+**Which architecture BEST meets these requirements?**
+
+ - Store prompts in S3, use Lambda functions to validate content, and CloudWatch Logs to record usage
+ - Implement Amazon Bedrock Prompt Management with approval workflows, store templates in S3, and use CloudTrail for auditing
+ - Use DynamoDB to store approved prompts, API Gateway to control access, and AWS Config to monitor compliance
+ - Deploy prompts through CodePipeline, validate with custom Lambda functions, and track with AWS X-Ray
+
+
+ ### Knowledge Check
+
+ 01/05
+
+**You need to design a system that handles multi-step prompt chains with conditional logic based on model responses. The system must process financial analysis workflows with different paths based on risk levels.**
+
+**Which approach is MOST operationally efficient?**
+
+ - Use Amazon Bedrock Prompt Flows with conditional branching and integrated pre/post processing steps.
+ - Implement workflow orchestration using AWS Step Functions with AWS Lambda for each step.
+ - Create a custom chain management system using Amazon Managed Streaming for Apache Kafka (Amazon MSK) for message passing.
+ - Build prompt chains using Amazon Simple Queue Service (Amazon SQS) for sequential processing.
+
+02/05
+
+**A large financial institution needs to deploy prompt templates and governance controls across 50 AI applications. The system must support versioning, approvals, and detailed usage auditing.**
+
+**Which approaches are MOST operationally efficient? (Select TWO.)**
+
+ - Use Amazon Bedrock Prompt Management with AWS CloudTrail integration for tracking and governance.
+ - Deploy Git repositories with custom continuous integration and continuous delivery (CI/CD) pipelines for prompt version control.
+ - Implement an Amazon S3 based template system with Amazon CloudWatch Logs for access tracking.
+ - Store prompts in Amazon DynamoDB with custom approval workflows.
+ - Manage prompts through parameter store with versioning.
+
+03/05
+
+**A customer service division needs to build an AI system handling 100,000 daily conversations requiring context maintenance and clarification workflows. The system must maintain sub-second response times and support multiple languages.**
+
+**Which approach is MOST operationally efficient?**
+
+ - Implement AWS Step Functions for workflows with Amazon Comprehend for intent and Amazon DynamoDB for history.
+ - Deploy AWS Lambda functions with Amazon Aurora for conversation management.
+ - Use Amazon API Gateway with custom WebSocket implementation for real-time interactions.
+ - Implement Amazon Simple Queue Service (Amazon SQS) queues for managing conversation state.
+
+04/05
+
+**A research organization needs to implement chain-of-thought (CoT) reasoning patterns for their foundation model analyzing scientific papers. The system must improve response accuracy through structured reasoning steps while maintaining processing efficiency.**
+
+**Which approach is MOST operationally efficient?**
+
+ - Implement Amazon Bedrock Prompt Flows with CoT templates and feedback integration.
+ - Use custom AWS Lambda functions to inject reasoning steps into prompts.
+ - Deploy separate models for each reasoning step with AWS Step Functions.
+ - Process reasoning chains through Amazon Simple Queue Service (Amazon SQS) queues.
+
+05/05
+
+**A customer service AI system needs to maintain context across multiple user interactions, supporting 50,000 concurrent sessions with sub-second retrieval times. The system must store conversation history, user preferences, and interaction metadata to improve foundation model responses.**
+
+**Which approach is MOST operationally efficient?**
+
+ - Use Amazon DynamoDB with time to live (TTL), global secondary indexes (GSIs), and optimized access patterns for conversation management.
+ - Implement conversation storage using Amazon RDS with partitioned tables and caching.
+ - Deploy an Amazon ElastiCache cluster with Redis for session management and backup to Amazon S3.
+ - Store conversations in Amazon DocumentDB (with MongoDB compatibility) with sharded collections.
+
+
+### Bonus assignment
+
+#### Project components
+
+**Model instruction framework**
+
+ - Create a base persona for your customer support assistant using Amazon Bedrock Prompt Management
+
+ - Define clear role boundaries, tone, and response formats
+
+ - Implement Amazon Bedrock Guardrails to prevent the assistant from:
+
+    - Providing security credentials
+    - Making commitments about future AWS features
+    - Discussing competitors inappropriately
+
+ - For the guardrails implementation:
+    - Consider using content filtering for preventing security credential sharing
+    - Implement topic detection to identify and block discussions about future AWS features
+    - Use semantic boundaries for competitor discussions
+
+**Prompt management and governance**
+ - Set up Amazon Bedrock Prompt Management with:
+    - Parameterized templates for different support scenarios
+    - Approval workflows for new prompt templates
+    - Version control for prompts stored in Amazon S3
+    - CloudTrail tracking for prompt usage
+    - CloudWatch Logs for access monitoring
+ - Some additional considerations:
+    - Implement role-based access control for prompt template modifications
+    - Create an audit log dashboard for prompt usage patterns
+    - Consider A/B testing capabilities within your prompt management system
+    
+**Quality assurance system**
+
+Create Step Functions workflows to test edge cases (angry customers, vague requests)
+
+Implement CloudWatch monitoring to detect prompt regression
+
+Set up automated testing for different prompt versions
+
+To enhance your Step Functions approach:
+
+Consider implementing a session management system with TTL in DynamoDB
+
+Add sentiment analysis alongside intent detection
+
+Include a confidence score threshold for when to trigger clarification workflows
+
+For your feedback loop:
+
+Add response latency tracking to optimize prompt efficiency
+
+Implement semantic clustering of user queries to identify common patterns
+
+Consider prompt distillation techniques to simplify complex prompts over time
+
+**Iterative prompt enhancement**
+
+Design a feedback collection mechanism
+
+Implement structured input components for different support scenarios
+
+Create output format specifications for consistent responses
+
+Develop chain-of-thought instruction patterns for complex troubleshooting
+
+Build a feedback loop system to improve prompts based on user interactions
+
+**Complex prompt system design**
+
+Implement Amazon Bedrock Prompt Flows to create:
+
+Sequential prompt chains for multi-step troubleshooting
+
+Conditional branching based on detected issue complexity
+
+Reusable prompt components for common support scenarios
+
+Pre-processing to format user inputs
+
+Post-processing to ensure response quality and consistency
+
+Consider adding:
+
+Fallback mechanisms when confidence scores are low
+
+Handoff protocols to human agents for complex scenarios
+
+Progressive disclosure techniques for complex troubleshooting steps
+
+#### Implementation steps
+
+**Architecture design and implementation**
+
+1. Create an Amazon Bedrock environment with access to appropriate foundation models
+2. Set up DynamoDB tables for conversation history
+3. Configure S3 buckets for prompt template storage
+4. Enable CloudTrail and CloudWatch for monitoring
+
+5. Use Amazon EventBridge to create event-driven workflows between components
+
+6. Consider Amazon Kendra for knowledge retrieval alongside your prompt system
+
+7. Implement AWS X-Ray for tracing requests through your system components
+
+**Development**
+
+1. Create base prompt templates in Amazon Bedrock Prompt Management
+
+2. Implement guardrails for responsible AI usage
+
+3. Develop Step Functions for conversation flow
+
+4. Build Lambda functions for pre/post-processing
+
+5. Configure Comprehend for intent recognition
+
+**Best practices:**
+
+ - Start with a limited domain scope and expand gradually
+
+ - Implement blue/green deployment for prompt template updates
+
+ - Create a prompt template library organized by support categories
+
+
+**Testing**
+
+1. Develop a comprehensive test suite with both synthetic and real-world examples
+
+2. Implement chaos engineering to test system resilience
+
+3. Create regression tests that run automatically when prompt templates change
+
+4. Create test cases for common support scenarios
+
+5. Implement automated testing with Lambda
+
+6. Set up monitoring for prompt effectiveness
+
+7. Test edge cases and failure modes
+
+
+**Refinement**
+
+Analyze performance metrics
+
+Refine prompts based on test results
+
+Implement feedback loops
+
+Optimize conversation flows
+
+#### Implementation examples
+
+For your Step Functions workflow, consider this high-level structure:
+
+```json
+{
+  "Comment": "Customer Support AI Assistant Workflow",
+  "StartAt": "CaptureUserQuery",
+  "States": {
+    "CaptureUserQuery": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "captureQueryFunction",
+        "Payload": {
+          "query.$": "$.query"
+        }
+      },
+      "Next": "DetectIntent"
+    },
+    "DetectIntent": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "comprehendIntentFunction",
+        "Payload": {
+          "query.$": "$.query"
+        }
+      },
+      "Next": "CheckIntentClarity"
+    },
+    "CheckIntentClarity": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.intentConfidence",
+          "NumericLessThan": 0.7,
+          "Next": "ClarifyIntent"
+        }
+      ],
+      "Default": "RetrieveContext"
+    }
+    // Additional states would continue here
+  }
+}
+```
+
+**Deliverables**
+
+ - Working customer support AI assistant with governance controls
+
+ - Documentation of prompt templates and governance mechanisms
+
+ - Test results showing prompt effectiveness
+
+ - Analysis of iterative improvements made during development
+
+#### Advanced challenge
+
+1. Start with a prototype focusing on a single support scenario.
+
+2. Build your prompt library with templates for common issues.
+
+3. Implement basic guardrails before expanding functionality.
+
+4. Create your testing framework early in development.
+
+5.  Establish metrics to measure assistant effectiveness.
+
+
 ---
 ---
+
 
 
 # Content Domain 2: Implementation and Integration
 ## Task 2.1: Implement agentic AI solutions and tool integrations.
+
+This lesson is a high-level overview of the first task and how it aligns to the GenAI developer role.
+
+**As you review these lessons for Task 2.1, check that you understand how to do the following:**
+
+
+ - Develop intelligent autonomous systems with appropriate memory and state management capabilities (for example, by using Amazon Bedrock Agents for reasoning agents, AWS Strands Agents and AWS Agent Squad for multi-agent systems, MCP for agent-tool interactions).
+
+ - Create advanced problem-solving systems to give FMs the ability to break down and solve complex problems by following structured reasoning steps (for example, by using Step Functions to implement ReAct patterns and chain-of-thought reasoning approaches).
+
+ - Develop safeguarded AI workflows to ensure controlled FM behavior (for example, by using Step Functions to implement stopping conditions, Lambda functions to implement timeout mechanisms, IAM policies to enforce resource boundaries, circuit breakers to mitigate failures).
+
+ - Create sophisticated model coordination systems to optimize performance across multiple capabilities (for example, by using specialized FMs to perform complex tasks, custom aggregation logic for model ensembles, model selection frameworks).
+
+ - Develop collaborative AI systems to enhance FM capabilities with human expertise (for example, by using Step Functions to orchestrate review and approval processes, API Gateway to implement feedback collection mechanisms, human augmentation patterns).
+
+ - Implement intelligent tool integrations to extend FM capabilities and to ensure reliable tool operations (for example, by using Amazon Bedrock Agents to manage agents, the AWS Strands API to implement custom behaviors, standardized function definitions, Lambda functions to implement error handling and parameter validation).
+
+ - Develop model extension frameworks to enhance FM capabilities (for example, by using Lambda functions to implement stateless MCP servers that provide lightweight tool access, Amazon ECS to implement MCP servers that provide complex tools, MCP client libraries to ensure consistent access patterns).
 
 ### AWS services overview
 
@@ -1212,9 +5233,1057 @@ Ensure you understand how to configure and implement the following steps:
 5. Develop tool discovery mechanisms that allow foundation models to dynamically learn about available tools and their capabilities, supporting flexible and extensible architectures. 
 
 
+### Self Assessment
+
+**Question 2.1.1**
 
 
-##Task 2.2: Implement model deployment strategies.
+**A developer is building an autonomous agent using Amazon Bedrock Agents that needs to maintain context across multiple user interactions in a customer service application.**
+
+**Which approach would be MOST effective for implementing memory management in this scenario?**
+
+
+ - Store all conversation history in Amazon DynamoDB and retrieve it for each new request
+
+ - Configure the agent with session-based memory to maintain context within a conversation
+
+ - Use Amazon S3 to store conversation transcripts and pass the file path as a parameter
+
+ - Implement a custom Lambda function that regenerates context from scratch for each interaction
+
+**Question 2.1.2 **
+
+**A financial services company is implementing a foundation model to assist with investment recommendations.**
+
+**Which combination of safeguards would BEST ensure controlled behavior of the foundation model in this regulated environment?**
+
+- Implement IAM policies for resource access and Lambda functions with timeout mechanisms
+
+- Use CloudWatch Alarms to monitor model outputs and SNS to notify administrators of issues
+
+- Deploy the model in a VPC with security groups restricting all external access
+
+- Implement Step Functions with stopping conditions, IAM policies for resource boundaries, and circuit breakers for failure mitigation
+
+### Use Case
+
+**AI-powered supply chain optimization system.**
+
+Let's say that a global manufacturing enterprise with more than 50 production facilities across 15 countries implemented an AI-powered supply chain optimization system to manage thousands of components from hundreds of suppliers. Traditional systems struggled with this complexity, resulting in inventory imbalances, production delays, and increased costs.
+
+The company has the following business requirements:
+- automate complex supply chain decisions across global operations
+- optimize inventory while maintaining production schedules
+- proactively identify and mitigate supply chain disruptions
+- coordinate with suppliers, logistics providers, and production facilities
+- provide transparent reasoning for recommendations
+- provide opportunities for human review of critical decisions
+- integrate with existing enterprise systems
+
+**Let's work through one possible solution and implementation for this use case.**
+
+**Intelligent Autonomous System**
+
+First, you need to design a multi-agent system using **AWS Strands Agent** and **AWS Agent Squad** with specialized agents for the following: 
+- demand forecasting
+- inventory optimization
+- supplier management
+- logistics coordination
+
+To support this architecture, you implement each agent using **Amazon Bedrock Agents** with specific action groups. Additionally, you can use **Amazon DynamoDB** for persistent memory and **ElastiCache** for real-time session state, creating a three-tier memory hierarchy: 
+- operational
+- tactical
+- strategic.
+
+To ensure seamless coordination, you configure agents to communicate through Model Context Protocol, MCP, allowing each agent to maintain its specialized focus while sharing critical supply chain insights.
+
+**Advanced problem-solving systems**
+
+Building on this foundation, you implement **AWS Step Functions** workflows, using React patterns to break down complex problems, like component shortages, into structured reasoning steps:
+- reason about production impact
+- query inventory systems
+- analyze alternatives
+- evaluate cost implications
+- generate recommendations.
+
+Through this approach, you guide foundation models through explicit intermediate steps using chain-of-thought, COT, reasoning, before reaching conclusions, improving decision quality by 37% compared to single-step approach.
+
+**Safeguards AI Flow**
+
+Next, you implement comprehensive safeguards, including the following: 
+- **Step Functions** with explicit stopping conditions
+- **AWS Lambda functions** with task-appropriate timeouts
+- **AWS Identity and Access Management, IAM policies**, following least privileged principles. 
+- **Circuit breaker patterns** using Amazon CloudWatch alarms.
+
+These safeguards prove critical during a major weather event that disrupts suppliers, automatically switching the system to conservative planning modes until conditions normalize,
+
+**Model Coordination Systems**
+
+For optimal performance, you deploy specialized foundation models, FMs, for different tasks, such as the following: 
+- **Claude 3 Sonnet** for complex reasoning
+- **Amazon Titan Text** for report generation
+- **Amazon Titan Embeddings** for similarity matching.
+
+To maximize effectiveness, you can create custom aggregation logic that combines outputs from multiple models using weighted averaging based on historical performance. This dynamic model selection framework reduces average response time by 42% while maintaining decision quality.
+
+**Collaborative AI Systems**
+
+For critical decisions, you can implement human-in-the-loop workflows using **Step Functions** for the following: 
+- major production schedule adjustments
+- strategic inventory positioning
+- supplier relationship changes
+- responses to major disruptions.
+
+With this approach, the system prepares comprehensive analysis packages for human reviewers and collects structured feedback through **Amazon API Gateway** endpoints, continuously improving its decision-making process.
+
+**Intelligent tool integrations**
+
+To complete the integration, you use Amazon Bedrock Agents to connect with the following existing systems: 
+- enterprise resource planning (ERP)
+- systems for inventory and production data
+- supplier management platforms
+- logistics systems
+- external disruption monitoring APIs.
+
+For this supply chain scenario, **AWS Strands API** supports custom agent behaviors for specialized tasks like multi-echelon inventory optimization. Standardized function definitions using OpenAI specifications ensure consistent interfaces, while **Lambda functions** provide error handling and parameter validation.
+
+**Model Extension Frameworks**
+
+Finally, to add enhanced foundation model capabilities, you can implement 
+1. **Lambda** functions as stateless MCP servers for lightweight tools, optimization solvers, forecasting, geospatial analysis. 
+2. *Amazon Elastic Container Service* (Amazon), clusters, for complex tools, like simulation engines or advanced optimizers.
+3. MCP client libraries, ensuring consistent access patterns, and 
+4. Tool discovery mechanisms for dynamic tool selection.
+
+This implementation creates agentic AI solution for complex enterprise challenges, balancing autonomy with appropriate safeguards, using specialized models, integrating human expertise, and extending foundation model capabilities through standardized tool integrations.
+
+
+### Knowledge Check
+
+01/05
+
+**A manufacturing company needs to implement safeguards in their AI system that monitors critical equipment while maintaining operational efficiency. The solution must provide real-time protection without creating unnecessary delays.**
+
+**Which approaches are MOST effective? (Select TWO.)**
+
+- Create circuit breaker patterns in AWS Step Functions that automatically disable automated actions when error rates exceed thresholds.
+- Implement continuous logging of all agent actions to Amazon CloudWatch and review logs weekly for issues.
+- Configure agents to require human approval for all actions before execution.
+- Design AWS Identity and Access Management (IAM) policies with graduated access levels based on operation criticality and automated risk assessment.
+
+
+02/05
+
+**A manufacturing facility is implementing a multi-agent system using AWS Strands for production line optimization. The system needs to coordinate multiple specialized agents while maintaining clear control hierarchies.**
+
+**Which approach provides the MOST robust solution?**
+
+- Implement AWS Agent Squad with supervisor-agent pattern and specialized worker agents.
+- Create a single agent with multiple specialized tools.
+- Deploy separate independent agents with direct peer-to-peer communication.
+- Use AWS Lambda functions to handle all agent coordination.
+
+03/05
+
+**A pharmaceutical company is developing an AI quality control system that needs to analyze manufacturing defects and propose solutions in real time. The system must evaluate multiple solution strategies before implementation.**
+
+**Which components are essential for the AWS Step Functions workflow? (Select TWO.)**
+
+- Implement ReAct patterns with validation steps between reasoning and action phases.
+- Deploy continuous human oversight for all quality decisions.
+- Design chain-of-thought (CoT) reasoning with multiple solution evaluation steps.
+- Create direct quality control interventions without intermediate validation.
+- Use basic if-then logic for defect resolution.
+
+
+04/05
+
+**A global logistics company needs to implement an AI system that coordinates warehouse operations across multiple time zones. The system must handle both autonomous operations and human intervention efficiently.**
+
+**Which solution BEST ensures effective coordination?**
+
+- Implement AWS Step Functions workflows with Amazon Augmented AI (Amazon A2I) integration and real-time Amazon API Gateway endpoints.
+- Use email notifications for all warehouse coordination.
+- Require manual approval for all AI-suggested optimizations.
+- Allow completely autonomous warehouse management.
+
+
+05/05
+
+**A semiconductor manufacturer needs to integrate their equipment monitoring tools with their AI system. The solution must handle both basic status checks and complex analysis of manufacturing processes.**
+
+**Which approach provides the MOST efficient integration?**
+
+- Deploy all monitoring tools as AWS Lambda functions.
+- Use Amazon Elastic Container Service (Amazon ECS) for all tool hosting, regardless of complexity.
+- Implement AWS Lambda for status checks and Amazon Elastic Container Service (Amazon ECS) for complex monitoring tools.
+- Run all tools directly on manufacturing equipment.
+
+
+### Bonus Assignment
+
+#### Scenario
+
+You will build an intelligent customer support system that does the following:
+
+ - Uses multiple specialized agents to handle different types of support requests
+ - Maintains conversation context across interactions
+ - Implements safeguards to ensure appropriate responses
+ - Coordinates between different foundation models for optimal performance
+ - Incorporates human review for sensitive actions
+ - Integrates with external tools for enhanced capabilities
+
+#### Part 1. Set up the Amazon Bedrock Agent with memory management
+
+##### Step 1: Create Bedrock Agent
+
+Create a Bedrock Agent with session-based memory to maintain context across interactions.
+
+```python
+import boto3
+import json
+from botocore.exceptions import ClientError
+
+# Initialize Bedrock client
+bedrock_agent_runtime = boto3.client('bedrock-agent-runtime')
+
+def create_agent_session():
+    """Create a new session for the Bedrock Agent"""
+    try:
+        response = bedrock_agent_runtime.create_session(
+            agentId='your-agent-id',
+            agentAliasId='your-agent-alias-id',
+            sessionConfiguration={
+                'enableTrace': True
+            }
+        )
+        return response['sessionId']
+    except ClientError as e:
+        print(f"Error creating session: {e}")
+        return None
+
+def invoke_agent_with_memory(session_id, user_input):
+    """Invoke the agent with memory of previous interactions"""
+    try:
+        response = bedrock_agent_runtime.invoke_agent(
+            agentId='your-agent-id',
+            agentAliasId='your-agent-alias-id',
+            sessionId=session_id,
+            inputText=user_input
+        )
+        
+        # Process the streaming response
+        for event in response['completion']:
+            if 'chunk' in event:
+                chunk = event['chunk']
+                if 'bytes' in chunk:
+                    # Process text response
+                    text = chunk['bytes'].decode('utf-8')
+                    print(text, end='')
+        
+        return response
+    except ClientError as e:
+        print(f"Error invoking agent: {e}")
+        return None
+
+# Usage example
+session_id = create_agent_session()
+if session_id:
+    # First interaction
+    invoke_agent_with_memory(session_id, "My internet connection is slow")
+    
+    # Second interaction - agent will remember previous context
+    invoke_agent_with_memory(session_id, "What troubleshooting steps should I try?")
+```
+
+#### Step 2: Agent Definition JSON
+
+2. Create your agent with this definition:
+
+```json
+{
+  "agentName": "CustomerSupportAgent",
+  "agentResourceRoleArn": "arn:aws:iam::123456789012:role/BedrockAgentRole",
+  "foundationModel": "anthropic.claude-3-sonnet-20240229-v1:0",
+  "instruction": "You are a customer support agent for an internet service provider. Help customers troubleshoot their issues by asking clarifying questions and providing step-by-step solutions.",
+  "memoryConfiguration": {
+    "enableMemory": true,
+    "memoryType": "SESSION_MEMORY"
+  }
+}
+```
+
+#### Part 2: Implement ReAct pattern with Step Functions
+
+Step 1: Create a Step Functions workflow
+
+1. Create a Step Functions workflow that implements the ReAct pattern (Reasoning + Acting):
+
+```json
+{
+  "Comment": "ReAct Pattern Implementation for Customer Support",
+  "StartAt": "ParseUserRequest",
+  "States": {
+    "ParseUserRequest": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:ParseUserRequestFunction",
+        "Payload": {
+          "input.$": "$"
+        }
+      },
+      "Next": "DetermineAction"
+    },
+    "DetermineAction": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:DetermineActionFunction",
+        "Payload": {
+          "input.$": "$"
+        }
+      },
+      "Next": "ActionChoice"
+    },
+    "ActionChoice": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.actionType",
+          "StringEquals": "troubleshoot",
+          "Next": "TroubleshootingAction"
+        },
+        {
+          "Variable": "$.actionType",
+          "StringEquals": "billing",
+          "Next": "BillingAction"
+        },
+        {
+          "Variable": "$.actionType",
+          "StringEquals": "escalate",
+          "Next": "EscalateAction"
+        }
+      ],
+      "Default": "GenerateResponse"
+    },
+    "TroubleshootingAction": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:TroubleshootingFunction",
+        "Payload": {
+          "input.$": "$"
+        }
+      },
+      "Next": "ReasonAboutResults"
+    },
+    "BillingAction": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:BillingFunction",
+        "Payload": {
+          "input.$": "$"
+        }
+      },
+      "Next": "ReasonAboutResults"
+    },
+    "EscalateAction": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:EscalateFunction",
+        "Payload": {
+          "input.$": "$"
+        }
+      },
+      "Next": "ReasonAboutResults"
+    },
+    "ReasonAboutResults": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:ReasoningFunction",
+        "Payload": {
+          "input.$": "$"
+        }
+      },
+      "Next": "NeedMoreActions"
+    },
+    "NeedMoreActions": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.needMoreActions",
+          "BooleanEquals": true,
+          "Next": "DetermineAction"
+        }
+      ],
+      "Default": "GenerateResponse"
+    },
+    "GenerateResponse": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:GenerateResponseFunction",
+        "Payload": {
+          "input.$": "$"
+        }
+      },
+      "End": true
+    }
+  }
+}
+```
+
+#### Step 2: Lambda function
+
+2. Create Lambda function for reasoning:
+
+```python
+import boto3
+import json
+import os
+
+bedrock = boto3.client('bedrock-runtime')
+
+def lambda_handler(event, context):
+    # Extract information from the event
+    user_request = event.get('userRequest', '')
+    action_results = event.get('actionResults', {})
+    conversation_history = event.get('conversationHistory', [])
+    
+    # Prepare prompt for reasoning
+    prompt = f"""
+    You are a reasoning agent that analyzes customer support interactions.
+    
+    User Request: {user_request}
+    
+    Action Results: {json.dumps(action_results, indent=2)}
+    
+    Previous Conversation: {json.dumps(conversation_history, indent=2)}
+    
+    Based on the above information:
+    1. What is the customer's core issue?
+    2. Has the action taken resolved the issue? If not, why?
+    3. What should be the next step?
+    4. Is additional action needed?
+    
+    Provide your reasoning in a structured format.
+    """
+    
+    # Invoke Bedrock model for reasoning
+    response = bedrock.invoke_model(
+        modelId='anthropic.claude-3-sonnet-20240229-v1:0',
+        contentType='application/json',
+        accept='application/json',
+        body=json.dumps({
+            "anthropic_version": "bedrock-2023-05-31",
+            "max_tokens": 1000,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+        })
+    )
+    
+    response_body = json.loads(response['body'].read().decode())
+    reasoning = response_body['content'][0]['text']
+    
+    # Parse reasoning to determine if more actions are needed
+    need_more_actions = "additional action needed" in reasoning.lower()
+    
+    return {
+        "reasoning": reasoning,
+        "needMoreActions": need_more_actions,
+        "userRequest": user_request,
+        "actionResults": action_results,
+        "conversationHistory": conversation_history
+    }
+```
+
+#### Part 3: Implement safeguarded AI workflows
+
+Step 1: Add safeguards to workflow
+
+1. Create a Lambda function with a timeout mechanism:
+
+```python
+import boto3
+import json
+import time
+import threading
+import signal
+
+class TimeoutError(Exception):
+    pass
+
+def timeout_handler(signum, frame):
+    raise TimeoutError("Function execution timed out")
+
+def lambda_handler(event, context):
+    # Set a timeout that's shorter than Lambda's timeout
+    # to ensure we can handle it gracefully
+    max_execution_time = 10  # seconds
+    signal.signal(signal.SIGALRM, timeout_handler)
+    signal.alarm(max_execution_time)
+    
+    try:
+        # Initialize Bedrock client
+        bedrock = boto3.client('bedrock-runtime')
+        
+        # Extract user input
+        user_input = event.get('userInput', '')
+        
+        # Invoke the model with safeguards
+        response = bedrock.invoke_model(
+            modelId='anthropic.claude-3-sonnet-20240229-v1:0',
+            contentType='application/json',
+            accept='application/json',
+            body=json.dumps({
+                "anthropic_version": "bedrock-2023-05-31",
+                "max_tokens": 500,
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": user_input
+                    }
+                ],
+                "temperature": 0.2,  # Lower temperature for more controlled outputs
+                "top_p": 0.9
+            })
+        )
+        
+        response_body = json.loads(response['body'].read().decode())
+        model_response = response_body['content'][0]['text']
+        
+        # Turn off the alarm
+        signal.alarm(0)
+        
+        return {
+            "statusCode": 200,
+            "body": model_response
+        }
+        
+    except TimeoutError:
+        # Handle timeout gracefully
+        return {
+            "statusCode": 408,
+            "body": "The model is taking too long to respond. Please try a simpler query."
+        }
+    except Exception as e:
+        # Handle other exceptions
+        signal.alarm(0)  # Turn off alarm
+        return {
+            "statusCode": 500,
+            "body": f"An error occurred: {str(e)}"
+        }
+```
+
+#### Step 2: Circuit breaker implementation:
+
+```python
+import boto3
+import json
+import os
+from datetime import datetime, timedelta
+import time
+
+# Use DynamoDB to track error rates
+dynamodb = boto3.resource('dynamodb')
+circuit_breaker_table = dynamodb.Table(os.environ['CIRCUIT_BREAKER_TABLE'])
+
+def lambda_handler(event, context):
+    service_name = event.get('serviceName', 'default-service')
+    
+    # Check if circuit is open (service disabled due to errors)
+    circuit_status = get_circuit_status(service_name)
+    
+    if circuit_status['status'] == 'OPEN':
+        # Circuit is open, check if we should try again
+        if datetime.now() >= circuit_status['reset_time']:
+            # Try half-open state
+            update_circuit_status(service_name, 'HALF-OPEN')
+        else:
+            # Still in cool-down period, use fallback
+            return invoke_fallback_service(event)
+    
+    # Circuit is CLOSED or HALF-OPEN, try the primary service
+    try:
+        # Call the primary service (e.g., Bedrock model)
+        bedrock = boto3.client('bedrock-runtime')
+        response = bedrock.invoke_model(
+            modelId=event.get('modelId', 'anthropic.claude-3-sonnet-20240229-v1:0'),
+            contentType='application/json',
+            accept='application/json',
+            body=json.dumps(event.get('requestBody', {}))
+        )
+        
+        # If we get here in HALF-OPEN state, close the circuit
+        if circuit_status['status'] == 'HALF-OPEN':
+            update_circuit_status(service_name, 'CLOSED')
+        
+        # Record successful call
+        record_call_result(service_name, True)
+        
+        return {
+            "statusCode": 200,
+            "body": json.loads(response['body'].read().decode())
+        }
+        
+    except Exception as e:
+        # Record failed call
+        record_call_result(service_name, False)
+        
+        # Check if we need to open the circuit
+        error_rate = get_error_rate(service_name)
+        if error_rate > 0.5:  # 50% error rate threshold
+            # Open the circuit
+            reset_time = datetime.now() + timedelta(minutes=5)  # 5-minute cool-down
+            update_circuit_status(service_name, 'OPEN', reset_time)
+        
+        # Use fallback for this request
+        return invoke_fallback_service(event)
+
+def get_circuit_status(service_name):
+    try:
+        response = circuit_breaker_table.get_item(
+            Key={'serviceName': service_name}
+        )
+        if 'Item' in response:
+            item = response['Item']
+            return {
+                'status': item.get('circuitStatus', 'CLOSED'),
+                'reset_time': datetime.fromisoformat(item.get('resetTime', datetime.now().isoformat()))
+            }
+        return {'status': 'CLOSED', 'reset_time': datetime.now()}
+    except Exception:
+        return {'status': 'CLOSED', 'reset_time': datetime.now()}
+
+def update_circuit_status(service_name, status, reset_time=None):
+    try:
+        item = {
+            'serviceName': service_name,
+            'circuitStatus': status,
+            'lastUpdated': datetime.now().isoformat()
+        }
+        if reset_time:
+            item['resetTime'] = reset_time.isoformat()
+        
+        circuit_breaker_table.put_item(Item=item)
+    except Exception as e:
+        print(f"Error updating circuit status: {e}")
+
+def record_call_result(service_name, success):
+    # Record call results for error rate calculation
+    timestamp = int(time.time())
+    try:
+        circuit_breaker_table.update_item(
+            Key={'serviceName': service_name},
+            UpdateExpression="SET calls = if_not_exists(calls, :empty_list) + :call",
+            ExpressionAttributeValues={
+                ':empty_list': [],
+                ':call': [{
+                    'timestamp': timestamp,
+                    'success': success
+                }]
+            }
+        )
+    except Exception as e:
+        print(f"Error recording call result: {e}")
+
+def get_error_rate(service_name):
+    try:
+        response = circuit_breaker_table.get_item(
+            Key={'serviceName': service_name}
+        )
+        
+        if 'Item' not in response or 'calls' not in response['Item']:
+            return 0.0
+        
+        # Consider only calls in the last 5 minutes
+        calls = response['Item']['calls']
+        current_time = int(time.time())
+        recent_calls = [call for call in calls if current_time - call['timestamp'] < 300]
+        
+        if not recent_calls:
+            return 0.0
+        
+        # Calculate error rate
+        failures = sum(1 for call in recent_calls if not call['success'])
+        return failures / len(recent_calls)
+    except Exception:
+        return 0.0
+
+def invoke_fallback_service(event):
+    # Implement fallback logic here (e.g., use a simpler model or canned responses)
+    return {
+        "statusCode": 200,
+        "body": {
+            "message": "Using fallback service due to primary service issues",
+            "fallbackResponse": "I apologize, but our advanced AI service is currently experiencing issues. Here's a basic response to your query..."
+        }
+    }
+```
+
+#### Step 2: IAM policy for resource boundaries:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel"
+      ],
+      "Resource": [
+        "arn:aws:bedrock:*:*:model/anthropic.claude-3-sonnet-20240229-v1:0"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceAccount": "${AWS::AccountId}"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "NumericLessThan": {
+          "bedrock:MaxTokens": "2000"
+        },
+        "NumericLessThanEquals": {
+          "bedrock:Temperature": "0.5"
+        }
+      }
+    }
+  ]
+}
+```
+
+#### Part 4: Model coordination system
+
+Step 1: Create a system that coordinates multiple foundation models:
+
+```python
+import boto3
+import json
+import os
+
+# Initialize clients
+bedrock = boto3.client('bedrock-runtime')
+lambda_client = boto3.client('lambda')
+
+def lambda_handler(event, context):
+    """
+    Model coordination system that selects the appropriate model based on the task
+    """
+    user_input = event.get('userInput', '')
+    task_type = determine_task_type(user_input)
+    
+    # Select model based on task type
+    if task_type == 'classification':
+        result = invoke_classification_model(user_input)
+    elif task_type == 'generation':
+        result = invoke_generation_model(user_input)
+    elif task_type == 'qa':
+        result = invoke_qa_model(user_input)
+    else:
+        # Default to general purpose model
+        result = invoke_general_model(user_input)
+    
+    return {
+        'statusCode': 200,
+        'body': result
+    }
+
+def determine_task_type(user_input):
+    """
+    Determine the type of task based on user input
+    """
+    # Use a lightweight model to classify the task
+    response = bedrock.invoke_model(
+        modelId='amazon.titan-text-express-v1',
+        contentType='application/json',
+        accept='application/json',
+        body=json.dumps({
+            "inputText": f"Classify the following user request into one of these categories: classification, generation, qa, general.\n\nUser request: {user_input}\n\nCategory:",
+            "textGenerationConfig": {
+                "maxTokenCount": 10,
+                "temperature": 0.0,
+                "topP": 0.9
+            }
+        })
+    )
+    
+    response_body = json.loads(response['body'].read().decode())
+    task_type = response_body['results'][0]['outputText'].strip().lower()
+    
+    # Normalize the response
+    if 'class' in task_type:
+        return 'classification'
+    elif 'gen' in task_type:
+        return 'generation'
+    elif 'qa' in task_type or 'question' in task_type:
+        return 'qa'
+    else:
+        return 'general'
+
+def invoke_classification_model(user_input):
+    """
+    Use a model optimized for classification tasks
+    """
+    response = bedrock.invoke_model(
+        modelId='amazon.titan-text-express-v1',
+        contentType='application/json',
+        accept='application/json',
+        body=json.dumps({
+            "inputText": user_input,
+            "textGenerationConfig": {
+                "maxTokenCount": 100,
+                "temperature": 0.0,
+                "topP": 0.9
+            }
+        })
+    )
+    
+    return json.loads(response['body'].read().decode())
+
+def invoke_generation_model(user_input):
+    """
+    Use a model optimized for creative generation
+    """
+    response = bedrock.invoke_model(
+        modelId='anthropic.claude-3-sonnet-20240229-v1:0',
+        contentType='application/json',
+        accept='application/json',
+        body=json.dumps({
+            "anthropic_version": "bedrock-2023-05-31",
+            "max_tokens": 1000,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": user_input
+                }
+            ],
+            "temperature": 0.7
+        })
+    )
+    
+    return json.loads(response['body'].read().decode())
+
+def invoke_qa_model(user_input):
+    """
+    Use a model optimized for question answering
+    """
+    response = bedrock.invoke_model(
+        modelId='anthropic.claude-3-haiku-20240307-v1:0',
+        contentType='application/json',
+        accept='application/json',
+        body=json.dumps({
+            "anthropic_version": "bedrock-2023-05-31",
+            "max_tokens": 500,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": user_input
+                }
+            ],
+            "temperature": 0.2
+        })
+    )
+    
+    return json.loads(response['body'].read().decode())
+
+def invoke_general_model(user_input):
+    """
+    Use a general purpose model
+    """
+    response = bedrock.invoke_model(
+        modelId='anthropic.claude-3-sonnet-20240229-v1:0',
+        contentType='application/json',
+        accept='application/json',
+        body=json.dumps({
+            "anthropic_version": "bedrock-2023-05-31",
+            "max_tokens": 500,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": user_input
+                }
+            ],
+            "temperature": 0.4
+        })
+    )
+    
+    return json.loads(response['body'].read().decode())
+```
+
+#### Part 5: Collaborative AI system with human-in-the-loop
+
+Step 1: Create a Step Functions workflow that incorporates human review:
+
+```json
+{
+  "Comment": "Human-in-the-Loop AI Workflow",
+  "StartAt": "GenerateInitialResponse",
+  "States": {
+    "GenerateInitialResponse": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:GenerateResponseFunction",
+        "Payload": {
+          "input.$": "$"
+        }
+      },
+      "Next": "EvaluateConfidence"
+    },
+    "EvaluateConfidence": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:EvaluateConfidenceFunction",
+        "Payload": {
+          "input.$": "$"
+        }
+      },
+      "Next": "ConfidenceCheck"
+    },
+    "ConfidenceCheck": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.confidence",
+          "NumericGreaterThan": 0.9,
+          "Next": "DeliverResponse"
+        },
+        {
+          "Variable": "$.sensitivity",
+          "StringEquals": "HIGH",
+          "Next": "RequestHumanReview"
+        }
+      ],
+      "Default": "RequestHumanReview"
+    },
+    "RequestHumanReview": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:CreateHumanTaskFunction",
+        "Payload": {
+          "input.$": "$"
+        }
+      },
+      "Next": "WaitForHumanReview"
+    },
+    "WaitForHumanReview": {
+      "Type": "Wait",
+      "SecondsPath": "$.waitTime",
+      "Next": "CheckHumanReviewStatus"
+    },
+    "CheckHumanReviewStatus": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:CheckHumanReviewStatusFunction",
+        "Payload": {
+          "input.$": "$"
+        }
+      },
+      "Next": "IsReviewComplete"
+    },
+    "IsReviewComplete": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.reviewStatus",
+          "StringEquals": "COMPLETED",
+          "Next": "ProcessHumanFeedback"
+        }
+      ],
+      "Default": "WaitForHumanReview"
+    },
+    "ProcessHumanFeedback": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:ProcessHumanFeedbackFunction",
+        "Payload": {
+          "input.$": "$"
+        }
+      },
+      "Next": "DeliverResponse"
+    },
+    "DeliverResponse": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:DeliverResponseFunction",
+        "Payload": {
+          "input.$": "$"
+        }
+      },
+      "End": true
+    }
+  }
+}
+```
+
+#### Step 2: Create a Lambda function to create a human review task:
+
+```python
+import boto3
+import json
+import os
+import time
+import uuid
+
+# Initialize clients
+bedrock = boto3.client('bedrock-runtime')
+lambda_client = boto3.client('lambda')
+
+# Configuration
+timeout_threshold = 30  # seconds
+max_tokens = 2000
+
+def lambda_handler(event, context):
+    """
+    Lambda function to create a human review task
+    """
+    try:
+        # Extract input
+        input_data = event.get('input', {})
+        
+        # Create human review task
+        response = lambda_client.invoke(
+            FunctionName='arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:CreateHumanTaskFunction',
+            Payload=json.dumps(input_data)
+        )
+        
+        # Return response
+        return {
+            'statusCode': 200,
+            'body': response['Payload'].read().decode()
+        }
+    except Exception as e:
+        return {
+            'statusCode': 500,
+            'body': str(e)
+        }
+```
+Successfully transferred back to supervisor
+
+## Task 2.2: Implement model deployment strategies.
+
 This lesson reviews AWS services to implement model deployment strategies.
 
 ### AWS services overview
@@ -1343,7 +6412,22 @@ Ensure you understand how to configure and implement the following steps:
 8. Develop comprehensive monitoring and testing frameworks to continuously evaluate model performance, resource utilization, and cost efficiency, enabling data-driven optimization decisions.
 
 ## Task 2.3: Design and implement enterprise integration architectures.
-This lesson reviews AWS services to design and implement enterprise integration architectures.
+
+This lesson is a high-level overview of the third task and how it aligns to the GenAI developer role.
+
+**As you review these lessons for Task 2.3, check that you understand how to do the following:**
+
+- Create enterprise connectivity solutions to seamlessly incorporate FM capabilities into existing enterprise environments (for example, by using API-based integrations with legacy systems, event-driven architectures to implement loose coupling, data synchronization patterns).
+
+- Develop integrated AI capabilities to enhance existing applications with GenAI functionality (for example, by using API Gateway to implement microservice integrations, Lambda functions for webhook handlers, Amazon EventBridge to implement event-driven integrations).
+
+- Create secure access frameworks to ensure appropriate security controls (for example, by using identity federation between FM services and enterprise systems, role-based access control for model and data access, least privilege API access to FMs).
+
+- Develop cross-environment AI solutions to ensure data compliance across jurisdictions while enabling FM access (for example, by using AWS Outposts for on-premises data integration, AWS Wavelength to perform edge deployments, secure routing between cloud and on-premises resources).
+
+- Implement CI/CD pipelines and GenAI gateway architectures to implement secure and compliant consumption patterns in enterprise environments (for example, by using AWS CodePipeline, AWS CodeBuild, automated testing frameworks for continuous deployment and testing of GenAI components with security scans and rollback support, centralized abstraction layers, observability and control mechanisms).
+
+
 
 ### AWS services overview
 
@@ -1648,6 +6732,2066 @@ As a GenAI developer, you need to understand how to create flexible model intera
 - Design multi-model ensemble systems with appropriate aggregation strategies: majority voting for classification tasks, weighted averaging for numeric predictions, and ranked fusion for retrieval tasks, with weights dynamically adjusted based on historical performance.
 	
 
+### Use Case
+
+A multinational financial institution with operations in more than 30 countries is undertaking a strategic initiative to integrate GenAI capabilities across its enterprise. The company aims to enhance customer experiences, improve operational efficiency, and drive innovation, while maintaining strict compliance with financial regulations and data sovereignty requirements.
+
+However, this transformation presents several challenges:
+ - Legacy systems built over decades contain critical financial data, but lack modern APIs. 
+ - Strict regulatory requirements vary across different jurisdictions. 
+ - High security standards for customer financial data. 
+ - Need for consistent AI capabilities across web, mobile, and branch applications. 
+ - Requirement for human oversight of AI generated content in regulated communications. 
+ - Continuous delivery of AI capabilities without disrupting critical financial operations.
+
+**Architecture**
+
+Let's walk through a possible solution for this use case. You can begin by analyzing existing enterprise systems to identify integration points, data formats, and protocols needed for foundation model integration.
+
+![Architecture Diagram for 2.3](2.3.arc.dia.png)
+
+**Enterprise Connectivity Architecture**
+
+![Connectivity Architecture](2.3.conn.arc.png)
+To implement a comprehensive connectivity architecture and integrate foundation models with existing systems, you can do the following:
+
+ - Implement **API Gateway** endpoints with appropriate request and response mappings to transform data between legacy systems and foundation models.
+ - Develop **Lambda** adapters to handle protocol conversions and data transformations between enterprise systems and foundation models. 
+  - Configure **Amazon EventBridge** rules and targets to implement event-driven architectures that loosely couple foundation models with enterprise systems.
+ - Create **Step Functions** workflows to orchestrate complex interactions between foundation models and multiple enterprise systems. 
+ - Implement data synchronization patterns using **AWS Glue** or **Amazon AppFlow** to ensure foundation models have access to current enterprise data. 
+ 
+Deploy and test integrations with appropriate monitoring and rollback mechanisms to ensure reliability.
+
+**Integrated AI Capabilities**
+
+To enhance customer facing applications with GenAI capabilities, you can implement a microservices architecture using **API Gateway** and **Lambda** functions. For example, you might do the following:
+- Identify opportunities to enhance existing applications with GenAI capabilities based on business value and technical feasibility.
+- Design API contracts for foundation model services that align with existing application architectures and requirements. 
+- Configure **API Gateway** with appropriate throttling, caching and monitoring to expose foundation models capabilities as microservices. 
+- Implement **Lambda** webhook handlers to process events from enterprise applications and invoke foundation models accordingly.
+- Set up **EventBridge** integrations to enable event-driven communication between applications and foundation models. 
+- Develop multi-level caching strategies to optimize performance and reduce cost for foundation model invocations. 
+- Create client libraries that streamline consumption of foundation model capabilities from various application frameworks.
+
+**Secure Access Framework**
+
+To implement a comprehensive security framework for foundation model access that meets this strict requirements of financial service regulations, you can do the following:
+- Analyze security requirements for foundation model access based on data sensitivity and compliance requirements.
+- Configure identity federation between enterprise identity providers and AWS using **AWS IAM Identity Center** or **Amazon Cognito**. 
+- Implement least privilege IAM policies with appropriate conditions for foundation model access. 
+- Set up fine-grained access controls using **Amazon Verified Permissions** based on user attributes and resource properties.
+- Configure encryption for data in transit and data at rest using **AWS Certificate Manager, ACM, and AWS Key Management Service, AWS KMS**.
+- Implement network security controls using **Virtual Private Cloud (VPC) endpoints**, **security groups** and **network access control lists (ACLs)**. 
+- Establish comprehensive logging and monitoring to detect and respond to security events.
+
+**Cross-Environment AI Solutions**
+
+To address data sovereignty requirements across different jurisdictions, you can implement a distributed architecture for foundation model deployment by doing the following:
+
+ - Analyze data residency and compliance requirements across different jurisdictions where the enterprise operates.
+ - Designing distributed architectures that respect data boundaries while enabling foundation model access. 
+ - Deploying **AWS Outposts** for on-premises foundation model inference on sensitive data. 
+ - Configuring **AWS Local Zones** and **AWS Wavelengths** deployments to reduce latency in specific geographic Regions.
+ - Implementing secure connectivity between cloud and on-premises resources using **AWS Direct Connect** and **AWS Transit Gateway**. 
+ - Setting up data replication mechanisms that respect compliance boundaries with appropriate filtering or anonymization. 
+ - Developing monitoring systems to verify foundation model deployments adhere to jurisdictional requirements. 
+  
+
+**CI/CD Pipelines and Gateway Architectures**
+
+Finally, you can implement a comprehensive, continuous integration and continuous delivery, CI/CD, pipeline for foundation model applications using **AWS CodePipeline** by doing the following.
+
+ - Designing CI/CD strategies with appropriate stages and quality gates for foundation model components. 
+ - Configuring **AWS CodePipeline** workflows for automated building, testing, and deployment of FM applications. 
+ - Setting up **AWS CodeBuild** projects with security scanning and quality checks for FM components.
+ - Implementing automated testing frameworks to validate foundation model behavior and performance. 
+ - Creating centralized GenAI gateway architectures for enterprise wide access control and governance.
+ - Configuring observability using CloudWatch, AWS X-Ray, and AWS CloudTrail for monitoring foundation model operations. 
+ - Establishing centralized policy enforcement with automated remediation for compliance violations.
+
+
+### Knowledge Check
+
+01/05
+
+**A GenAI developer needs to implement real-time trading signal generation using foundation models (FMs).**
+
+**Which combination of services provides the MOST efficient architecture for this requirement?**
+
+ a. Amazon API Gateway with REST APIs and AWS Lambda functions for synchronous processing\
+ b. WebSocket APIs with Amazon EventBridge and Amazon Kinesis Data Streams\
+ c. HTTP APIs with AWS Step Functions for orchestration\
+ d. Amazon Simple Queue Service (Amazon SQS) with periodic AWS Lambda polling
+
+
+02/05
+
+**A global financial services firm needs to deploy foundation models (FMs) for trading analytics while meeting data residency requirements and maintaining sub-millisecond latency.**
+
+**Which combination of deployment approaches is MOST appropriate?**
+
+ - Deploy all models to the cloud and access through virtual private network (VPN) connections.
+
+ - Use AWS Outposts for data residency and AWS Wavelength for low-latency processing.
+
+ - Replicate all data to the cloud for centralized processing.
+
+ - Use Lambda@Edge for model inference and caching.
+
+
+03/05
+
+
+**A financial services firm needs to implement secure access controls for their AI model APIs while maintaining sub-millisecond latency.**
+
+**Which security implementation is MOST appropriate?**
+
+ - Amazon API Gateway with AWS Lambda authorizers
+ - AWS Identity and Access Management (IAM) roles with resource-based policies and virtual private cloud (VPC) endpoints
+ - Amazon Cognito User Pools with JSON web token (JWT) validation
+ - Custom authorizers with database lookups
+
+
+ 04/05
+
+**When implementing event-driven AI integration, what is the MOST effective approach for handling model inference errors while maintaining system reliability?**
+
+ - Implement synchronous retries with exponential backoff.
+ - Use dead-letter queues with automated fallback models.
+ - Log errors and continue processing.
+ - Route all errors to human review.
+
+05/05
+
+**A GenAI developer needs to implement real-time model monitoring across distributed environments.**
+
+**Which combination of services provides the MOST comprehensive solution?**
+
+
+- Amazon CloudWatch with custom metrics and Amazon EventBridge rules
+- Prometheus with Grafana dashboards
+- Custom logging with Amazon OpenSearch Service
+- Amazon SageMaker Model Monitor
+
+
+### Bonus assignment
+
+#### Project architecture
+
+ - API Gateway for centralized access control
+ - Event-driven integration patterns
+ - Secure access frameworks
+ - Cross-environment data handling
+ - CI/CD pipeline for deployment
+
+#### Project components
+
+ - API-based integration layer
+ - Event-driven processing system
+ - Secure access framework
+ - Cross-environment data handling
+ - CI/CD pipeline for deployment
+
+#### Component 1: API-based integration layer
+
+Objective: Create an API Gateway that serves as a central access point for foundation model capabilities, simulating integration with legacy systems.Implementation
+
+**Step 1.1: Create an API Gateway**
+
+
+```bash
+# Create an API Gateway
+aws apigateway create-rest-api --name "GenAI-Integration-Gateway" --description "Enterprise GenAI Integration Gateway"
+
+# Get the API ID for use in subsequent commands
+API_ID=$(aws apigateway get-rest-apis --query "items[?name=='GenAI-Integration-Gateway'].id" --output text)
+
+# Create a resource
+PARENT_ID=$(aws apigateway get-resources --rest-api-id $API_ID --query "items[0].id" --output text)
+aws apigateway create-resource --rest-api-id $API_ID --parent-id $PARENT_ID --path-part "generate"
+
+# Get the resource ID
+RESOURCE_ID=$(aws apigateway get-resources --rest-api-id $API_ID --query "items[?pathPart=='generate'].id" --output text)
+
+# Create a POST method
+aws apigateway put-method --rest-api-id $API_ID --resource-id $RESOURCE_ID --http-method POST --authorization-type "COGNITO_USER_POOLS" --authorizer-id $AUTHORIZER_ID
+```
+
+**Step 1.2: Create a Lambda Function for API Processing**
+
+```bash
+Create a file named api_processor.py:
+
+
+import json
+import boto3
+import os
+import logging
+import uuid
+
+# Configure logging
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+# Initialize clients
+bedrock_runtime = boto3.client('bedrock-runtime')
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table(os.environ['REQUEST_TABLE'])
+
+def lambda_handler(event, context):
+    """
+    Process API requests and route to appropriate foundation models
+    """
+    try:
+        # Extract request body
+        body = json.loads(event['body']) if isinstance(event.get('body'), str) else event.get('body', {})
+        
+        # Extract request parameters
+        prompt = body.get('prompt', '')
+        model_id = body.get('model', 'anthropic.claude-v2')
+        department = body.get('department', 'general')
+        request_type = body.get('type', 'text-generation')
+        
+        # Log request for auditing
+        request_id = str(uuid.uuid4())
+        user_id = event['requestContext']['authorizer']['claims']['sub']
+        
+        # Store request in DynamoDB for tracking
+        table.put_item(
+            Item={
+                'requestId': request_id,
+                'userId': user_id,
+                'department': department,
+                'modelId': model_id,
+                'requestType': request_type,
+                'timestamp': int(context.timestamp),
+                'prompt': prompt
+            }
+        )
+        
+        # Process based on request type
+        if request_type == 'text-generation':
+            response = invoke_text_model(prompt, model_id)
+        elif request_type == 'image-generation':
+            response = invoke_image_model(prompt)
+        else:
+            return {
+                'statusCode': 400,
+                'headers': {'Content-Type': 'application/json'},
+                'body': json.dumps({'error': 'Unsupported request type'})
+            }
+        
+        # Return successful response
+        return {
+            'statusCode': 200,
+            'headers': {'Content-Type': 'application/json'},
+            'body': json.dumps({
+                'requestId': request_id,
+                'result': response,
+                'model': model_id
+            })
+        }
+        
+    except Exception as e:
+        logger.error(f"Error processing request: {str(e)}")
+        return {
+            'statusCode': 500,
+            'headers': {'Content-Type': 'application/json'},
+            'body': json.dumps({'error': str(e)})
+        }
+
+def invoke_text_model(prompt, model_id):
+    """
+    Invoke a text generation foundation model
+    """
+    if model_id.startswith('anthropic'):
+        response = bedrock_runtime.invoke_model(
+            modelId=model_id,
+            contentType='application/json',
+            accept='application/json',
+            body=json.dumps({
+                "prompt": f"\n\nHuman: {prompt}\n\nAssistant:",
+                "max_tokens_to_sample": 500,
+                "temperature": 0.7,
+                "top_p": 0.9,
+            })
+        )
+        response_body = json.loads(response['body'].read())
+        return response_body.get('completion', '')
+    
+    elif model_id.startswith('amazon'):
+        response = bedrock_runtime.invoke_model(
+            modelId=model_id,
+            contentType='application/json',
+            accept='application/json',
+            body=json.dumps({
+                "inputText": prompt,
+                "textGenerationConfig": {
+                    "maxTokenCount": 500,
+                    "temperature": 0.7,
+                    "topP": 0.9
+                }
+            })
+        )
+        response_body = json.loads(response['body'].read())
+        return response_body.get('results', [{}])[0].get('outputText', '')
+    
+    else:
+        raise ValueError(f"Unsupported model ID: {model_id}")
+
+def invoke_image_model(prompt):
+    """
+    Invoke an image generation model (placeholder)
+    """
+    # In a real implementation, this would call an image generation model
+    return f"Image generation requested for prompt: {prompt}"
+```
+
+**Step 1.3: Create a legacy system simulator**
+
+Create a file named legacy_system_simulator.py:
+
+```python
+import json
+import boto3
+import os
+import logging
+import csv
+import io
+from datetime import datetime
+
+# Configure logging
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+# Initialize S3 client
+s3 = boto3.client('s3')
+bucket_name = os.environ['DATA_BUCKET']
+
+def lambda_handler(event, context):
+    """
+    Simulate a legacy system that processes CSV data and requests AI analysis
+    """
+    try:
+        # Get the file from the event
+        file_key = event['Records'][0]['s3']['object']['key']
+        
+        # Download the CSV file
+        response = s3.get_object(Bucket=bucket_name, Key=file_key)
+        csv_content = response['Body'].read().decode('utf-8')
+        
+        # Process the CSV data
+        csv_reader = csv.DictReader(io.StringIO(csv_content))
+        records = list(csv_reader)
+        
+        # Generate summary request for AI analysis
+        summary_request = {
+            'prompt': f"Analyze the following {len(records)} records and provide insights: {json.dumps(records[:10])}...",
+            'model': 'anthropic.claude-v2',
+            'department': 'finance',
+            'type': 'text-generation'
+        }
+        
+        # Call the API Gateway (in a real scenario)
+        # Here we'll just log the request
+        logger.info(f"Legacy system would send request: {json.dumps(summary_request)}")
+        
+        # Store the processed result
+        timestamp = datetime.now().strftime('%Y%m%d-%H%M%S')
+        processed_key = f"processed/{os.path.basename(file_key)}-{timestamp}.json"
+        
+        s3.put_object(
+            Bucket=bucket_name,
+            Key=processed_key,
+            Body=json.dumps({
+                'source_file': file_key,
+                'record_count': len(records),
+                'processed_timestamp': timestamp,
+                'ai_request': summary_request
+            }),
+            ContentType='application/json'
+        )
+        
+        return {
+            'statusCode': 200,
+            'body': json.dumps({
+                'message': f"Processed {len(records)} records from {file_key}",
+                'output_file': processed_key
+            })
+        }
+        
+    except Exception as e:
+        logger.error(f"Error processing legacy data: {str(e)}")
+        return {
+            'statusCode': 500,
+            'body': json.dumps({'error': str(e)})
+        }
+
+```
+
+**Step 1.4: Create CloudFormation template for API integration layer**
+
+Create a file named api_integration_layer.yaml:
+
+```yaml
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Enterprise GenAI Integration Gateway - API Integration Layer'
+
+Parameters:
+  DataBucketName:
+    Type: String
+    Default: 'genai-enterprise-data'
+    Description: 'S3 bucket for storing data'
+
+Resources:
+  # DynamoDB Table for Request Tracking
+  RequestTrackingTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: GenAI-Request-Tracking
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: requestId
+          AttributeType: S
+        - AttributeName: userId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: requestId
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: UserIdIndex
+          KeySchema:
+            - AttributeName: userId
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+  # S3 Bucket for Data Storage
+  DataBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref DataBucketName
+      VersioningConfiguration:
+        Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+  # IAM Role for API Processor Lambda
+  ApiProcessorRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+      Policies:
+        - PolicyName: BedrockAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'bedrock:InvokeModel'
+                Resource: '*'
+        - PolicyName: DynamoDBAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'dynamodb:PutItem'
+                Resource: !GetAtt RequestTrackingTable.Arn
+
+  # IAM Role for Legacy System Simulator Lambda
+  LegacySystemRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+      Policies:
+        - PolicyName: S3Access
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 's3:GetObject'
+                  - 's3:PutObject'
+                Resource: 
+                  - !Sub '${DataBucket.Arn}/*'
+
+  # Lambda Function for API Processing
+  ApiProcessorFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: GenAI-API-Processor
+      Handler: index.lambda_handler
+      Role: !GetAtt ApiProcessorRole.Arn
+      Runtime: python3.9
+      Timeout: 30
+      MemorySize: 256
+      Environment:
+        Variables:
+          REQUEST_TABLE: !Ref RequestTrackingTable
+      Code:
+        ZipFile: |
+          # Code from api_processor.py
+
+  # Lambda Function for Legacy System Simulator
+  LegacySystemFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: GenAI-Legacy-System-Simulator
+      Handler: index.lambda_handler
+      Role: !GetAtt LegacySystemRole.Arn
+      Runtime: python3.9
+      Timeout: 30
+      MemorySize: 256
+      Environment:
+        Variables:
+          DATA_BUCKET: !Ref DataBucketName
+      Code:
+        ZipFile: |
+          # Code from legacy_system_simulator.py
+
+  # S3 Event Notification for Legacy System
+  LegacySystemEventNotification:
+    Type: AWS::S3::BucketNotification
+    Properties:
+      Bucket: !Ref DataBucket
+      LambdaConfigurations:
+        - Event: 's3:ObjectCreated:*'
+          Filter:
+            S3Key:
+              Suffix: '.csv'
+          Function: !GetAtt LegacySystemFunction.Arn
+
+  # Lambda Permission for S3 Invocation
+  LegacySystemPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref LegacySystemFunction
+      Principal: 's3.amazonaws.com'
+      SourceAccount: !Ref 'AWS::AccountId'
+      SourceArn: !GetAtt DataBucket.Arn
+
+Outputs:
+  ApiProcessorFunctionArn:
+    Description: 'ARN of the API Processor Lambda Function'
+    Value: !GetAtt ApiProcessorFunction.Arn
+  
+  RequestTrackingTableName:
+    Description: 'Name of the DynamoDB Request Tracking Table'
+    Value: !Ref RequestTrackingTable
+  
+  DataBucketName:
+    Description: 'Name of the S3 Data Bucket'
+    Value: !Ref DataBucket
+
+
+```
+
+**Component 2: Event-driven processing system**
+
+**Objective:** Create an event-driven architecture using EventBridge to process events from various sources and trigger appropriate AI workflows.
+
+**Step: 2.1 Create an EventBridge rule and target:**
+
+```bash
+# Create an EventBridge rule
+aws events put-rule \
+    --name "GenAI-ProcessingEvents" \
+    --event-pattern "{\"source\":[\"com.enterprise.application\"],\"detail-type\":[\"DocumentUploaded\",\"CustomerInteraction\",\"DataAnalysisRequest\"]}"
+
+# Create a Lambda function for event processing
+aws lambda create-function \
+    --function-name GenAI-EventProcessor \
+    --runtime python3.9 \
+    --role $LAMBDA_EXECUTION_ROLE \
+    --handler index.lambda_handler \
+    --zip-file fileb://event_processor.zip
+
+# Add the Lambda function as a target for the EventBridge rule
+aws events put-targets \
+    --rule "GenAI-ProcessingEvents" \
+    --targets "Id"="1","Arn"="$LAMBDA_FUNCTION_ARN"
+```
+
+**Step: 2.2 Create an Event processor Lambda function:**
+
+```python
+import json
+import boto3
+import os
+import logging
+from datetime import datetime
+
+# Configure logging
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+# Initialize clients
+bedrock_runtime = boto3.client('bedrock-runtime')
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table(os.environ['EVENT_TABLE'])
+
+def lambda_handler(event, context):
+    """
+    Process events from EventBridge and trigger appropriate AI workflows
+    """
+    try:
+        # Log the incoming event
+        logger.info(f"Received event: {json.dumps(event)}")
+        
+        # Extract event details
+        detail_type = event.get('detail-type', '')
+        source = event.get('source', '')
+        detail = event.get('detail', {})
+        
+        # Store the event in DynamoDB
+        event_id = detail.get('id', datetime.now().isoformat())
+        table.put_item(
+            Item={
+                'eventId': event_id,
+                'source': source,
+                'detailType': detail_type,
+                'timestamp': event.get('time', datetime.now().isoformat()),
+                'detail': detail
+            }
+        )
+        
+        # Process based on event type
+        if detail_type == 'DocumentUploaded':
+            response = process_document_upload(detail)
+        elif detail_type == 'CustomerInteraction':
+            response = process_customer_interaction(detail)
+        elif detail_type == 'DataAnalysisRequest':
+            response = process_data_analysis(detail)
+        else:
+            logger.warning(f"Unsupported event type: {detail_type}")
+            return {
+                'statusCode': 400,
+                'body': json.dumps({'error': f"Unsupported event type: {detail_type}"})
+            }
+        
+        # Return successful response
+        return {
+            'statusCode': 200,
+            'body': json.dumps({
+                'eventId': event_id,
+                'result': response
+            })
+        }
+        
+    except Exception as e:
+        logger.error(f"Error processing event: {str(e)}")
+        return {
+            'statusCode': 500,
+            'body': json.dumps({'error': str(e)})
+        }
+
+def process_document_upload(detail):
+    """
+    Process document upload events
+    """
+    document_type = detail.get('documentType', '')
+    content = detail.get('content', '')
+    
+    # Generate a prompt based on document type
+    if document_type == 'contract':
+        prompt = f"Analyze this contract and extract key terms, parties, and obligations: {content[:1000]}..."
+    elif document_type == 'report':
+        prompt = f"Summarize the main findings of this report: {content[:1000]}..."
+    else:
+        prompt = f"Analyze this document and provide key insights: {content[:1000]}..."
+    
+    # Invoke foundation model
+    response = bedrock_runtime.invoke_model(
+        modelId='anthropic.claude-v2',
+        contentType='application/json',
+        accept='application/json',
+        body=json.dumps({
+            "prompt": f"\n\nHuman: {prompt}\n\nAssistant:",
+            "max_tokens_to_sample": 1000,
+            "temperature": 0.2,
+            "top_p": 0.9,
+        })
+    )
+    
+    response_body = json.loads(response['body'].read())
+    return {
+        'documentType': document_type,
+        'analysis': response_body.get('completion', '')
+    }
+
+def process_customer_interaction(detail):
+    """
+    Process customer interaction events
+    """
+    interaction_type = detail.get('interactionType', '')
+    customer_id = detail.get('customerId', '')
+    content = detail.get('content', '')
+    
+    # Generate a prompt based on interaction type
+    if interaction_type == 'complaint':
+        prompt = f"Analyze this customer complaint and suggest a response: {content}"
+    elif interaction_type == 'inquiry':
+        prompt = f"Generate a helpful response to this customer inquiry: {content}"
+    else:
+        prompt = f"Analyze this customer interaction and provide insights: {content}"
+    
+    # Invoke foundation model
+    response = bedrock_runtime.invoke_model(
+        modelId='anthropic.claude-v2',
+        contentType='application/json',
+        accept='application/json',
+        body=json.dumps({
+            "prompt": f"\n\nHuman: {prompt}\n\nAssistant:",
+            "max_tokens_to_sample": 800,
+            "temperature": 0.4,
+            "top_p": 0.9,
+        })
+    )
+    
+    response_body = json.loads(response['body'].read())
+    return {
+        'interactionType': interaction_type,
+        'customerId': customer_id,
+        'suggestedResponse': response_body.get('completion', '')
+    }
+
+def process_data_analysis(detail):
+    """
+    Process data analysis requests
+    """
+    analysis_type = detail.get('analysisType', '')
+    data_source = detail.get('dataSource', '')
+    parameters = detail.get('parameters', {})
+    
+    # In a real implementation, this would fetch data from the specified source
+    # For this example, we'll simulate with a placeholder
+    
+    # Generate a prompt based on analysis type
+    prompt = f"Perform {analysis_type} analysis on data from {data_source} with parameters {json.dumps(parameters)}"
+    
+    # Invoke foundation model
+    response = bedrock_runtime.invoke_model(
+        modelId='anthropic.claude-v2',
+        contentType='application/json',
+        accept='application/json',
+        body=json.dumps({
+            "prompt": f"\n\nHuman: {prompt}\n\nAssistant:",
+            "max_tokens_to_sample": 1200,
+            "temperature": 0.2,
+            "top_p": 0.9,
+        })
+    )
+    
+    response_body = json.loads(response['body'].read())
+    return {
+        'analysisType': analysis_type,
+        'dataSource': data_source,
+        'results': response_body.get('completion', '')
+    }
+```
+
+
+**Step: 2.3: Create a sample event publisher**
+
+Create a file named event_publisher.py:
+
+```python
+import json
+import boto3
+import uuid
+import datetime
+import random
+
+# Initialize EventBridge client
+events = boto3.client('events')
+
+def publish_document_event():
+    """
+    Publish a sample document upload event
+    """
+    document_types = ['contract', 'report', 'policy', 'memo']
+    document_type = random.choice(document_types)
+    
+    event = {
+        'Source': 'com.enterprise.application',
+        'DetailType': 'DocumentUploaded',
+        'Time': datetime.datetime.now().isoformat(),
+        'Detail': json.dumps({
+            'id': str(uuid.uuid4()),
+            'documentType': document_type,
+            'uploadedBy': f'user-{random.randint(1000, 9999)}',
+            'timestamp': datetime.datetime.now().isoformat(),
+            'content': f"This is a sample {document_type} document content for testing purposes."
+        })
+    }
+    
+    response = events.put_events(Entries=[event])
+    print(f"Published DocumentUploaded event: {response}")
+
+def publish_customer_event():
+    """
+    Publish a sample customer interaction event
+    """
+    interaction_types = ['complaint', 'inquiry', 'feedback']
+    interaction_type = random.choice(interaction_types)
+    
+    content_templates = {
+        'complaint': "I've been having issues with your service for the past week. This is unacceptable.",
+        'inquiry': "Can you provide more information about your premium subscription options?",
+        'feedback': "I really enjoyed using your new feature. It has greatly improved my workflow."
+    }
+    
+    event = {
+        'Source': 'com.enterprise.application',
+        'DetailType': 'CustomerInteraction',
+        'Time': datetime.datetime.now().isoformat(),
+        'Detail': json.dumps({
+            'id': str(uuid.uuid4()),
+            'interactionType': interaction_type,
+            'customerId': f'cust-{random.randint(10000, 99999)}',
+            'channel': random.choice(['email', 'chat', 'phone']),
+            'timestamp': datetime.datetime.now().isoformat(),
+            'content': content_templates[interaction_type]
+        })
+    }
+    
+    response = events.put_events(Entries=[event])
+    print(f"Published CustomerInteraction event: {response}")
+
+def publish_data_analysis_event():
+    """
+    Publish a sample data analysis request event
+    """
+    analysis_types = ['trend', 'anomaly', 'forecast', 'segment']
+    analysis_type = random.choice(analysis_types)
+    
+    data_sources = ['sales_data', 'customer_metrics', 'product_performance', 'marketing_campaign']
+    data_source = random.choice(data_sources)
+    
+    event = {
+        'Source': 'com.enterprise.application',
+        'DetailType': 'DataAnalysisRequest',
+        'Time': datetime.datetime.now().isoformat(),
+        'Detail': json.dumps({
+            'id': str(uuid.uuid4()),
+            'analysisType': analysis_type,
+            'dataSource': data_source,
+            'requestedBy': f'analyst-{random.randint(100, 999)}',
+            'priority': random.choice(['high', 'medium', 'low']),
+            'parameters': {
+                'timeframe': random.choice(['daily', 'weekly', 'monthly']),
+                'segments': random.sample(['region', 'product', 'customer_type', 'channel'], k=random.randint(1, 3))
+            }
+        })
+    }
+    
+    response = events.put_events(Entries=[event])
+    print(f"Published DataAnalysisRequest event: {response}")
+
+if __name__ == "__main__":
+    # Publish one of each event type
+    publish_document_event()
+    publish_customer_event()
+    publish_data_analysis_event()
+```
+
+**Step: 2.4: Create a CloudFormation template for an event-driven system**
+
+Create a file named event_driven_system.yaml:
+
+```yaml
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Enterprise GenAI Integration Gateway - Event-Driven Processing System'
+
+Parameters:
+  RequestTrackingTableName:
+    Type: String
+    Default: 'GenAI-Request-Tracking'
+    Description: 'DynamoDB table for request tracking'
+
+Resources:
+  # DynamoDB Table for Event Tracking
+  EventTrackingTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: GenAI-Event-Tracking
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: eventId
+          AttributeType: S
+        - AttributeName: source
+          AttributeType: S
+      KeySchema:
+        - AttributeName: eventId
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: SourceIndex
+          KeySchema:
+            - AttributeName: source
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+  # IAM Role for Event Processor Lambda
+  EventProcessorRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect:Successfully transferred back to supervisor
+```
+
+
+## Task 2.4: Implement FM API integrations.
+
+This lesson is a high-level overview of the fourth task and how it aligns with the GenAI developer role.
+
+As you review these lessons for Task 2.4, check that you understand how to do the following:
+
+ - Create flexible model interaction systems (for example, by using Amazon Bedrock APIs to manage synchronous requests from various compute environments, language-specific AWS SDKs and Amazon SQS for asynchronous processing, API Gateway to provide custom API clients with request validation).
+
+ - Develop real-time AI interaction systems to provide immediate feedback from FM (for example, by using Amazon Bedrock streaming APIs for incremental response delivery, WebSockets or server-sent events to generate text in real time, API Gateway to implement chunked transfer encoding).
+
+ - Create resilient FM systems to ensure reliable operations (for example, by using the AWS SDK for exponential backoff, API Gateway to manage rate limiting, fallback mechanisms for graceful degradation, AWS X-Ray to provide observability across service boundaries).
+
+ - Develop intelligent model routing systems to optimize model selection (for example, by using application code to implement static routing configurations, Step Functions for dynamic content-based routing to specialized FMs, intelligent model routing based on metrics, API Gateway with request transformations for routing logic).
+
+### AWS Services Overview
+
+
+AWS offers services and tools to help to design and implement FM API integrations. These include **Amazon Bedrock, AWS SDKs, Amazon SQS, Amazon API Gateway, AWS X-Ray, AWS Step Functions, and more**.
+
+Understanding these services, how to configure them for specific use cases, and when to use them is crucial to your knowledge as a GenAI developer. 
+
+Use the following information to review your knowledge about these services.
+
+#### Create flexible model interaction systems
+
+As a GenAI developer, you need to understand how to create flexible model interaction systems. 
+
+**Ensure you understand how to do the following:**
+
+- Configure **Amazon Bedrock API request timeouts** based on model complexity and input size, with larger timeouts (up to 120 seconds) for complex generation tasks and shorter timeouts (15-30 seconds) for simpler inference operations.
+
+- Implement custom retry policies in **AWS SDK clients** with exponential backoff starting at 100ms with a backoff factor of 2 and maximum retry count of 3-5 attempts, adding jitter of ±100ms to prevent synchronized retries.
+
+- Set up **connection pooling** in HTTP clients with appropriate pool sizes (10-20 connections for each instance) and connection time to live (TTL) settings (60-300 seconds) to balance resource utilization with connection reuse efficiency.
+
+- Configure **SQS queues** for asynchronous processing with visibility timeouts matching expected processing duration (typically 5-15 minutes for complex FM tasks), with dead-letter queues configured after 3-5 failed attempts.
+
+- Implement **API Gateway request validators** with JSON Schema definitions that enforce parameter constraints like maximum token limits (typically 4096 tokens), minimum confidence thresholds (0.5-0.7), and required fields validation.
+
+- Set up **language-specific error handling patterns** that properly distinguish between retriable errors (429, 500, 503) and non-retriable errors (400, 401, 403), implementing appropriate logging and monitoring for each error category.
+
+- Configure **API Gateway usage plans** with appropriate throttling limits (for example, 10-50 requests per second) and burst capacities (2-3 times the steady-state rate) based on downstream model capacity and client requirements.
+
+
+#### Develop real-time AI interaction systems
+As a GenAI developer, you need to understand how to develop real-time AI interaction systems. 
+
+Ensure you understand how to do the following:
+
+- Implement client-side buffer management for **Amazon Bedrock** streaming responses with configurable buffer sizes (5-20 chunks) and flush triggers based on buffer fullness, time elapsed (100-500 ms), or semantic boundaries like sentence completion.
+
+- Configure **WebSocket connection keep-alive settings** with ping frames every 30-60 seconds and appropriate idle timeout settings (typically 10 minutes for interactive sessions) to maintain long-lived connections during model generation.
+
+- Set up **server-sent event handlers** with reconnection strategies that implement exponential backoff starting at 1 second with a maximum delay of 30-60 seconds, maintaining event IDs to resume streams after disconnection.
+
+- Configure **API Gateway chunked transfer encoding** with appropriate integration response templates that preserve Transfer-Encoding headers and chunk formatting, with chunk sizes optimized for network efficiency (typically 1-4 KB).
+
+- Implement **mobile client network handling** with connection state detection, automatic switching between Wi-Fi and cellular networks, and appropriate buffering strategies that adapt to available bandwidth and latency.
+
+- Set up **typing indicators and partial response rendering** with appropriate debounce settings (typically 300-500 ms) to balance responsiveness with network efficiency, implementing progressive rendering of model outputs as they arrive.
+
+- Configure **streaming response error handling** with appropriate client-side recovery logic that can handle mid-stream failures, implementing fallback to full-response APIs when streaming encounters persistent issues.
+
+
+#### Create resilient FM systems
+As a GenAI developer, you need to understand how to create resilient FM systems. 
+
+Ensure you understand how to do the following:
+
+- Configure **AWS SDK retry settings** with maximum attempts of 3-5, initial backoff of 100 ms, maximum backoff of 20 seconds, and jitter factor of 0.1-0.3 to handle transient foundation model API failures.
+
+- Implement **API Gateway throttling** at multiple levels with account-level limits (typically 10,000 requests per second [RPS]), stage-level limits (1,000-5,000 RPS), and route-level limits tailored to specific model capacities (50-500 RPS for complex models).
+
+- Design **fallback mechanisms** with clear degradation paths: primary model → smaller specialized model → cached responses → static responses, with appropriate quality thresholds and transition logic for each fallback level.
+
+- Configure **X-Ray tracing** with custom subsegments for key processing stages (preprocessing, model invocation, postprocessing), annotating traces with business-relevant attributes like model name, input complexity, and output quality metrics.
+
+- Set up **multi-dimensional monitoring** combining latency percentiles (p50, p90, p99), error rates by category, token throughput, and cost metrics in unified CloudWatch dashboards with appropriate alarm thresholds based on Service Level Agreements (SLAs).
+
+- Implement **circuit breaker patterns** with failure thresholds of 50% over 10 requests, recovery timeouts of 30-60 seconds, and half-open state testing that allows limited traffic (10-20% of normal) to verify recovery.
+
+- Configure **multi-Region resilience** with active-active or active-passive deployment models, implementing health checks with 30-second intervals and three consecutive failures to trigger failover, with Amazon Route 53 routing policies that respect regional compliance requirements.
+
+
+#### Develop intelligent model routing systems
+As a GenAI developer, you need to understand how to develop intelligent model routing systems.
+
+Ensure you understand how to do the following:
+
+- Implement **static routing configurations** with feature flags stored in Parameter Store, a capability of AWS Systems Manager or AWS AppConfig, enabling quick updates to routing logic without code deployments and gradual rollout of routing changes with appropriate monitoring.
+
+- Configure **Step Functions Choice states** with content-based routing conditions that evaluate input complexity (token count, semantic complexity scores), language detection results, and content classification to select appropriate specialized models.
+
+- Implement **metric-based routing systems** that track and store model performance metrics (latency, cost, quality scores) in DynamoDB or Amazon Timestream, with routing algorithms that optimize for specific objectives like cost efficiency or response quality.
+
+- Set up **API Gateway mapping templates** that transform requests based on custom headers (x-model-preference), query parameters (complexity, quality), or payload analysis, implementing appropriate default routing when selectors are not provided.
+
+- Configure **model cascading patterns** with confidence thresholds (typically 0.7-0.9) that determine when to escalate from specialized to general models, implementing appropriate metadata passing between cascade levels to preserve context.
+
+- Implement **A/B testing frameworks** that route 5-10% of traffic to candidate models, with appropriate tagging and logging to track performance metrics, and statistical analysis to determine significance of observed differences.
+
+- Design **multi-model ensemble systems** with appropriate aggregation strategies: majority voting for classification tasks, weighted averaging for numeric predictions, and ranked fusion for retrieval tasks, with weights dynamically adjusted based on historical performance.
+
+#### Self-Check Questions
+
+2.4.1 **A development team is building an application that needs to process customer inquiries using Amazon Bedrock foundation models. The application needs to handle varying loads throughout the day with peak traffic of 100 requests per minute.**
+
+**Which implementation approach provides the most scalable solution for managing these synchronous requests?**
+
+- Implement direct calls to Amazon Bedrock APIs from the frontend application
+- Create an Amazon API Gateway with Lambda integration that forwards requests to Amazon Bedrock
+- Use Amazon SQS to queue all requests and process them with a single Lambda function
+- Deploy Amazon EC2 instances to handle the requests and directly call Amazon Bedrock
+
+2.4.2 **A customer service application needs to display AI-generated responses to agents as they are being generated, rather than waiting for complete responses.**
+
+**Which implementation approach would best support this requirement?**
+
+- Use Amazon Bedrock's standard InvokeModel API and poll for results
+- Implement Amazon Bedrock streaming APIs with WebSockets to deliver incremental responses
+- Configure Amazon SNS to push notifications when responses are ready
+- Use Amazon Kinesis Data Streams to capture and display responses
+
+
+### AWS Skills
+
+####Create flexible model interaction systems
+
+For the exam, ensure you understand how to create flexible model interaction systems.
+
+Ensure you understand how to configure and implement the following steps:
+
+1. Analyze application requirements to determine appropriate interaction patterns (synchronous or asynchronous) based on response time expectations, throughput requirements, and client capabilities.
+
+2. Configure Amazon Bedrock API clients with appropriate request timeouts, retry settings, and connection pooling parameters based on model complexity and expected response times.
+
+3. Implement error handling strategies that distinguish between different error types (client errors, service errors, throttling) with appropriate recovery mechanisms for each scenario.
+
+4. Set up asynchronous processing workflows using SQS queues with appropriate message attributes, visibility timeouts, and dead-letter queue configurations for handling foundation model requests.
+
+5. Design and implement API Gateway resources with request validators that enforce parameter constraints, input formatting requirements, and security controls before requests reach foundation models.
+
+6. Develop language-specific client libraries using AWS SDKs that abstract the complexities of foundation model interactions, providing consistent error handling, retry logic, and response parsing.
+
+7. Implement appropriate monitoring and logging to track request volumes, response times, error rates, and cost metrics across different interaction patterns and foundation models.
+
+#### Develop real-time AI interaction systems
+
+For the exam, ensure you understand how to develop real-time AI interaction systems.
+
+Ensure you understand how to configure and implement the following steps:
+
+1. Analyze user experience requirements to determine appropriate streaming interaction patterns based on response time expectations, content type, and client capabilities.
+
+2. Configure Amazon Bedrock streaming API clients with appropriate buffer management, chunk processing, and error handling to provide smooth incremental response delivery.
+
+3. Implement WebSocket API handlers in API Gateway with appropriate connection management, message formatting, and error handling for bidirectional real-time communication.
+
+4. Set up server-sent event endpoints with appropriate content type headers, event formatting, and reconnection strategies for browser-based streaming applications.
+
+5. Develop client-side rendering components that can progressively display foundation model outputs as they arrive, with appropriate UI feedback to indicate ongoing generation.
+
+6. Implement chunked transfer encoding through API Gateway with appropriate integration response templates and content handling for HTTP-based streaming responses.
+
+7. Design and implement appropriate error recovery mechanisms for streaming interactions, handling mid-stream failures, network interruptions, and timeout scenarios gracefully.
+
+#### Create resilient FM systems
+
+For the exam, ensure you understand how to create resilient FM systems.
+
+Ensure you understand how to configure and implement the following steps:
+
+1. Analyze resilience requirements based on application criticality, expected traffic patterns, and available foundation model alternatives.
+
+2. Configure AWS SDK clients with appropriate retry policies, including maximum attempts, backoff factors, and jitter settings to handle transient foundation model API failures.
+
+3. Implement API Gateway throttling at multiple levels (account, stage, route) with appropriate limits based on downstream service capacities and client requirements.
+
+4. Design and implement fallback mechanisms with clear degradation paths between different foundation models, cached responses, and static fallbacks based on failure scenarios.
+
+5. Configure X-Ray tracing with custom segments, subsegments, and annotations to provide detailed visibility into foundation model request flows across service boundaries.
+
+6. Implement circuit breaker patterns with appropriate failure thresholds, recovery timeouts, and testing strategies to prevent cascading failures during service disruptions. Set up comprehensive monitoring and alerting using CloudWatch metrics, logs, and alarms to detect and respond to resilience issues before they impact users.
+
+#### Develop intelligent model routing systems
+
+For the exam, ensure you understand how to develop intelligent model routing systems.
+
+Ensure you understand how to configure and implement the following steps:
+
+1. Analyze model selection requirements based on available foundation models, content characteristics, performance metrics, and business objectives.
+
+2. Implement static routing configurations using feature flags or configuration services like AWS AppConfig or Parameter Store with appropriate update mechanisms and monitoring.
+
+3. Design and implement Step Functions workflows with Choice states that evaluate content characteristics and route requests to appropriate foundation models based on predefined rules.
+
+4. Develop metric collection and storage systems using services like DynamoDB or Timestream to track model performance across dimensions like latency, cost, and quality.
+
+5. Implement intelligent routing algorithms that optimize model selection based on historical performance metrics, current system load, and business priorities.
+
+6. Configure API Gateway mapping templates that transform requests based on headers, query parameters, or payload content to implement routing logic at the API layer.
+
+7. Design and implement A/B testing frameworks to evaluate new routing strategies, with appropriate metrics collection, statistical analysis, and gradual rollout capabilities.
+
+
+2.4.3 **Your team has implemented an application using Amazon Bedrock APIs, but occasionally encounters throttling errors during peak usage.**
+
+**Which combination of techniques would create the most resilient system?**
+
+- Increase provisioned capacity and implement custom retry logic
+- Implement AWS SDK exponential backoff, circuit breakers, and fallback mechanisms
+- Switch to a larger foundation model that can handle more requests
+- Deploy the application in multiple AWS regions and use Route 53 for failover
+
+2.4.4 **A developer is designing an API for a chatbot application that needs to validate requests before sending them to Amazon Bedrock.**
+
+**Which API Gateway feature should be used to ensure requests contain all required fields and adhere to size limitations?**
+
+ - API Gateway Caching
+ - Request Mapping Templates
+ - Request Validators with JSON Schema
+ - API Gateway Usage Plans
+
+### Use Case
+
+To build an enterprise grade assistant platform for healthcare. Let's say that your company developed an AI assistant platform for healthcare professionals that supports clinical decision making, medical documentation, and patient engagement across hospital environments.
+
+The platform has several business requirements:
+- Support multiple interaction patterns from various hospital systems and devices.
+- Provide real-time AI assistance during time-sensitive clinical workflows.
+- Ensure reliable operation during network disruptions or service degradation.
+- Optimize model selection based on medical specialties and clinical context.
+- Maintain compliance with healthcare regulations while scaling across facilities.
+
+Let's walk through a possible solution for this use case. 
+
+**Architecture**
+
+![Use case architecture for 2.4](2.4.flex.fm.interaction.png)
+
+**Flexible model interaction systems**
+
+One solution is to implement **Amazon Bedrock APIs** with four or five second timeouts for synchronous clinical queries, configuring custom retry logic with exponential backoff and jitter to handle peak hospital traffic.
+
+Now for post encounter documentation, you can deploy **Amazon Simple Queue Service (Amazon SQS)**, with 10 minute visibility timeouts and dead letter queues, allowing clinicians to submit requests and continue patient care while processing occurs asynchronously.
+
+Then, you can configure **API Gateway** with the JSON Schema validators to check for required medical context fields and validate terminology against standardized codes, implementing usage plans with department specific throttling limits.
+
+
+**Real-time AI assistance**
+
+Next, you develop cross platform client libraries using AWS SDKs with standardized error handling and timeout configurations based on clinical workflow criticality. Now, for time sensitive clinical workflows, you can implement **Amazon Bedrock streaming APIs** with optimized buffer management that prioritizes rendering clinical information first, enabling healthcare professionals to begin reviewing AI generated clinical decision support while complete analyses are still generating.
+
+Meanwhile, for patient education applications, you can set up **server sent events** with event IDs that enabled stream resumption after network interruptions, implementing progressive rendering of health content with medical terminology explanations.
+
+**Resilient FM Systems**
+
+Next, to ensure reliable operation, you configure **AWS SDK clients** with carefully tuned retry policies and implement priority queuing for emergency requests. Additionally, you deploy multi-layered **API Gateway throttling** with limits calibrated to hospital sizes and usage patterns, configuring burst capacities to handle shift changes and morning rounds.
+
+You can also implement fallback mechanisms with a degradation path from specialized medical models to general purpose models with medical prompts, then to Retrieval Augmented Generation, RAG, using hospital knowledge bases, and finally to rule-based systems for critical functions.
+
+Additionally, you can deploy **X-Ray tracing** with custom annotations for clinical workflows to capture context.
+
+Let's say that the platform uses **AppConfig** to manage static routing configurations.
+
+
+Now, for complex cases spanning multiple specialties, you can implement **Step Functions** with choice states to evaluate patient data and medical codes to select appropriate specialized models with parallel execution from multi-specialty consultations.
+
+And finally, you can develop a metrics-based routing system that tracks diagnostic accuracy, response quality, and response time in **Amazon Timestream** to continuously optimize model selection.
+
+And you also implement API Gateway mapping templates that apply specialty specific prompts and formatting based on clinical context headers with A/B testing capabilities.
+
+
+### Knowledge Check
+
+01/05
+
+**You're implementing real-time document analysis for a financial trading system that requires immediate feedback during document review.**
+
+**Which combination of services and configurations provides the MOST efficient architecture for this requirement?**
+
+- Amazon API Gateway REST APIs with AWS Lambda polling and Amazon CloudWatch metrics
+- Amazon API Gateway WebSocket APIs with Amazon Bedrock streaming and chunked transfer encoding
+- HTTP APIs with AWS Step Functions for orchestration and Amazon Simple Queue Service (Amazon SQS) for queuing
+- Amazon Simple Queue Service (Amazon SQS) with AWS Lambda consumers and periodic status checks
+
+02/05
+
+**A financial services company needs to implement resilient error handling for its foundation model (FM) system that processes sensitive trading documents.**
+
+**Which approaches provide the MOST robust error management while maintaining system stability? (Select TWO.)**
+
+- Implement constant retry intervals with maximum attempts.
+- Configure exponential backoff with jitter in SDK settings.
+- Use synchronous retries for immediate recovery.
+- Implement circuit breakers with fallback mechanisms.
+- Set up fixed timeouts with linear retry patterns.
+
+03/05
+
+**You need to implement real-time content moderation using foundation models (FMs) with immediate feedback.**
+
+**Which approach using AWS SDKs and services provides the MOST efficient streaming implementation?**
+
+- Configure Amazon Simple Queue Service (Amazon SQS) queues with long polling for batch processing.
+- Implement BedrockRuntimeClient with response streaming and WebSocket integration.
+- Use standard invoke_model calls with periodic status checks.
+- Set up async AWS Lambda invocations with Amazon Simple Queue Service (Amazon SQS) for results.
+
+
+04/05
+
+**Which service configurations provide the MOST comprehensive observability for a distributed foundation model (FM) system? (Select TWO.)**
+
+- Amazon CloudWatch metrics with default logging
+- AWS X-Ray tracing with custom subsegments and annotations
+- Simple console logging in AWS Lambda functions
+- Distributed tracing with custom span attributes and service maps
+- Standard Amazon API Gateway access logs
+
+05/05
+
+**You are implementing a dynamic routing system for multiple foundation models (FMs) that handles different document types.**
+
+**Which combination of services provides the MOST efficient routing architecture while maintaining observability?**
+
+- Amazon API Gateway with direct AWS Lambda integrations for each model
+- AWS Step Functions with dynamic Choice states and AWS X-Ray tracing
+- Amazon Simple Queue Service (Amazon SQS) queues with different message groups for each model
+- Amazon EventBridge rules with static routing patterns
+
+
+
+### Bonus assignment
+
+Project components
+
+#### Part 1: Synchronous document analysis API
+
+**Tasks:**
+ - Create an Amazon API Gateway REST API with request validation
+ - Implement a Lambda function that calls Amazon Bedrock for real-time document analysis
+ - Configure proper IAM roles and permissions for Bedrock access
+ - Add request validation using JSON Schema to ensure proper document format
+
+**Implementation Details:**
+
+ - Set up API Gateway with a POST /analyze endpoint
+ - Create JSON Schema validator to ensure requests include document text and metadata
+ - Implement Lambda function using AWS SDK for Python (Boto3) to call Bedrock
+ - Configure appropriate timeouts and memory allocation
+
+#### Part 2: Asynchronous processing pipeline
+
+**Tasks:**
+
+ - Create an Amazon SQS queue for document processing
+ - Implement a Lambda function to receive large documents and queue them for processing
+ - Create a consumer Lambda function that processes queued documents using Bedrock
+ - Store results in Amazon S3 and notify users via Amazon SNS
+
+**Implementation Details:**
+
+ - Configure SQS with appropriate retention and visibility settings
+ - Implement producer Lambda with proper error handling
+ - Create consumer Lambda with batch processing capabilities
+ - Set up dead-letter queue for failed processing attempts
+
+#### Part 3: Real-time interactive analysis
+
+**Tasks:**
+
+ - Implement WebSocket support in API Gateway
+ - Create a Lambda function that uses Bedrock streaming APIs
+ - Deliver incremental model responses to clients in real-time
+ - Implement a simple web frontend to demonstrate the streaming capability
+
+**Implementation Details:**
+
+ - Configure API Gateway WebSocket API with connect/disconnect/message routes
+ - Implement Lambda function using Bedrock streaming APIs
+ - Create connection management using DynamoDB
+ - Build a simple HTML/JavaScript frontend to display streaming responses
+
+#### Part 4: Resilient system implementation
+
+**Tasks:**
+
+ - Implement exponential backoff and retry logic for Bedrock API calls
+ - Add circuit breaker patterns to prevent cascading failures
+ - Create fallback mechanisms when primary models are unavailable
+ - Implement observability using AWS X-Ray and CloudWatch
+
+**Implementation Details:**
+
+ - Configure AWS SDK retry settings with jitter
+ - Implement circuit breaker using state tracking in DynamoDB
+ - Create fallback logic to use alternative models when primary fails
+ - Enable X-Ray tracing across all Lambda functions and API Gateway
+
+#### Part 5: Intelligent model routing
+
+**Tasks:**
+
+ - Create an AWS Step Functions workflow for content-based routing
+ - Implement a classifier Lambda to analyze document characteristics
+ - Configure routing logic to select optimal foundation models
+ - Add performance tracking to improve routing decisions over time
+
+**Implementation Details:**
+
+ - Design Step Functions workflow with decision logic
+ - Implement document classifier using simpler, faster models
+ - Create routing rules based on document type, length, and complexity
+ - Store performance metrics in DynamoDB for future optimization
+
+**Implementation details**
+
+**Step 1: Set up environment**
+
+ - Create a new directory for your project
+ - Initialize a new Python project with virtual environment
+ - Install required dependencies:
+
+```bash
+pip install boto3 aws-xray-sdk aws-lambda-powertools
+```
+Set up AWS CLI with appropriate credentials
+
+**Step 2: Create base infrastructure**
+
+Use AWS CDK or CloudFormation to create:
+
+ - API Gateway REST API
+ - API Gateway WebSocket API
+ - SQS Queue and Dead Letter Queue
+ - S3 bucket for document storage
+ - DynamoDB tables for connection management and metrics
+ - IAM roles with least privilege permissions
+
+**Step 3: Implement synchronous API**
+
+Create Lambda function for synchronous processing:
+
+```python
+import boto3
+import json
+from aws_lambda_powertools import Logger, Tracer
+from aws_lambda_powertools.utilities.typing import LambdaContext
+
+logger = Logger()
+tracer = Tracer()
+bedrock_runtime = boto3.client('bedrock-runtime')
+
+@tracer.capture_lambda_handler
+def handler(event, context: LambdaContext):
+    try:
+        # Extract document from request
+        body = json.loads(event['body'])
+        document_text = body['document']
+        document_type = body.get('type', 'general')
+        
+        # Select model based on document type
+        model_id = "anthropic.claude-v2" if document_type == "legal" else "amazon.titan-text-express-v1"
+        
+        # Call Bedrock API
+        response = bedrock_runtime.invoke_model(
+            modelId=model_id,
+            body=json.dumps({
+                "prompt": f"Analyze the following document and provide key insights:\n\n{document_text}",
+                "max_tokens_to_sample": 500,
+                "temperature": 0.7
+            })
+        )
+        
+        response_body = json.loads(response['body'].read())
+        
+        return {
+            'statusCode': 200,
+            'body': json.dumps({
+                'analysis': response_body['completion'],
+                'model_used': model_id
+            })
+        }
+    except Exception as e:
+        logger.exception("Error processing document")
+        return {
+            'statusCode': 500,
+            'body': json.dumps({'error': str(e)})
+        }
+```
+
+**Create API Gateway with request validation:**
+
+```json
+{
+  "type": "object",
+  "required": ["document"],
+  "properties": {
+    "document": {"type": "string", "minLength": 10},
+    "type": {"type": "string", "enum": ["general", "legal", "technical", "feedback"]}
+  }
+}
+```
+
+**Step 4: Implement asynchronous pipeline**
+
+Create producer Lambda:
+
+```python
+import boto3
+import json
+import os
+from aws_lambda_powertools import Logger
+
+logger = Logger()
+sqs = boto3.client('sqs')
+QUEUE_URL = os.environ['DOCUMENT_QUEUE_URL']
+
+def handler(event, context):
+    try:
+        body = json.loads(event['body'])
+        document_text = body['document']
+        document_type = body.get('type', 'general')
+        
+        # Check document size
+        if len(document_text) > 10000:
+            # Send to SQS for async processing
+            sqs.send_message(
+                QueueUrl=QUEUE_URL,
+                MessageBody=json.dumps({
+                    'document': document_text,
+                    'type': document_type,
+                    'callback_url': body.get('callback_url')
+                })
+            )
+            
+            return {
+                'statusCode': 202,
+                'body': json.dumps({
+                    'message': 'Document queued for processing',
+                    'job_id': context.aws_request_id
+                })
+            }
+        else:
+            # For smaller documents, process synchronously
+            # [Implementation similar to synchronous handler]
+            pass
+            
+    except Exception as e:
+        logger.exception("Error queueing document")
+        return {
+            'statusCode': 500,
+            'body': json.dumps({'error': str(e)})
+        }
+```
+
+**Create consumer Lambda:**
+
+```python
+import boto3
+import json
+import os
+from aws_lambda_powertools import Logger
+from botocore.config import Config
+
+logger = Logger()
+s3 = boto3.client('s3')
+sns = boto3.client('sns')
+BUCKET_NAME = os.environ['RESULTS_BUCKET']
+SNS_TOPIC = os.environ['NOTIFICATION_TOPIC']
+
+# Configure boto3 with exponential backoff
+bedrock_runtime = boto3.client(
+    'bedrock-runtime',
+    config=Config(
+        retries={
+            'max_attempts': 3,
+            'mode': 'adaptive'
+        }
+    )
+)
+
+def handler(event, context):
+    for record in event['Records']:
+        try:
+            message = json.loads(record['body'])
+            document = message['document']
+            doc_type = message['type']
+            callback_url = message.get('callback_url')
+            
+            # Process with Bedrock
+            response = bedrock_runtime.invoke_model(
+                modelId="anthropic.claude-v2",
+                body=json.dumps({
+                    "prompt": f"Analyze this {doc_type} document thoroughly:\n\n{document}",
+                    "max_tokens_to_sample": 1000,
+                    "temperature": 0.2
+                })
+            )
+            
+            response_body = json.loads(response['body'].read())
+            analysis = response_body['completion']
+            
+            # Store results in S3
+            result_key = f"analyses/{context.aws_request_id}.json"
+            s3.put_object(
+                Bucket=BUCKET_NAME,
+                Key=result_key,
+                Body=json.dumps({
+                    'document_type': doc_type,
+                    'analysis': analysis
+                })
+            )
+            
+            # Notify user
+            if callback_url:
+                sns.publish(
+                    TopicArn=SNS_TOPIC,
+                    Message=json.dumps({
+                        'result_url': f"s3://{BUCKET_NAME}/{result_key}",
+                        'callback_url': callback_url
+                    })
+                )
+                
+        except Exception as e:
+            logger.exception(f"Error processing message {record['messageId']}")
+            # Message will return to queue based on visibility timeout
+```
+
+**Step 5: Implement real-time streaming**
+
+Create WebSocket handler:
+
+```python
+import boto3
+import json
+import os
+from aws_lambda_powertools import Logger
+
+logger = Logger()
+dynamodb = boto3.resource('dynamodb')
+connections_table = dynamodb.Table(os.environ['CONNECTIONS_TABLE'])
+apigw_management = boto3.client('apigatewaymanagementapi', 
+                               endpoint_url=os.environ['WEBSOCKET_API_ENDPOINT'])
+bedrock_runtime = boto3.client('bedrock-runtime')
+
+def handler(event, context):
+    route_key = event.get('requestContext', {}).get('routeKey')
+    connection_id = event.get('requestContext', {}).get('connectionId')
+    
+    if route_key == '$connect':
+        # Store connection ID
+        connections_table.put_item(
+            Item={'connectionId': connection_id, 'status': 'connected'}
+        )
+        return {'statusCode': 200}
+        
+    elif route_key == '$disconnect':
+        # Remove connection ID
+        connections_table.delete_item(Key={'connectionId': connection_id})
+        return {'statusCode': 200}
+        
+    elif route_key == 'sendMessage':
+        # Process message and stream response
+        body = json.loads(event.get('body', '{}'))
+        prompt = body.get('prompt', '')
+        
+        try:
+            # Call Bedrock with streaming
+            response = bedrock_runtime.invoke_model_with_response_stream(
+                modelId='anthropic.claude-v2',
+                body=json.dumps({
+                    "prompt": prompt,
+                    "max_tokens_to_sample": 500
+                })
+            )
+            
+            # Process streaming response
+            for event in response.get('body'):
+                if 'chunk' in event:
+                    chunk_data = json.loads(event['chunk']['bytes'])
+                    if 'completion' in chunk_data:
+                        # Send each chunk to the WebSocket client
+                        apigw_management.post_to_connection(
+                            ConnectionId=connection_id,
+                            Data=json.dumps({'chunk': chunk_data['completion']})
+                        )
+            
+            # Signal completion
+            apigw_management.post_to_connection(
+                ConnectionId=connection_id,
+                Data=json.dumps({'status': 'complete'})
+            )
+            
+            return {'statusCode': 200}
+            
+        except Exception as e:
+            logger.exception("Error streaming response")
+            try:
+                apigw_management.post_to_connection(
+                    ConnectionId=connection_id,
+                    Data=json.dumps({'error': str(e)})
+                )
+            except:
+                pass
+            return {'statusCode': 500}
+```
+
+**Create a simple HTML/JS frontend:**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-time AI Analysis</title>
+    <style>
+        #response {
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+        }
+        .typing {
+            border-right: 2px solid black;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Real-time Document Analysis</h1>
+    <textarea id="prompt" rows="5" cols="60" placeholder="Enter your document here..."></textarea>
+    <br>
+    <button id="analyze">Analyze Document</button>
+    <h2>Analysis (Real-time):</h2>
+    <div id="response"></div>
+
+    <script>
+        const wsUrl = 'YOUR_WEBSOCKET_URL';
+        let socket;
+        
+        document.getElementById('analyze').addEventListener('click', () => {
+            const prompt = document.getElementById('prompt').value;
+            const responseDiv = document.getElementById('response');
+            
+            responseDiv.innerHTML = '<span class="typing"></span>';
+            
+            // Connect WebSocket if not connected
+            if (!socket || socket.readyState !== WebSocket.OPEN) {
+                socket = new WebSocket(wsUrl);
+                
+                socket.onopen = () => {
+                    socket.send(JSON.stringify({
+                        action: 'sendMessage',
+                        prompt: prompt
+                    }));
+                };
+                
+                socket.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    
+                    if (data.chunk) {
+                        const typing = responseDiv.querySelector('.typing');
+                        if (typing) {
+                            typing.insertAdjacentText('beforebegin', data.chunk);
+                        } else {
+                            responseDiv.insertAdjacentText('beforeend', data.chunk);
+                        }
+                    } else if (data.status === 'complete') {
+                        const typing = responseDiv.querySelector('.typing');
+                        if (typing) typing.remove();
+                    } else if (data.error) {
+                        responseDiv.innerHTML += `<br><span style="color:red">Error: ${data.error}</span>`;
+                    }
+                };
+                
+                socket.onerror = (error) => {
+                    responseDiv.innerHTML += `<br><span style="color:red">WebSocket Error</span>`;
+                    console.error('WebSocket Error:', error);
+                };
+            } else {
+                socket.send(JSON.stringify({
+                    action: 'sendMessage',
+                    prompt: prompt
+                }));
+            }
+        });
+    </script>
+</body>
+</html>
+```
+
+**Step 6: Implement resilient system**
+
+Create a resilient Bedrock client utility:
+
+```python
+import boto3
+import time
+import json
+import random
+from botocore.exceptions import ClientError
+from aws_lambda_powertools import Logger
+
+logger = Logger()
+dynamodb = boto3.resource('dynamodb')
+circuit_breaker_table = dynamodb.Table('ModelCircuitBreaker')
+
+class ResilientBedrockClient:
+    def __init__(self, model_id="anthropic.claude-v2", fallback_model_id="amazon.titan-text-express-v1"):
+        self.bedrock_runtime = boto3.client('bedrock-runtime')
+        self.primary_model_id = model_id
+        self.fallback_model_id = fallback_model_id
+        self.max_retries = 3
+        self.base_delay = 0.1  # 100ms
+    
+    def _check_circuit_breaker(self, model_id):
+        """Check if circuit breaker is open for this model"""
+        try:
+            response = circuit_breaker_table.get_item(Key={'model_id': model_id})
+            if 'Item' in response:
+                status = response['Item']
+                if status.get('circuit_open', False):
+                    # Check if we should try again (circuit half-open)
+                    last_failure = status.get('last_failure', 0)
+                    if time.time() - last_failure > 60:  # Try again after 1 minute
+                        return False
+                    return True
+            return False
+        except Exception as e:
+            logger.warning(f"Error checking circuit breaker: {e}")
+            return False
+    
+    def _open_circuit(self, model_id):
+        """Open circuit breaker for this model"""
+        try:
+            circuit_breaker_table.put_item(Item={
+                'model_id': model_id,
+                'circuit_open': True,
+                'last_failure': int(time.time()),
+                'failure_count': 1
+            })
+        except Exception as e:
+            logger.warning(f"Error opening circuit breaker: {e}")
+    
+    def _increment_failure(self, model_id):
+        """Increment failure count and possibly open circuit"""
+        try:
+            response = circuit_breaker_table.update_item(
+                Key={'model_id': model_id},
+                UpdateExpression="SET failure_count = if_not_exists(failure_count, :zero) + :inc, last_failure = :time",
+                ExpressionAttributeValues={
+                    ':inc': 1,
+                    ':zero': 0,
+                    ':time': int(time.time())
+                },
+                ReturnValues="UPDATED_NEW"
+            )
+            
+            # Open circuit if too many failures
+            if 'Attributes' in response and response['Attributes'].get('failure_count', 0) >= 5:
+                self._open_circuit(model_id)
+                
+        except Exception as e:
+            logger.warning(f"Error incrementing failure count: {e}")
+    
+    def _close_circuit(self, model_id):
+        """Close circuit breaker after successful call"""
+        try:
+            circuit_breaker_table.update_item(
+                Key={'model_id': model_id},
+                UpdateExpression="SET circuit_open = :false, failure_count = :zero",
+                ExpressionAttributeValues={
+                    ':false': False,
+                    ':zero': 0
+                }
+            )
+        except Exception as e:
+            logger.warning(f"Error closing circuit breaker: {e}")
+    
+    def invoke_model(self, prompt, max_tokens=500, temperature=0.7):
+        """Invoke model with resilience patterns"""
+        # Try primary model first, unless circuit is open
+        model_id = self.primary_model_id
+        if self._check_circuit_breaker(model_id):
+            logger.info(f"Circuit open for {model_id}, using fallback")
+            model_id = self.fallback_model_id
+        
+        # Try with exponential backoff
+        retry_count = 0
+        while retry_count <= self.max_retries:
+            try:
+                response = self.bedrock_runtime.invoke_model(
+                    modelId=model_id,
+                    body=json.dumps({
+                        "prompt": prompt,
+                        "max_tokens_to_sample": max_tokens,
+                        "temperature": temperature
+                    })
+                )
+                
+                # Success - close circuit if it was the primary model
+                if model_id == self.primary_model_id:
+                    self._close_circuit(model_id)
+                
+                return json.loads(response['body'].read())
+                
+            except ClientError as e:
+                error_code = e.response.get('Error', {}).get('Code')
+                
+                # Handle specific errors
+                if error_code == 'ThrottlingException' or error_code == '429':
+                    # Exponential backoff with jitter
+                    delay = (2 ** retry_count * self.base_delay) + (random.random() * 0.1)
+                    logger.warning(f"Rate limited, retrying in {delay:.2f}s")
+                    time.sleep(delay)
+                    retry_count += 1
+                    continue
+                    
+                elif error_code == 'ServiceUnavailable' or error_code == '503':
+                    # Record failure and try fallback if this is the primary model
+                    self._increment_failure(model_id)
+                    if model_id == self.primary_model_id:
+                        logger.warning(f"Service unavailable for {model_id}, trying fallback")
+                        model_id = self.fallback_model_id
+                        retry_count = 0  # Reset retry count for fallback
+                        continue
+                
+                # For other errors, increment failure and re-raise
+                self._increment_failure(model_id)
+                raise
+                
+            except Exception as e:
+                # Unexpected error
+                logger.exception(f"Unexpected error invoking model: {e}")
+                self._increment_failure(model_id)
+                
+                # Try fallback if this was the primary
+                if model_id == self.primary_model_id:
+                    model_id = self.fallback_model_id
+                    retry_count = 0
+                    continue
+                raise
+                
+            finally:
+                retry_count += 1
+        
+        # If we get here, all retries failed
+        raise Exception("Maximum retries exceeded")
+
+```
+
+**Step 7: Implement intelligent model routing**
+
+Create Step Functions workflow definition:
+
+```json
+{
+  "Comment": "Document Analysis Workflow with Intelligent Routing",
+  "StartAt": "ClassifyDocument",
+  "States": {
+    "ClassifyDocument": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${DocumentClassifierFunction}",
+        "Payload": {
+          "document.$": "$.document",
+          "metadata.$": "$.metadata"
+        }
+      },
+      "Next": "RouteByDocumentType",
+      "ResultPath": "$.classification"
+    },
+    "RouteByDocumentType": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.classification.type",
+          "StringEquals": "legal",
+          "Next": "ProcessLegalDocument"
+        },
+        {
+          "Variable": "$.classification.type",
+          "StringEquals": "technical",
+          "Next": "ProcessTechnicalDocument"
+        },
+        {
+          "Variable": "$.classification.type",
+          "StringEquals": "feedback",
+          "Next": "ProcessFeedbackDocument"
+        }
+      ],
+      "Default": "ProcessGeneralDocument"
+    },
+    "ProcessLegalDocument": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${LegalProcessorFunction}",
+        "Payload": {
+          "document.$": "$.document",
+          "classification.$": "$.classification"
+        }
+      },
+      "Next": "RecordMetrics",
+      "ResultPath": "$.result"
+    },
+    "ProcessTechnicalDocument": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${TechnicalProcessorFunction}",
+        "Payload": {
+          "document.$": "$.document",
+          "classification.$": "$.classification"
+        }
+      },
+      "Next": "RecordMetrics",
+      "ResultPath": "$.result"
+    },
+    "ProcessFeedbackDocument": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${FeedbackProcessorFunction}",
+        "Payload": {
+          "document.$": "$.document",
+          "classification.$": "$.classification"
+        }
+      },
+      "Next": "RecordMetrics",
+      "ResultPath": "$.result"
+    },
+    "ProcessGeneralDocument": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${GeneralProcessorFunction}",
+        "Payload": {
+          "document.$": "$.document",
+          "classification.$": "$.classification"
+        }
+      },
+      "Next": "RecordMetrics",
+      "ResultPath": "$.result"
+    },
+    "RecordMetrics": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${MetricsRecorderFunction}",
+        "Payload": {
+          "document_id.$": "$.metadata.document_id",
+          "classification.$": "$.classification",
+          "processing_time.$": "$.result.processing_time",
+          "model_used.$": "$.result.model_used",
+          "confidence_score.$": "$.result.confidence_score"
+        }
+      },
+      "End": true
+    }
+  }
+}
+```
+
+Create document classifier Lambda:
+
+```python
+import boto3
+import json
+import time
+from aws_lambda_powertools import Logger, Tracer
+
+logger = Logger()
+tracer = Tracer()
+bedrock_runtime = boto3.client('bedrock-runtime')
+
+@tracer.capture_lambda_handler
+def handler(event, context):
+    start_time = time.time()
+    document = event.get('document', '')
+    
+    # Use a smaller, faster model for classification
+    try:
+        # Use a lightweight model for classification
+        response = bedrock_runtime.invoke_model(
+            modelId="amazon.titan-text-express-v1",
+            body=json.dumps({
+                "inputText": f"Classify this document into one of these categories: legal, technical, feedback, general. Only respond with the category name.\n\n{document[:1000]}",
+                "textGenerationConfig": {
+                    "maxTokenCount": 10,
+                    "temperature": 0.0,
+                    "topP": 0.9
+                }
+            })
+        )
+        
+        response_body = json.loads(response['body'].read())
+        classification = response_body['results'][0]['outputText'].strip().lower()
+        
+        # Normalize classification
+        if 'legal' in classification:
+            doc_type = 'legal'
+        elif 'technical' in classification:
+            doc_type = 'technical'
+        elif 'feedback' in classification:
+            doc_type = 'feedback'
+        else:
+            doc_type = 'general'
+        
+        # Determine complexity based on length and other factors
+        complexity = 'high' if len(document) > 5000 else 'medium' if len(document) > 1000 else 'low'
+        
+        processing_time = time.time() - start_time
+        
+        return {
+            'type': doc_type,
+            'complexity': complexity,
+            'processing_time': processing_time,
+            'confidence': 0.85  # In a real system,Successfully transferred back to supervisor
+```
+
+
 ## Task 2.5: Implement application integration patterns and development tools.
 	This lesson reviews AWS services to design and implement application integration patterns and development tools.
 	
@@ -1660,108 +8804,1206 @@ Understanding these services, how to configure them for specific use cases, and 
 Use the following information to review your knowledge about these services.
 
 
-Create FM API interfaces for GenAI workloads
+#### Create FM API interfaces for GenAI workloads
 As a GenAI developer, you need to understand how to create FM API interfaces for GenAI workloads. 
 
 Ensure you understand how to do the following:
 
-Configure API Gateway WebSocket APIs with appropriate connection management settings, including idle timeout values of 10-30 minutes for long-running GenAI tasks and ping/pong intervals of 30-60 seconds to maintain connection stability during extended model generation.
+ - Configure API Gateway WebSocket APIs with appropriate connection management settings, including idle timeout values of 10-30 minutes for long-running GenAI tasks and ping/pong intervals of 30-60 seconds to maintain connection stability during extended model generation.
+ - Implement token windowing techniques that dynamically manage context windows by tracking token usage and implementing sliding window approaches that retain critical context while removing less relevant content when approaching token limits (typically 4K-32K tokens).
+ - Design tiered retry strategies with different backoff patterns based on error types: immediate retry for 429 errors with jitter of 100-300 ms, exponential backoff starting at 500 ms for 5xx errors, and circuit breaking after 3-5 failures within a 30-second window.
+ - Configure API Gateway integration timeouts that align with model complexity (30-60 seconds for standard requests, more than 120 seconds for complex generations) while implementing client-side progress indicators for requests approaching timeout thresholds.
+ - Implement request chunking strategies that break large prompts into manageable segments with appropriate context preservation between chunks, using techniques like recursive summarization to maintain coherence across chunk boundaries.
+ - Configure API Gateway response templates that properly handle streaming responses with appropriate content-type headers (text/event-stream for server-side encryption [SSE], application/json for chunked JSON) and chunk formatting to ensure compatibility with various client libraries.
+ - Implement content filtering middleware that validates both input prompts and model responses against content policies, with appropriate logging of policy violations and fallback mechanisms when content is rejected.
 
-Implement token windowing techniques that dynamically manage context windows by tracking token usage and implementing sliding window approaches that retain critical context while removing less relevant content when approaching token limits (typically 4K-32K tokens).
+#### Develop accessible AI interfaces
 
-Design tiered retry strategies with different backoff patterns based on error types: immediate retry for 429 errors with jitter of 100-300 ms, exponential backoff starting at 500 ms for 5xx errors, and circuit breaking after 3-5 failures within a 30-second window.
-
-Configure API Gateway integration timeouts that align with model complexity (30-60 seconds for standard requests, more than 120 seconds for complex generations) while implementing client-side progress indicators for requests approaching timeout thresholds.
-
-Implement request chunking strategies that break large prompts into manageable segments with appropriate context preservation between chunks, using techniques like recursive summarization to maintain coherence across chunk boundaries.
-
-Configure API Gateway response templates that properly handle streaming responses with appropriate content-type headers (text/event-stream for server-side encryption [SSE], application/json for chunked JSON) and chunk formatting to ensure compatibility with various client libraries.
-
-Implement content filtering middleware that validates both input prompts and model responses against content policies, with appropriate logging of policy violations and fallback mechanisms when content is rejected.
-
-
-Develop accessible AI interfaces
 As a GenAI developer, you need to understand how to develop accessible AI interfaces. 
 
 Ensure you understand how to do the following:
 
-Create Amplify UI components with progressive enhancement that gracefully handle varying levels of client capabilities, implementing skeleton screens during model generation and appropriate error states for failed requests.
-
-Implement OpenAPI specifications with comprehensive schema definitions for GenAI endpoints, including detailed parameter descriptions, example values, and response schemas that document token usage, generation metadata, and potential error conditions.
-
-Configure Bedrock Prompt Flows with appropriate node connections that implement business logic validation between steps, with error handling paths that provide meaningful feedback to non-technical users when inputs don't meet requirements.
-
-Design multimodal input components that handle text, images, and document uploads with appropriate validation, preprocessing, and format conversion before foundation model submission.
-
-Implement progressive rendering patterns that display model outputs incrementally as they're generated, with appropriate buffering strategies that balance responsiveness (updating every 50-200 ms) with rendering efficiency.
-
-Configure client-side caching strategies for common AI responses with appropriate cache invalidation triggers based on input similarity thresholds (typically 85-95% similarity) and time-based expiration policies.
-
-Design accessibility-enhanced AI interfaces with appropriate ARIA attributes, keyboard navigation support, and screen reader compatibility for AI-generated content, implementing proper loading states and progress indicators.
+ - Create Amplify UI components with progressive enhancement that gracefully handle varying levels of client capabilities, implementing skeleton screens during model generation and appropriate error states for failed requests.
+ - Implement OpenAPI specifications with comprehensive schema definitions for GenAI endpoints, including detailed parameter descriptions, example values, and response schemas that document token usage, generation metadata, and potential error conditions.
+ - Configure Bedrock Prompt Flows with appropriate node connections that implement business logic validation between steps, with error handling paths that provide meaningful feedback to non-technical users when inputs don't meet requirements.
+ - Design multimodal input components that handle text, images, and document uploads with appropriate validation, preprocessing, and format conversion before foundation model submission.
+ - Implement progressive rendering patterns that display model outputs incrementally as they're generated, with appropriate buffering strategies that balance responsiveness (updating every 50-200 ms) with rendering efficiency.
+ - Configure client-side caching strategies for common AI responses with appropriate cache invalidation triggers based on input similarity thresholds (typically 85-95% similarity) and time-based expiration policies.
+ - Design accessibility-enhanced AI interfaces with appropriate ARIA attributes, keyboard navigation support, and screen reader compatibility for AI-generated content, implementing proper loading states and progress indicators.
 
 
-Create business system enhancements
+#### Create business system enhancements
 As a GenAI developer, you need to understand how to create business system enhancements. 
 
 Ensure you understand how to do the following:
 
-Implement Lambda functions that enhance CRM systems with sentiment analysis of customer interactions, configuring appropriate triggers based on interaction events and integration points that update customer records with derived insights.
+ - Implement Lambda functions that enhance CRM systems with sentiment analysis of customer interactions, configuring appropriate triggers based on interaction events and integration points that update customer records with derived insights.
+ - Configure Step Functions workflows for document processing with parallel execution states for concurrent analysis of different document sections, implementing appropriate aggregation steps and quality thresholds before updating downstream systems.
+ - Set up Amazon Q Business data sources with appropriate refresh schedules (daily for frequently changing content, weekly for stable documentation), implementing custom document parsers for proprietary formats and metadata extraction for improved relevance.
+ - Design Amazon Bedrock Data Automation workflows with appropriate validation checkpoints that verify data quality before proceeding to subsequent steps, implementing notification mechanisms when human review is required.
+ - Implement bidirectional synchronization between AI-enhanced systems and existing business applications, with appropriate conflict resolution strategies and audit logging of AI-driven changes.
+ - Configure custom metrics collection for business key performance indicators (KPIs) impacted by AI enhancements, with appropriate baseline comparisons and statistical significance testing to validate improvement claims.
+ - Design hybrid human-AI workflows with appropriate handoff points based on confidence thresholds (typically 80-90% for critical decisions), implementing clear indicators of AI-generated content compared to human-verified content.
 
-Configure Step Functions workflows for document processing with parallel execution states for concurrent analysis of different document sections, implementing appropriate aggregation steps and quality thresholds before updating downstream systems.
+#### Enhance developer productivity
 
-Set up Amazon Q Business data sources with appropriate refresh schedules (daily for frequently changing content, weekly for stable documentation), implementing custom document parsers for proprietary formats and metadata extraction for improved relevance.
-
-Design Amazon Bedrock Data Automation workflows with appropriate validation checkpoints that verify data quality before proceeding to subsequent steps, implementing notification mechanisms when human review is required.
-
-Implement bidirectional synchronization between AI-enhanced systems and existing business applications, with appropriate conflict resolution strategies and audit logging of AI-driven changes.
-
-Configure custom metrics collection for business key performance indicators (KPIs) impacted by AI enhancements, with appropriate baseline comparisons and statistical significance testing to validate improvement claims.
-
-Design hybrid human-AI workflows with appropriate handoff points based on confidence thresholds (typically 80-90% for critical decisions), implementing clear indicators of AI-generated content compared to human-verified content.
-
-
-Enhance developer productivity
-
-Develop advanced GenAI applications
-As a GenAI developer, you need to understand how to develop advanced GenAI applications.
+As a GenAI developer, you need to understand how to enhance developer productivity.
 
 Ensure you understand how to do the following:
 
-Configure AWS Strands Agents with appropriate tool configurations that include parameter validation, error handling, and rate limiting to prevent resource exhaustion during agent execution.
+ - Configure AWS Strands Agents with appropriate tool configurations that include parameter validation, error handling, and rate limiting to prevent resource exhaustion during agent execution.
+ - Implement AWS Agent Squad orchestration with specialized agent roles and well-defined communication protocols between agents, configuring appropriate supervision mechanisms for complex multi-agent workflows.
+ - Design Step Functions workflows for agent orchestration with appropriate state transitions based on agent outputs, implementing validation steps between agent handoffs and recovery mechanisms for agent failures.
+ - Configure prompt chaining patterns in Amazon Bedrock with appropriate context preservation between chain steps, implementing techniques like compression, summarization, or key information extraction to maintain critical context within token limits.
+ - Implement Retrieval Augmented Generation (RAG) patterns with dynamic retrieval strategies that adjust search parameters based on query complexity, implementing re-ranking algorithms that prioritize relevant information for prompt inclusion.
+ - Design feedback loops that capture model performance metrics and user interactions to continuously improve prompts, with A/B testing frameworks that evaluate prompt variations against defined quality metrics.
+ - Implement hybrid orchestration patterns that combine declarative workflows (Step Functions) with reactive event processing (EventBridge) to create flexible, event-driven agent systems that can respond to changing conditions.
 
-Implement AWS Agent Squad orchestration with specialized agent roles and well-defined communication protocols between agents, configuring appropriate supervision mechanisms for complex multi-agent workflows.
+#### Improve troubleshooting efficiency
 
-Design Step Functions workflows for agent orchestration with appropriate state transitions based on agent outputs, implementing validation steps between agent handoffs and recovery mechanisms for agent failures.
-
-Configure prompt chaining patterns in Amazon Bedrock with appropriate context preservation between chain steps, implementing techniques like compression, summarization, or key information extraction to maintain critical context within token limits.
-
-Implement Retrieval Augmented Generation (RAG) patterns with dynamic retrieval strategies that adjust search parameters based on query complexity, implementing re-ranking algorithms that prioritize relevant information for prompt inclusion.
-
-Design feedback loops that capture model performance metrics and user interactions to continuously improve prompts, with A/B testing frameworks that evaluate prompt variations against defined quality metrics.
-
-Implement hybrid orchestration patterns that combine declarative workflows (Step Functions) with reactive event processing (EventBridge) to create flexible, event-driven agent systems that can respond to changing conditions.
-
-
-Improve troubleshooting efficiency
 As a GenAI developer, you need to understand how to improve troubleshooting efficiency.
 
 Ensure you understand how to do the following:
 
-Configure CloudWatch Logs Insights queries that identify patterns in prompt-response pairs, with filters for high-latency responses, error conditions, and unexpected token usage to quickly isolate problematic interactions.
-
-Implement X-Ray tracing with custom annotations that capture GenAI-specific context like prompt complexity metrics, token counts, and model parameters to correlate performance issues with specific input characteristics.
-
-Design Amazon Q Developer error pattern recognition rules tailored to common GenAI failure modes, with appropriate remediation suggestions for issues like context length errors, content policy violations, and hallucination patterns.
-
-Configure centralized prompt registries with versioning and performance metrics that enable quick identification of which prompt versions are associated with specific issues or performance degradation.
-
-Implement synthetic monitoring for GenAI endpoints that regularly tests with representative prompts, tracking performance trends and detecting degradation before it impacts users.
-
-Design debugging tools that visualize attention patterns and token influence in model outputs to help developers understand why specific generations occurred and how to adjust prompts for better results.
-
-Configure comprehensive logging pipelines that capture the full context of GenAI interactions including preprocessing steps, retrieval results, and post-processing transformations to enable end-to-end analysis of issues.
+ - Configure CloudWatch Logs Insights queries that identify patterns in prompt-response pairs, with filters for high-latency responses, error conditions, and unexpected token usage to quickly isolate problematic interactions.
+ - Implement X-Ray tracing with custom annotations that capture GenAI-specific context like prompt complexity metrics, token counts, and model parameters to correlate performance issues with specific input characteristics.
+ - Design Amazon Q Developer error pattern recognition rules tailored to common GenAI failure modes, with appropriate remediation suggestions for issues like context length errors, content policy violations, and hallucination patterns.
+ - Configure centralized prompt registries with versioning and performance metrics that enable quick identification of which prompt versions are associated with specific issues or performance degradation.
+ - Implement synthetic monitoring for GenAI endpoints that regularly tests with representative prompts, tracking performance trends and detecting degradation before it impacts users.
+ - Design debugging tools that visualize attention patterns and token influence in model outputs to help developers understand why specific generations occurred and how to adjust prompts for better results.
+ - Configure comprehensive logging pipelines that capture the full context of GenAI interactions including preprocessing steps, retrieval results, and post-processing transformations to enable end-to-end analysis of issues.
 
 
+### Review AWS Skills
+
+AWS skills to design and implement application integration patterns and development tools.
+
+#### Create FM API interfaces for GenAI workloads
+
+For the exam, ensure you understand how to create FM API interfaces for GenAI workloads.
+
+Ensure you understand how to configure and implement the following steps:
+
+1. Analyze the specific requirements of GenAI workloads, including response streaming needs, expected token usage patterns, and timeout considerations based on model complexity and use cases.
+
+2. Configure API Gateway with appropriate endpoint types (REST, HTTP, or WebSocket) based on interaction patterns, implementing resource paths and methods that align with foundation model capabilities.
+
+3. Implement streaming response handling through API Gateway by configuring integration response templates with appropriate content-type headers and chunk formatting, testing with various client libraries to ensure compatibility.
+
+4. Develop token limit management strategies including dynamic prompt compression, context windowing techniques, and truncation algorithms that preserve critical information while staying within model token constraints.
+
+5. Design and implement comprehensive retry strategies with appropriate backoff patterns, jitter, and circuit breakers based on error types, implementing different handling for throttling errors compared to model timeouts.
+
+6. Configure appropriate timeouts at multiple levels (client, API Gateway, Lambda, model invocation) based on expected processing times for different request types, implementing client-side progress indicators for long-running requests.
+
+7. Develop request validation and transformation logic that ensures inputs meet model requirements, implementing appropriate error handling and feedback mechanisms when validation fails.
+
+#### Develop accessible AI interfaces
+
+For the exam, ensure you understand how to develop accessible AI interfaces.
+
+Ensure you understand how to configure and implement the following steps:
+
+1. Analyze user personas and accessibility requirements to determine appropriate interface patterns for different user groups, considering technical expertise, device constraints, and accessibility needs.
+
+2. Design and implement Amplify UI components with progressive enhancement that provide intuitive interfaces for AI interaction, implementing appropriate loading states, error handling, and accessibility attributes.
+
+3. Create comprehensive OpenAPI specifications that document all foundation model endpoints, including detailed parameter descriptions, example requests/responses, and error scenarios to enable API-first development.
+
+4. Configure Amazon Bedrock Prompt Flows with appropriate nodes and connections that implement business logic, error handling, and data transformations, testing with representative inputs to validate workflow behavior.
+
+5. Implement multimodal input handling for text, images, and documents with appropriate validation and preprocessing, ensuring formats are compatible with foundation model requirements.
+
+6. Develop progressive rendering patterns that display model outputs incrementally as they're generated, implementing appropriate buffering and rendering strategies based on content type and user experience requirements.
+
+7. Design and implement appropriate feedback mechanisms that help users understand AI capabilities and limitations, including confidence indicators, source citations, and explanations of AI-generated content.
+
+#### Create business system enhancements
+
+For the exam, ensure you understand how to create business system enhancements.
+
+Ensure you understand how to configure and implement the following steps:
+
+1. Analyze existing business systems to identify integration points and enhancement opportunities, considering data flows, API capabilities, and business processes that could benefit from AI augmentation.
+
+2. Develop Lambda functions that enhance CRM systems by implementing event handlers for customer interactions, processing data through appropriate foundation models, and updating customer records with derived insights.
+
+3. Design and implement Step Functions workflows for document processing with appropriate states for document ingestion, preprocessing, model invocation, post-processing, and result delivery to downstream systems.
+
+4. Configure Amazon Q Business data sources with appropriate connectors, authentication mechanisms, and indexing settings, implementing custom document processors for proprietary formats and metadata extraction.
+
+5. Set up Amazon Bedrock Data Automation workflows with appropriate triggers, data transformation steps, and validation checkpoints, implementing notification mechanisms for exceptions that require human intervention.
+
+6. Implement bidirectional synchronization between AI-enhanced systems and existing business applications, developing appropriate conflict resolution strategies and audit logging mechanisms.
+
+7. Design and implement measurement frameworks to evaluate the business impact of AI enhancements, establishing baseline metrics and implementing tracking for KPIs.
+
+#### Enhance developer productivity
+
+For the exam, ensure you understand how to enhance developer productivity.
+
+Ensure you understand how to configure and implement the following steps:
+
+1. Analyze development workflows to identify opportunities for AI-assisted productivity enhancements, considering code generation, refactoring, testing, and optimization activities.
+
+2. Configure Amazon Q Developer for code generation with appropriate context inclusion that incorporates project-specific conventions, implementing workflows that integrate generated code into existing development processes.
+
+3. Develop code refactoring pipelines that use Amazon Q to identify improvement opportunities, implementing prioritization mechanisms based on complexity, usage patterns, and business impact.
+
+4. Implement API assistance workflows that analyze API usage patterns and suggest optimizations, developing custom rules that align with project-specific best practices and performance requirements.
+
+5. Design and implement AI-assisted testing frameworks that generate test cases based on code analysis, developing validation mechanisms to ensure generated tests provide meaningful coverage.
+
+6. Configure performance profiling workflows that identify optimization opportunities in GenAI applications, implementing recommendations for memory management, concurrency, and caching strategies.
+
+7. Develop knowledge sharing mechanisms that capture project-specific patterns and lessons learned, implementing retrieval systems that provide context-aware assistance during development.
+
+#### Develop advanced GenAI applications
+
+For the exam, ensure you understand how to develop advanced GenAI applications.
+
+Ensure you understand how to configure and implement the following steps:
+
+1. Analyze complex use cases that require sophisticated AI capabilities, identifying opportunities for agent-based solutions, workflow orchestration, and advanced prompt engineering techniques.
+
+2. Configure AWS Strands Agents with appropriate tools, memory mechanisms, and reasoning capabilities, implementing validation logic for tool inputs/outputs and error handling strategies.
+
+3. Design and implement AWS Agent Squad orchestration with specialized agent roles and communication protocols, developing supervision mechanisms that ensure coherent multi-agent behavior.
+
+4. Create Step Functions workflows for agent orchestration with appropriate state transitions, implementing validation steps between agent handoffs and recovery mechanisms for agent failures.
+
+5. Implement prompt chaining patterns in Amazon Bedrock with appropriate context preservation between chain steps, developing techniques to maintain critical information within token limits.
+
+6. Design and implement RAG patterns with dynamic retrieval strategies, developing ranking algorithms that prioritize relevant information for prompt inclusion.
+
+7. Create feedback loops that capture performance metrics and user interactions to continuously improve agent behavior, implementing A/B testing frameworks to evaluate different approaches.
+
+#### Improve troubleshooting efficiency
+
+For the exam, ensure you understand how to improve troubleshooting efficiency.
+
+Ensure you understand how to configure and implement the following steps:
+
+1. Analyze common failure patterns in foundation model applications to develop targeted troubleshooting strategies, considering prompt issues, model limitations, and integration challenges.
+
+2. Configure CloudWatch Logs Insights queries that identify patterns in prompt-response pairs, developing filters for high-latency responses, error conditions, and unexpected token usage.
+
+3. Implement X-Ray tracing with custom annotations that capture GenAI-specific context, developing visualization approaches that highlight performance bottlenecks and error sources.
+
+4. Configure Amazon Q Developer with custom error pattern recognition rules, developing remediation suggestions for common GenAI failure modes like context-length errors and content policy violations.
+
+5. Design and implement centralized prompt registries with versioning and performance metrics, developing analysis tools that correlate prompt variations with success rates and performance characteristics.
+
+6. Create synthetic monitoring for GenAI endpoints that regularly tests with representative prompts, implementing alerting mechanisms that detect degradation before it impacts users.
+
+7. Develop comprehensive logging pipelines that capture the full context of GenAI interactions, implementing analysis tools that enable end-to-end troubleshooting of complex issues.
+
+
+### Self Assessment
+
+2.5.1 **Your GenAI application is experiencing high latency when making calls to foundation models.**
+
+**Which approach would be most effective for optimizing performance?**
+- Increase the Lambda function memory allocation
+- Implement request batching and response caching
+- Switch to a smaller foundation model
+- Deploy the application in multiple AWS regions
+
+2.5.2 **Your company wants to enhance its customer relationship management (CRM) system by automatically generating personalized follow-up emails based on customer interaction notes.**
+
+**Which implementation approach would be most effective?**
+
+- Create a Lambda function that processes CRM events, retrieves customer data, and uses Amazon Bedrock to generate personalized emails
+- Deploy an EC2 instance that runs a script to periodically check the CRM database and generate emails
+- Implement a SageMaker endpoint that hosts a custom model for email generation
+- Use Amazon Pinpoint to send templated emails based on customer segments
+
+### Use Case
+**Transforming insurance claims processing with integrated GenAI solutions.**
+
+Let's say that a multinational insurance company handling over 50,000 claims monthly across auto, home, health, and commercial lines, faced significant operational challenges, including lengthy claims processing times, inconsistent adjudication decisions, and poor customer satisfaction. 
+
+The company decided to implement a comprehensive GenAI transformation initiative to modernize their claims processing workflows, enhance customer experiences, and improve operational efficiency.
+
+Let's work through a solution of a comprehensive GenAI transformation to modernize their claims processing, addressing challenges including lengthy processing times, inconsistent adjudication decisions, and manual document processing bottlenecks.
+
+**Architecture**
+
+![alt text](2.5.arc.diag.png)
+
+**FM API Interfaces**
+
+First, you can configure WebSocket APIs with 20-minute timeouts for stable claims review sessions, implement token windowing to manage context within 8,000 limits, and design-tiered retry strategies with circuit breaker after four failures to ensure resilience during high-volume periods.
+
+**Accessible AI Interfaces**
+
+Next, you can create **AWS Amplify** UI components with progressive enhancement. Publish comprehensive OpenAPI specifications for partner integration and configure **Amazon Bedrock prompt flows**, enabling non-technical users to design custom workflows without developer involvement.
+
+**Business System Enhancements**
+
+For claims processing enhancements using **Lambda** functions, you can enhance the customer relationship management (CRM) systems with sentiment analysis during claim submissions.
+
+You can also implement **AWS Step Functions** for parallel document processing workflows with validation checkpoints.
+
+Additionally, configure **Amazon Q Business data sources** with daily refreshes and metadata tagging by claim type and coverage category.
+
+**Development Optimization**
+
+For development optimization, you can configure **Amazon Q Developer** with insurance domain context for compliant code generation, implement refactoring pipelines prioritized by performance impact, and create testing frameworks with specialized coverage for GenAI-specific scenarios.
+
+**Advanced GenAI Applications**
+
+Now, for intelligent agent orchestration, you can configure and deploy **AWS Strands Agents**, specialized agents for policy lookups, coverage verification, and fraud detection with orchestration workflows, ensuring consistent claim understanding between handoffs and recovery mechanisms for when specialized agents encounter limitations.
+
+For complex commercial claims, you can implement **AWS Agent Squad orchestration** with specialized roles, including *policy expert*, *damage assessor*, *fraud investigator*, and *customer advocate*. The **AWS Step Functions** workflows for agent orchestration include validation steps between handoff to ensure consistent claim understanding and recovery mechanisms when specialized agents encounter limitations.
+
+Finally, for comprehensive monitoring, using **CloudWatch Logs Insights**, you can configure logging queries to identify patterns in claim processing. Additionally, you can implement **X-Ray** for tracing with insurance-specific annotations, and you can create custom error recognition rules with remediation suggestions for common failure modes.
+
+### Knowledge Check
+
+01/05
+
+**A GenAI developer is creating an API interface for a foundation model (FM) that needs to handle streaming responses and manage token limits effectively.**
+
+**Which approach would be MOST appropriate?**
+
+- Use REST APIs with custom token tracking in Amazon DynamoDB.
+- Implement WebSocket APIs with AWS Lambda for token management.
+- Deploy HTTP APIs with AWS Step Functions for token handling.
+- Set up AWS AppSync with client-side token management.
+
+02/05
+
+**A team needs to implement accessible AI interfaces for their foundation model (FM) application.**
+
+**Which approaches provide the BEST balance of accessibility and maintainability? (Select TWO.)**
+
+- Build custom React components with manual AWS integrations.
+- Use AWS Amplify UI components with built-in accessibility features.
+- Implement command-line interfaces (CLIs) for all interactions.
+- Integrate Amazon Bedrock Prompt Flows for no-code workflow building.
+- Deploy third-party frameworks with custom API wrappers.
+
+03/05
+
+**When enhancing a customer relationship management (CRM) system with AI capabilities, which service combination would provide the MOST effective solution?**
+
+- Use AWS Lambda and Amazon DynamoDB for all CRM processing.
+- Implement AWS Step Functions with AWS Lambda and Amazon Q Business integration.
+- Deploy Amazon SageMaker AI endpoints for CRM predictions.
+- Use AWS Glue for all data transformations.
+
+04/05
+
+**A development team is building a complex AI application using Amazon Q Developer. They need to optimize their workflow for handling multi-agent systems and implementing sophisticated prompt engineering techniques.**
+
+**Which approach would be MOST effective?**
+
+- Use Amazon Q Developer solely for code generation without custom prompts.
+- Implement Amazon Q Developer context-aware suggestions with custom prompt templates.
+- Rely entirely on pre-built agent templates without customization.
+- Manually code all agent interactions without Amazon Q Developer assistance.
+
+05/05   
+
+**For troubleshooting a large-scale foundation model (FM) application with multiple microservices and complex data flows, which monitoring approaches would provide the MOST comprehensive and actionable insights? (Select TWO.)**
+
+- Implement distributed tracing with AWS X-Ray and custom subsegments.
+- Use Amazon CloudWatch Logs Insights with custom metric extractions.
+- Deploy a third-party application performance monitoring (APM) tool for all monitoring needs.
+- Integrate Amazon Q Developer for AI-specific error pattern recognition.
+- Rely solely on application-level logging with custom parsers.
+
+### Bonus Assignment
+
+#### Technical architecture components
+
+**FM API interface development**
+  - Create an API Gateway with WebSocket support for streaming responses from Amazon Bedrock
+  - Implement token limit management using Lambda authorizers
+  - Design retry strategies for foundation model timeouts
+
+**Accessible AI interfaces**
+  - Build a React-based frontend using AWS Amplify with declarative UI components
+  - Create OpenAPI specifications for your API endpoints
+  - Implement a no-code workflow using Amazon Bedrock Prompt Flows for support agents
+
+**Business system enhancements**
+  - Develop Lambda functions to integrate with a mock CRM system
+  - Use Step Functions to orchestrate the document processing workflow
+  - Connect Amazon Q Business to provide internal knowledge to support agents
+  - Implement Bedrock Data Automation for processing customer feedback
+
+**Developer productivity tools**
+  - Use Amazon Q Developer to generate and refactor code
+  - Implement code suggestions for API integration
+  - Create AI component testing for the support system
+  - Apply performance optimization techniques
+
+**Advanced GenAI application development**
+  - Implement AWS Strands Agents for customer intent classification
+  - Use AWS Agent Squad for orchestrating multiple specialized agents
+  - Design prompt chaining patterns with Amazon Bedrock
+
+**Troubleshooting implementation**
+  - Set up CloudWatch Logs Insights to analyze prompts and responses
+  - Implement X-Ray tracing for foundation model API calls
+  - Use Amazon Q Developer to recognize error patterns in your GenAI application
+
+
+
+####  Project implementation
+
+**Phase 1: Set up API development**
+
+- Create a new AWS account or use an existing one with appropriate permissions
+- Set up Amazon Bedrock access with Claude or other foundation models
+- Create API Gateway with WebSocket support
+- Implement Lambda functions for token management and retry logic
+
+**Example: Setting up Amazon Bedrock client:**
+
+```python
+import boto3
+import json
+import time
+
+# Initialize Bedrock client
+bedrock_runtime = boto3.client(
+    service_name='bedrock-runtime',
+    region_name='us-east-1'
+)
+
+def invoke_model(prompt, model_id="anthropic.claude-v2", max_tokens=1000):
+    """Invoke Bedrock model with retry logic"""
+    max_retries = 3
+    retry_delay = 2
+    
+    for attempt in range(max_retries):
+        try:
+            response = bedrock_runtime.invoke_model(
+                modelId=model_id,
+                body=json.dumps({
+                    "prompt": prompt,
+                    "max_tokens_to_sample": max_tokens,
+                    "temperature": 0.7,
+                    "top_p": 0.9,
+                })
+            )
+            return json.loads(response['body'].read())
+        except Exception as e:
+            if attempt < max_retries - 1:
+                print(f"Attempt {attempt+1} failed. Retrying in {retry_delay} seconds...")
+                time.sleep(retry_delay)
+                retry_delay *= 2  # Exponential backoff
+            else:
+                raise e
+
+```
+
+**Example: API Gateway WebSocket Lambda Handler:**
+
+```python
+import json
+import boto3
+import os
+from token_management import check_token_limits
+
+bedrock = boto3.client('bedrock-runtime')
+apigw_management = boto3.client('apigatewaymanagementapi', 
+                               endpoint_url=f"https://{os.environ['API_ID']}.execute-api.{os.environ['AWS_REGION']}.amazonaws.com/{os.environ['STAGE']}")
+
+def lambda_handler(event, context):
+    """Handle WebSocket connections for streaming responses"""
+    connection_id = event['requestContext']['connectionId']
+    
+    if event['requestContext']['routeKey'] == '$connect':
+        # Handle connection
+        return {'statusCode': 200}
+    
+    if event['requestContext']['routeKey'] == '$disconnect':
+        # Handle disconnection
+        return {'statusCode': 200}
+    
+    # Handle messages
+    try:
+        body = json.loads(event['body'])
+        prompt = body.get('prompt', '')
+        
+        # Check token limits before processing
+        if not check_token_limits(prompt):
+            send_to_connection(connection_id, {
+                'error': 'Token limit exceeded. Please reduce your input.'
+            })
+            return {'statusCode': 400}
+        
+        # Process with Bedrock and stream response
+        response = process_with_bedrock(prompt, connection_id)
+        return {'statusCode': 200}
+    except Exception as e:
+        send_to_connection(connection_id, {
+            'error': str(e)
+        })
+        return {'statusCode': 500}
+
+def send_to_connection(connection_id, data):
+    """Send data to WebSocket connection"""
+    apigw_management.post_to_connection(
+        ConnectionId=connection_id,
+        Data=json.dumps(data).encode('utf-8')
+    )
+
+def process_with_bedrock(prompt, connection_id):
+    """Process prompt with Bedrock and stream responses"""
+    # Implementation for streaming would use Bedrock's streaming APIs
+    # This is a simplified version
+    response = bedrock.invoke_model_with_response_stream(
+        modelId='anthropic.claude-v2',
+        body=json.dumps({
+            'prompt': prompt,
+            'max_tokens_to_sample': 500
+        })
+    )
+    
+    # Stream the response chunks
+    for event in response.get('body'):
+        chunk = json.loads(event.get('chunk').get('bytes'))
+        send_to_connection(connection_id, {
+            'type': 'chunk',
+            'content': chunk.get('completion')
+        })
+    
+    # Send completion message
+    send_to_connection(connection_id, {
+        'type': 'complete'
+    })
+    
+    return True
+```
+
+**Example: Token management Lambda Function:**
+
+```python
+import tiktoken
+
+def check_token_limits(text, model="claude-v2", max_tokens=8000):
+    """
+    Check if the text exceeds token limits for the specified model
+    Returns True if within limits, False otherwise
+    """
+    # For Claude, we use cl100k_base encoding as an approximation
+    encoding = tiktoken.get_encoding("cl100k_base")
+    tokens = encoding.encode(text)
+    token_count = len(tokens)
+    
+    print(f"Token count: {token_count} / {max_tokens}")
+    
+    return token_count <= max_tokens
+
+def truncate_to_token_limit(text, model="claude-v2", max_tokens=8000):
+    """Truncate text to fit within token limits"""
+    encoding = tiktoken.get_encoding("cl100k_base")
+    tokens = encoding.encode(text)
+    
+    if len(tokens) <= max_tokens:
+        return text
+    
+    truncated_tokens = tokens[:max_tokens]
+    return encoding.decode(truncated_tokens)
+```
+
+**Phase 2: Frontend and integration development**
+
+- Initialize an Amplify project with React components
+- Create UI components for support ticket submission and response viewing
+- Develop OpenAPI specifications for your endpoints
+- Build Bedrock Prompt Flows for support agent workflows
+
+*Example: Amplify react component for support ticket submission*
+
+```javascript
+// SupportTicketForm.js
+import React, { useState } from 'react';
+import { API } from 'aws-amplify';
+import { 
+  Button, 
+  Flex, 
+  Heading, 
+  TextAreaField, 
+  TextField, 
+  SelectField 
+} from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+
+const SupportTicketForm = () => {
+  const [formState, setFormState] = useState({
+    subject: '',
+    category: 'technical',
+    description: '',
+    priority: 'medium'
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [response, setResponse] = useState(null);
+
+  const handleChange = (e) => {
+    setFormState({
+      ...formState,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      // Call API Gateway endpoint
+      const result = await API.post('supportApi', '/tickets', {
+        body: formState
+      });
+      
+      setResponse(result);
+    } catch (error) {
+      console.error('Error submitting ticket:', error);
+      setResponse({ error: 'Failed to submit ticket. Please try again.' });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <Flex direction="column" gap="1rem">
+      <Heading level={3}>Submit Support Ticket</Heading>
+      
+      <form onSubmit={handleSubmit}>
+        <Flex direction="column" gap="1rem">
+          <TextField
+            label="Subject"
+            name="subject"
+            value={formState.subject}
+            onChange={handleChange}
+            required
+          />
+          
+          <SelectField
+            label="Category"
+            name="category"
+            value={formState.category}
+            onChange={handleChange}
+          >
+            <option value="technical">Technical Issue</option>
+            <option value="billing">Billing Question</option>
+            <option value="feature">Feature Request</option>
+            <option value="other">Other</option>
+          </SelectField>
+          
+          <TextAreaField
+            label="Description"
+            name="description"
+            value={formState.description}
+            onChange={handleChange}
+            rows={5}
+            required
+          />
+          
+          <SelectField
+            label="Priority"
+            name="priority"
+            value={formState.priority}
+            onChange={handleChange}
+          >
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+            <option value="critical">Critical</option>
+          </SelectField>
+          
+          <Button type="submit" variation="primary" isLoading={isSubmitting}>
+            Submit Ticket
+          </Button>
+        </Flex>
+      </form>
+      
+      {response && !response.error && (
+        <Flex direction="column" gap="0.5rem" backgroundColor="rgba(0, 200, 0, 0.1)" padding="1rem" borderRadius="4px">
+          <Heading level={5}>Ticket Submitted Successfully</Heading>
+          <p>Ticket ID: {response.ticketId}</p>
+          <p>AI Summary: {response.aiSummary}</p>
+          <p>Estimated Response Time: {response.estimatedResponseTime}</p>
+        </Flex>
+      )}
+      
+      {response && response.error && (
+        <Flex backgroundColor="rgba(200, 0, 0, 0.1)" padding="1rem" borderRadius="4px">
+          <p>{response.error}</p>
+        </Flex>
+      )}
+    </Flex>
+  );
+};
+
+export default SupportTicketForm;
+
+```
+
+**Example: OpenAPI Specification**
+
+```yaml
+openapi: 3.0.0
+info:
+  title: Support Ticket API
+  description: API for managing support tickets with AI enhancements
+  version: 1.0.0
+paths:
+  /tickets:
+    post:
+      summary: Create a new support ticket
+      operationId: createTicket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketRequest'
+      responses:
+        '200':
+          description: Ticket created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketResponse'
+        '400':
+          description: Invalid input
+        '500':
+          description: Server error
+  /tickets/{ticketId}:
+    get:
+      summary: Get ticket details
+      operationId: getTicket
+      parameters:
+        - name: ticketId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ticket details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketDetail'
+        '404':
+          description: Ticket not found
+components:
+  schemas:
+    TicketRequest:
+      type: object
+      required:
+        - subject
+        - description
+      properties:
+        subject:
+          type: string
+        category:
+          type: string
+          enum: [technical, billing, feature, other]
+        description:
+          type: string
+        priority:
+          type: string
+          enum: [low, medium, high, critical]
+    TicketResponse:
+      type: object
+      properties:
+        ticketId:
+          type: string
+        aiSummary:
+          type: string
+        estimatedResponseTime:
+          type: string
+    TicketDetail:
+      type: object
+      properties:
+        ticketId:
+          type: string
+        subject:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        priority:
+          type: string
+        status:
+          type: string
+        aiAnalysis:
+          type: object
+          properties:
+            sentiment:
+              type: string
+            keyIssues:
+              type: array
+              items:
+                type: string
+            suggestedSolution:
+              type: string
+```
+
+**Phase 3: Business log implementation**
+
+- Create Step Functions workflow for ticket processing
+- Implement Lambda functions for CRM integration
+- Set up Amazon Q Business with relevant knowledge sources
+- Configure Bedrock Data Automation for feedback processing
+
+**Example: Step Functions workflow definition**
+
+```json
+{
+  "Comment": "Support Ticket Processing Workflow",
+  "StartAt": "ProcessNewTicket",
+  "States": {
+    "ProcessNewTicket": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${TicketProcessorFunction}",
+        "Payload": {
+          "ticket.$": "$"
+        }
+      },
+      "ResultPath": "$.processingResult",
+      "Next": "AnalyzeSentiment"
+    },
+    "AnalyzeSentiment": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::bedrock:invokeModel",
+      "Parameters": {
+        "ModelId": "anthropic.claude-v2",
+        "Body": {
+          "prompt.$": "States.Format('Human: Analyze the sentiment and urgency of this support ticket. Extract key issues and categorize the problem.\n\nTicket: {}\n\nHuman: ', $.ticket.description)",
+          "max_tokens_to_sample": 500,
+          "temperature": 0.2
+        }
+      },
+      "ResultPath": "$.sentimentAnalysis",
+      "Next": "CheckPriority"
+    },
+    "CheckPriority": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.ticket.priority",
+          "StringEquals": "critical",
+          "Next": "HighPriorityProcessing"
+        }
+      ],
+      "Default": "StandardProcessing"
+    },
+    "HighPriorityProcessing": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${HighPriorityHandlerFunction}",
+        "Payload": {
+          "ticket.$": "$.ticket",
+          "analysis.$": "$.sentimentAnalysis"
+        }
+      },
+      "ResultPath": "$.priorityProcessingResult",
+      "Next": "UpdateCRM"
+    },
+    "StandardProcessing": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${StandardHandlerFunction}",
+        "Payload": {
+          "ticket.$": "$.ticket",
+          "analysis.$": "$.sentimentAnalysis"
+        }
+      },
+      "ResultPath": "$.standardProcessingResult",
+      "Next": "UpdateCRM"
+    },
+    "UpdateCRM": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${CRMUpdaterFunction}",
+        "Payload": {
+          "ticket.$": "$.ticket",
+          "processingResult.$": "$"
+        }
+      },
+      "ResultPath": "$.crmUpdateResult",
+      "Next": "GenerateResponse"
+    },
+    "GenerateResponse": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::bedrock:invokeModel",
+      "Parameters": {
+        "ModelId": "anthropic.claude-v2",
+        "Body": {
+          "prompt.$": "States.Format('Human: Generate a helpful response for this support ticket based on the analysis.\n\nTicket: {}\n\nAnalysis: {}\n\nHuman: ', $.ticket.description, $.sentimentAnalysis.Body)",
+          "max_tokens_to_sample": 1000,
+          "temperature": 0.7
+        }
+      },
+      "ResultPath": "$.generatedResponse",
+      "Next": "SendNotification"
+    },
+    "SendNotification": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "${NotificationTopic}",
+        "Message": {
+          "ticketId.$": "$.ticket.ticketId",
+          "subject.$": "$.ticket.subject",
+          "generatedResponse.$": "$.generatedResponse.Body"
+        }
+      },
+      "End": true
+    }
+  }
+}
+```
+
+**Example: CRM integration Lambda Function**
+
+```python
+import boto3
+import json
+import os
+import requests
+from datetime import datetime
+
+# Mock CRM API endpoint - in a real scenario, this would be your CRM system's API
+CRM_API_ENDPOINT = os.environ.get('CRM_API_ENDPOINT', 'https://mock-crm-api.example.com/api/v1')
+CRM_API_KEY = os.environ.get('CRM_API_KEY', 'mock-api-key')
+
+def lambda_handler(event, context):
+    """Update CRM with ticket information and AI analysis"""
+    ticket = event.get('ticket', {})
+    processing_result = event.get('processingResult', {})
+    
+    # Extract key information
+    ticket_id = ticket.get('ticketId')
+    customer_email = ticket.get('customerEmail')
+    subject = ticket.get('subject')
+    description = ticket.get('description')
+    category = ticket.get('category')
+    priority = ticket.get('priority')
+    
+    # Extract AI analysis if available
+    ai_analysis = {}
+    if 'sentimentAnalysis' in event:
+        try:
+            ai_response = json.loads(event['sentimentAnalysis'].get('Body', '{}'))
+            ai_analysis = {
+                'sentiment': extract_sentiment(ai_response),
+                'keyIssues': extract_key_issues(ai_response),
+                'suggestedCategory': extract_category(ai_response)
+            }
+        except Exception as e:
+            print(f"Error parsing AI analysis: {str(e)}")
+    
+    # Prepare data for CRM
+    crm_data = {
+        'ticketId': ticket_id,
+        'customerEmail': customer_email,
+        'subject': subject,
+        'description': description,
+        'category': category,
+        'priority': priority,
+        'aiAnalysis': ai_analysis,
+        'createdAt': datetime.now().isoformat(),
+        'status': 'new'
+    }
+    
+    # Update CRM
+    try:
+        response = update_crm(crm_data)
+        return {
+            'statusCode': 200,
+            'crmUpdateId': response.get('id'),
+            'message': 'CRM updated successfully'
+        }
+    except Exception as e:
+        print(f"Error updating CRM: {str(e)}")
+        return {
+            'statusCode': 500,
+            'error': str(e)
+        }
+
+def update_crm(data):
+    """Send data to CRM API"""
+    # In a real implementation, this would make an actual API call
+    # This is a mock implementation
+    
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {CRM_API_KEY}'
+    }
+    
+    # For demo purposes, we'll just print the data instead of making a real API call
+    print(f"Would send to CRM: {json.dumps(data, indent=2)}")
+    
+    # Mock successful response
+    return {
+        'id': f"crm-{data['ticketId']}",
+        'status': 'success',
+        'timestamp': datetime.now().isoformat()
+    }
+
+def extract_sentiment(ai_response):
+    """Extract sentiment from AI response"""
+    # In a real implementation, this would parse the AI response
+    # This is a simplified version
+    response_text = ai_response.get('completion', '')
+    
+    if 'positive' in response_text.lower():
+        return 'positive'
+    elif 'negative' in response_text.lower():
+        return 'negative'
+    else:
+        return 'neutral'
+
+def extract_key_issues(ai_response):
+    """Extract key issues from AI response"""
+    # Simplified implementation
+    response_text = ai_response.get('completion', '')
+    
+    # Look for key issues section
+    if 'key issues:' in response_text.lower():
+        issues_section = response_text.lower().split('key issues:')[1].split('\n')
+        issues = [issue.strip('- ').strip() for issue in issues_section if issue.strip()]
+        return issues[:3]  # Return top 3 issues
+    
+    return ['Issue extraction not available']
+
+def extract_category(ai_response):
+    """Extract suggested category from AI response"""
+    # Simplified implementation
+    response_text = ai_response.get('completion', '').lower()
+    
+    categories = {
+        'technical': ['technical', 'bug', 'error', 'not working'],
+        'billing': ['billing', 'payment', 'charge', 'invoice'],
+        'feature': ['feature', 'enhancement', 'improvement', 'suggestion'],
+        'account': ['account', 'login', 'password', 'access']
+    }
+    
+    for category, keywords in categories.items():
+        for keyword in keywords:
+            if keyword in response_text:
+                return category
+    
+    return 'other'
+```
+
+**Phase 4: Advanced features and testing**
+
+  - Implement AWS Strands Agents for intent classification
+  - Configure AWS Agent Squad for orchestration
+  - Set up monitoring with CloudWatch and X-Ray
+  - Test the system with sample support tickets
+
+**Example: AWS Strands Agent implementation:**
+
+```python
+import boto3
+import json
+import os
+from datetime import datetime
+
+bedrock_agent = boto3.client('bedrock-agent-runtime')
+
+def lambda_handler(event, context):
+    """Handle ticket classification using AWS Strands Agent"""
+    ticket = event.get('ticket', {})
+    
+    # Extract ticket information
+    ticket_id = ticket.get('ticketId')
+    subject = ticket.get('subject', '')
+    description = ticket.get('description', '')
+    
+    # Prepare input for the agent
+    agent_input = f"""
+    Ticket ID: {ticket_id}
+    Subject: {subject}
+    Description: {description}
+    
+    Please classify this support ticket, identify key issues, and recommend next steps.
+    """
+    
+    # Invoke the Strands Agent
+    try:
+        response = bedrock_agent.invoke_agent(
+            agentId=os.environ.get('TICKET_CLASSIFIER_AGENT_ID'),
+            agentAliasId=os.environ.get('TICKET_CLASSIFIER_AGENT_ALIAS_ID'),
+            sessionId=f"ticket-{ticket_id}",
+            inputText=agent_input
+        )
+        
+        # Process agent response
+        result = {}
+        for chunk in response.get('completion', {}).get('chunks', []):
+            if chunk.get('messageType') == 'agent_response':
+                result = json.loads(chunk.get('content', '{}'))
+        
+        # Return the classification results
+        return {
+            'statusCode': 200,
+            'ticketId': ticket_id,
+            'classification': result.get('classification'),
+            'keyIssues': result.get('keyIssues', []),
+            'recommendedActions': result.get('recommendedActions', []),
+            'confidence': result.get('confidence', 0.0)
+        }
+    except Exception as e:
+        print(f"Error invoking Strands Agent: {str(e)}")
+        return {
+            'statusCode': 500,
+            'error': str(e)
+        }
+```
+
+**Example: CloudWatch Logs Insights query for prompt analysis**
+
+```python
+import boto3
+import json
+from datetime import datetime, timedelta
+
+logs = boto3.client('logs')
+
+def analyze_prompt_responses():
+    """Analyze prompts and responses using CloudWatch Logs Insights"""
+    query = """
+    fields @timestamp, @message
+    | filter @message like "PROMPT" or @message like "RESPONSE"
+    | parse @message "Type: * Content: *" as type, content
+    | stats count() by type
+    | sort @timestamp desc
+    """
+    
+    # Set time range for the query (last 24 hours)
+    end_time = datetime.now()
+    start_time = end_time - timedelta(hours=24)
+    
+    # Start the query
+    start_query_response = logs.start_query(
+        logGroupName='/aws/lambda/bedrock-integration-function',
+        startTime=int(start_time.timestamp()),
+        endTime=int(end_time.timestamp()),
+        queryString=query
+    )
+    
+    query_id = start_query_response['queryId']
+    
+    # Wait for query to complete
+    response = None
+    while response is None or response['status'] == 'Running':
+        print('Waiting for query to complete...')
+        response = logs.get_query_results(
+            queryId=query_id
+        )
+        if response['status'] == 'Complete':
+            break
+        time.sleep(1)
+    
+    # Process and return results
+    results = []
+    for result in response['results']:
+        item = {}
+        for field in result:
+            item[field['field']] = field['value']
+        results.append(item)
+    
+    return results
+
+def lambda_handler(event, context):
+    """Handler for analyzing prompts and responses"""
+    try:
+        results = analyze_prompt_responses()
+        return {
+            'statusCode': 200,
+            'body': json.dumps(results)
+        }
+    except Exception as e:
+        print(f"Error analyzing logs: {str(e)}")
+        return {
+            'statusCode': 500,
+            'body': json.dumps({'error': str(e)})
+        }
+```
+
+**Example: X-Ray tracing implementation**
+
+```python
+import boto3
+import json
+import os
+from aws_xray_sdk.core import xray_recorder
+from aws_xray_sdk.core import patch_all
+
+# Patch all supported libraries for X-Ray tracing
+patch_all()
+
+bedrock_runtime = boto3.client('bedrock-runtime')
+
+@xray_recorder.capture('invoke_bedrock_model')
+def invoke_bedrock_model(prompt, model_id="anthropic.claude-v2"):
+    """Invoke Bedrock model with X-Ray tracing"""
+    xray_recorder.begin_subsegment('bedrock_api_call')
+    
+    try:
+        response = bedrock_runtime.invoke_model(
+            modelId=model_id,
+            body=json.dumps({
+                "prompt": prompt,
+                "max_tokens_to_sample": 500,
+                "temperature": 0.7,
+                "top_p": 0.9,
+            })
+        )
+        
+        result = json.loads(response['body'].read())
+        
+        # Add metadata to the subsegment
+        xray_recorder.current_subsegment.put_metadataSuccessfully transferred back to supervisor
+```
+
+**Assessment criteria**
+
+You should demonstrate:
+
+- Functional API interfaces with proper error handling
+- Responsive and accessible UI components
+- Effective business logic implementation
+- Proper use of developer productivity tools
+- Advanced GenAI capabilities through agents and orchestration
+- Comprehensive monitoring and troubleshooting setup
+
+**Bonus challenges**
+
+- Implement multi-language support using foundation models
+- Create a sentiment analysis component for customer feedback
+- Develop a recommendation system for support agents
+- Implement a chatbot interface using Amazon Lex integration
+
+**Deliverables**
+
+- GitHub repository with complete code
+- Architecture diagram showing all AWS services used
+- Documentation of API endpoints and integration points
+- Testing strategy and results
+
+---
+---
 
 # Content Domain 3: AI Safety, Security, and Governance
 
