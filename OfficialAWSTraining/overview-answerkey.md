@@ -1273,3 +1273,266 @@ b) - Although useful, this approach might miss critical inter-service dependenci
 c) - Third-party tools might not integrate as seamlessly with AWS services and might lack AI-specific insights.\
 d) - Amazon Q Developer AI-specific error recognition can identify subtle patterns in foundation model behavior that traditional monitoring might miss.\
 e) - Application-level logging alone lacks the depth and correlation capabilities needed for complex, distributed AI systems.
+
+
+# Task 3
+
+# Task 3.1
+
+**3.1.1**
+
+**Answer:** (b)
+
+(b) Amazon Bedrock with guardrails, Step Functions orchestrating Lambda functions for custom moderation workflows
+
+**Explanation:** Option B provides a comprehensive solution for input safety controls. Amazon Bedrock guardrails offer pre-built content filtering capabilities to detect and block harmful inputs. Step Functions orchestrating Lambda functions enables custom moderation workflows that can implement business-specific rules, perform additional validation, and handle edge cases. This combination creates a defense-in-depth approach to protect against harmful user inputs while maintaining flexibility for custom requirements.
+
+**3.1.2**
+
+**Answer:** (b)
+
+(b) Amazon Comprehend for pre-processing filters, Amazon Bedrock with model-based guardrails, Lambda functions for post-processing validation, and API Gateway for API response filtering
+
+**Explanation:** Option B represents a true defense-in-depth approach with multiple layers of protection:
+
+- Pre-processing filters using Amazon Comprehend to analyze and filter inputs before they reach the foundation model
+- Model-based guardrails in Amazon Bedrock to enforce safety during generation
+- Post-processing validation with Lambda functions to verify outputs meet safety requirements
+- API Gateway response filtering as a final check before content reaches users
+
+This multi-layered approach ensures that if one safety mechanism fails, others are in place to prevent harmful content from reaching users, following the principle of defense-in-depth security.
+
+
+
+### Knowledge Check
+
+01/05
+
+**Answer:** (b), (c)
+
+(b) Amazon Bedrock guardrails with pre-configured content filtering
+(c) AWS Lambda functions with custom validation rules
+
+**Explanation:**
+
+A) Although S3 bucket policies are important for data security, they do not provide real-time protection against harmful inputs.   B) Amazon Bedrock guardrails provide immediate, real-time protection against harmful content through configured filtering rules.   C) Lambda functions enable real-time, custom validation of inputs before they reach the foundation model (FM).   D) CloudWatch Logs are useful for monitoring but do not provide real-time protection against harmful inputs.  
+
+
+02/05
+
+**Answer:** (b)
+
+(b) Implementing multiple security layers with Amazon Comprehend, Amazon Bedrock, AWS Lambda, and Amazon API Gateway
+
+**Explanation:**
+
+A) Although important, using only guardrails does not provide multiple layers of protection need\
+B) This provides comprehensive protection through multiple layers of security, true to defense-in-depth principles.\
+C) Single-layer protection does not constitute a defense-in-depth approach.\
+D) Although Lambda functions are valuable, alone they do not provide sufficient defense-in-depth protection.
+
+
+03/05
+
+**Answer:** (b)
+
+(b) To provide grounding and fact-checking for AI responses
+
+**Explanation:**
+
+A) This is not the purpose of Knowledge Bases. It is used for fact verification and grounding.  \
+B) Knowledge Bases helps verify responses against established facts and provides grounding for AI outputs.  \
+C) This is not a function of Knowledge Bases. It is handled by Amazon API Gateway.  \
+D) Authentication is not a function of Knowledge Bases. It is handled by other AWS services.
+
+04/05
+
+**Answer:** (b)
+
+(b) Amazon Bedrock Knowledge Bases grounding with JSON Schema validation
+
+**Explanation:**
+
+A) Only using strict Amazon API Gateway controls does not provide effective prevention of hallucinations.  \
+B) This combination of components is MOST effective for preventing hallucinations in foundation model (FM) responses.  \
+C) Implementing only Amazon CloudWatch monitoring does not provide effective prevention of hallucinations.  \
+D) Although helpful, Lambda functions alone cannot effectively prevent hallucinations.  
+
+05/05
+
+**Answer:** (b)
+
+(b) Implementing AWS Step Functions with custom moderation workflows and real-time validation
+
+**Explanation:**
+
+A) Post-processing alone might allow harmful content to reach the model.  \
+B) This provides structured, scalable moderation with real-time protection capabilities.  \
+C) CloudWatch Logs are for monitoring, not active moderation.  \
+D) Amazon S3 policies do not provide real-time content moderation capabilities.
+
+
+# Task 3.2
+
+**3.2.1**
+
+**Answer:** (b)
+
+(b) Amazon Comprehend Medical and Amazon Bedrock Guardrails
+
+For healthcare applications dealing with protected health information (PHI), the most appropriate combination is Amazon Comprehend Medical for PHI detection and Amazon Bedrock Guardrails for implementing safeguards. 
+AWS documentation states: "*Depending on your business compliance requirements, consider using Amazon Comprehend and Amazon Comprehend Medical to mask or redact personally identifiable information (PII) and protected health information (PHI) from training data*". Additionally, "*Amazon Bedrock Guardrails provides safeguards that you can configure for your generative AI applications based on your use cases and responsible AI policies*". \
+While Amazon Macie (option A) is useful for detecting sensitive data in S3 buckets, it's not specifically designed for PHI in real-time AI interactions. Options C and D focus on auditing and network security rather than direct PHI protection.
+
+**3.2.2**
+
+**Answer:** (c)
+
+(c) AWS IAM, AWS CloudTrail, and Amazon CloudWatch
+
+**Explanation:**
+
+For comprehensive security monitoring and access control of Amazon Bedrock deployments, the most complete combination is AWS IAM, AWS CloudTrail, and Amazon CloudWatch.\
+AWS documentation states: "*Use CloudTrail to log and monitor all create, read, update, and delete (CRUD) actions to Amazon Bedrock and Amazon S3*" and "*Amazon CloudWatch monitors applications, responds to performance changes, optimizes resource use, and provides insights into operational health*". Additionally, "*AWS Identity and Access Management (IAM) is used to control access to AWS resources*". While options A and B include valuable services, they don't provide the comprehensive monitoring and access control needed. Option D focuses on threat protection rather than comprehensive monitoring and access control for Bedrock.
+
+### Knowledge Check
+
+01/05
+
+**Answer:** (b), (d)
+
+[Incorrect] Rationale: This provides only basic security and lacks necessary network isolation and granular access control.  
+
+[Correct] Rationale: This provides network isolation and granular data access control necessary for sensitive data.
+
+[Incorrect] Rationale: Using public subnets exposes the environment to unnecessary risk and lacks proper isolation.  
+
+[Correct] Rationale: This enables granular data access control and proper monitoring of all data access.
+
+02/05
+
+**Answer:** (c)
+
+(c) Implementing Amazon Comprehend for personally identifiable information (PII) detection, Amazon Macie for sensitive data discovery, Amazon Bedrock privacy features, and Amazon S3 lifecycle policies
+
+**Explanation:**
+
+[Incorrect] Rationale: This provides only one layer of protection and misses critical personally identifiable information (PII) detection and data lifecycle management.  
+
+[Correct] Rationale: This provides comprehensive privacy protection through multiple layers and proper data lifecycle management.  
+
+[Incorrect] Rationale: This lacks necessary privacy controls and personally identifiable information (PII) detection capabilities.  
+
+[Incorrect] Rationale: This focuses only on monitoring and lacks essential privacy protection features.  
+
+
+03/05
+
+**Answer:** (b)
+
+(b) Using data masking, anonymization strategies, and Amazon Bedrock Guardrails with utility monitoring
+
+**Explanation:**
+[Incorrect] Rationale: This addresses only one aspect of privacy and does not consider model utility.  
+
+[Correct] Rationale: This provides comprehensive privacy protection while actively monitoring and maintaining model utility.  
+
+[Incorrect] Rationale: This focuses only on PII detection and ignores model utility maintenance.  
+
+[Incorrect] Rationale: This lacks both privacy protection and utility preservation measures.
+
+04/05
+
+**Answer:** (b)
+
+(b) Using data masking, anonymization strategies, and Amazon Bedrock Guardrails with utility monitoring
+
+**Explanation:**
+
+[Incorrect] Rationale: This provides only basic protection and lacks necessary privacy controls for healthcare data.  
+
+[Correct] Rationale: This provides multiple layers of privacy protection with proper monitoring and compliance capabilities.  
+
+[Incorrect] Rationale: This lacks necessary privacy controls and data protection measures.  
+
+[Incorrect] Rationale: This addresses only network security and misses critical privacy requirements.
+
+
+05/05
+
+**Answer:** (a), (c)
+
+(a) Virtual private cloud (VPC) endpoints with comprehensive network isolation and CloudWatch alerts
+
+(c) AWS Lake Formation with granular access controls
+
+**Explanation:**
+
+[Correct] Rationale: This provides necessary network-level security for model deployments.  
+
+[Incorrect] Rationale: This provides insufficient protection for foundation model deployments.  
+
+[Correct] Rationale: This enables proper data access control and protection for model data.  
+
+[Incorrect] Rationale: Although monitoring is important, alone it is insufficient for securing model deployments.  
+
+# Task 3.3
+
+**3.3.1**
+
+**Answer:** (b)
+
+(b) Amazon SageMaker Model Cards
+
+**Explanation:**
+
+**Correct Answer:**
+
+Amazon SageMaker Model Cards is the correct solution for documenting model characteristics, intended use cases, and limitations. According to AWS documentation, "Amazon SageMaker Model Cards helps you document and track machine learning (ML) model information, such as model inputs and outputs, intended uses, ethical considerations, training details, evaluation results, and more". Model Cards are specifically designed to support governance and compliance requirements by providing a standardized way to document model details, which is essential for regulatory compliance in financial services. The other options (Systems Manager Documents, CloudWatch Dashboards, and Config Rules) don't provide the specialized model documentation capabilities required for this scenario.
+
+**3.3.2**
+
+**Answer:** (b)
+
+(b) Amazon SageMaker Model Monitor
+
+**Explanation:**
+
+Amazon SageMaker Model Monitor is the correct service for detecting and alerting on bias drift in foundation model outputs. According to AWS documentation, "Amazon SageMaker Model Monitor provides capabilities to monitor models in production. Using SageMaker Model Monitor, you can set alerts to detect when there are deviations in the model quality, such as data drift and anomalies". Specifically, SageMaker Model Monitor includes bias drift monitoring capabilities that can detect changes in model outputs that might indicate increasing bias over time. While Amazon Inspector (option B) focuses on security vulnerabilities, AWS Config (option C) monitors resource configurations, and Amazon GuardDuty (option D) detects security threats, none of these services are designed to monitor model bias drift like SageMaker Model Monitor.
+
+**3.3.3**
+
+**Answer:** (b)
+
+(b) Amazon SageMaker Lineage Tracking
+
+**Explanation:**
+
+Amazon SageMaker Lineage Tracking is the correct feature for tracking model provenance in foundation model deployments. According to AWS documentation, "Amazon SageMaker ML Lineage Tracking creates and stores information about the steps of a machine learning (ML) workflow from data preparation to model deployment. With the tracking information, you can reproduce the workflow steps, track model and dataset lineage, and establish model governance and audit standards". This feature allows organizations to track the complete lineage of models, including training datasets, hyperparameters, and evaluation metrics. While CloudFormation Templates (option B) define infrastructure, S3 Versioning (option C) tracks object versions, and Systems Manager Inventory (option D) tracks software inventory, none provide the specialized model lineage tracking capabilities of SageMaker Lineage Tracking.
+
+---
+
+## 3.4
+
+**3.4.1**
+
+**Answer:** (a)
+
+(a) Amazon Bedrock with LLM-as-a-judge evaluation
+
+**Explanation:**
+
+**Correct Answer:** 
+**Amazon Bedrock with LLM-as-a-judge evaluation** is the most effective approach for automated bias evaluations of foundation model outputs. According to AWS documentation, "The LLM-as-a-judge pattern uses one foundation model to evaluate the outputs of another, allowing for automated assessment of various quality dimensions including bias, toxicity, and adherence to guidelines". This approach enables systematic evaluation of model outputs against predefined fairness criteria at scale. While Amazon Comprehend sentiment analysis (option B) can detect sentiment but not specifically evaluate bias in complex ways, Amazon Rekognition (option C) is for image and video analysis, and Amazon Transcribe content redaction (option D) is for redacting sensitive information from transcripts, none provide the comprehensive bias evaluation capabilities of the LLM-as-a-judge approach.
+
+**3.4.2**
+
+**Answer:** (a)
+
+(a) A custom namespace specific to their application
+
+**Explanation:**
+
+**A custom namespace specific to their application** is the correct choice for organizing confidence metrics from foundation model outputs in CloudWatch. 
+According to AWS documentation, "When publishing custom metrics to CloudWatch, you should use a custom namespace that doesn't begin with 'AWS/' to avoid conflicts with AWS service namespaces". Custom namespaces allow developers to organize their metrics logically and separate them from AWS service metrics. While AWS/Bedrock (option B) and AWS/SageMaker (option C) are reserved namespaces for AWS services and shouldn't be used for custom metrics, and AWS/Lambda (option D) is for Lambda service metrics, none are appropriate for organizing application-specific confidence metrics.
+

@@ -10268,6 +10268,1016 @@ For the exam, ensure you understand how to implement advanced threat detection.
 
 
 
+#### Implement advanced threat detection
+
+For the exam, ensure you understand how to implement advanced threat detection.
+
+**Ensure you understand how to configure and implement the following steps:**
+
+1. Develop custom detection mechanisms using Lambda functions to identify and block prompt injection attempts.
+
+2. Implement pattern matching and heuristic approaches to detect common jailbreak techniques targeting foundation models.
+
+3. Create input sanitization functions that remove potentially harmful elements from user inputs before processing.
+
+4. Configure content filters at multiple levels (API Gateway, Lambda, and Amazon Bedrock) to provide comprehensive protection.
+
+5. Develop specialized safety classifiers using Amazon SageMaker to detect specific types of threats relevant to your application.
+
+6. Create automated adversarial testing workflows using Step Functions to proactively identify vulnerabilities.
+
+7. Implement continuous monitoring systems using CloudWatch to detect unusual patterns that might indicate attacks.
+
+8. Develop threat intelligence integration to keep security measures updated against emerging attack vectors.
+
+### Self Assessment
+
+**3.1.1**
+**A financial services company is implementing a generative AI chatbot that will help customers with investment advice. The development team needs to ensure the system rejects harmful or inappropriate user inputs.**
+
+**Which combination of AWS services provides the most comprehensive protection against malicious prompts?**
+
+- Amazon Comprehend for sentiment analysis and Amazon Bedrock with custom prompt templates
+- Amazon Bedrock with guardrails, Step Functions orchestrating Lambda functions for custom moderation workflows
+- Amazon Lex for intent recognition and Amazon Translate for language detection
+- Amazon SageMaker with custom ML models and Amazon CloudWatch for monitoring
+
+**3.1.2**
+
+**Your team is building a customer service AI assistant that will handle sensitive financial information. You need to implement multiple layers of protection to ensure comprehensive safety.**
+
+**Which combination of services implements a true defense-in-depth approach?**
+
+- Amazon Bedrock with system prompts and Amazon CloudWatch for logging
+- Amazon Comprehend for pre-processing filters, Amazon Bedrock with model-based guardrails, Lambda functions for post-processing validation, and API Gateway for API response filtering
+- Amazon Cognito for authentication and Amazon S3 for secure storage of conversations
+- AWS WAF for web application protection and Amazon GuardDuty for threat detection
+
+
+### Use Case
+
+Demonstrates a comprehensive approach to implementing input and output safety controls for AI applications in the financial services industry.
+
+A large financial institution wants to develop an AI assistant to handle customer inquiries about their accounts, financial products, and general banking questions. The assistant needs to be secure, accurate, and safe from potential misuse while handling sensitive financial information.
+![I/O Safety Controls](3.2.io.safety.png)
+
+**Architecture**
+
+For this use case, we will use **Amazon Bedrock**, **Amazon Comprehend**, **AWS Lambda**, **AWS Step Functions**, and **AWS Organizations**. Let's walk through an example implementation strategy.
+
+![Architecture](3.2.architecture.png)
+
+**Input Safety Controls**
+
+First, to input safety controls, you can deploy **Amazon Bedrock Guardrails** to 
+ - filter incoming customer queries for personally identifiable information (PII), 
+ - detection and blocking, harmful content filtering such as profanity, threats, and harassment, and
+ - prevention of prompt injection attempts.
+
+You can configure **AWS Lambda** for an initial input validation to do the following: 
+ - sanitize inputs to prevent SQL injection and cross-site scripting (XSS) attacks
+ - validate request formats and parameters
+ - block requests with obvious malicious patterns
+
+Next, you can configure **Amazon Comprehend** for content analysis to do the following: 
+ - detect sentiment and key phrases to identify potential threats
+ - identify PII and sensitive information
+ - classify content into risk categories
+
+Also, configure **AWS Step Functions** to orchestrate the entire content safety process, implement branching logic based on risk assessment, and maintain audit logs for security compliance.
+
+Lastly, you can configure **Amazon Bedrock Guardrails** to apply predefined guardrails to filter harmful content, prevent prompt injection attacks, and ensure compliance with financial regulations. 
+
+**Output Safety Controls**
+
+![Output Safety Controls](3.2.output.safety.png)
+
+For a response filtering framework, you can configure **Amazon Bedrock Guardrails** to filter out potentially harmful and misleading financial advice, prevent disclosure of sensitive account information, and ensure responses comply with financial regulations.
+
+You can also configure the hallucination prevention system with **Amazon Bedrock Knowledge Bases** to store accurate financial product information and up-to-date banking policies and procedures.
+
+For structured output enforcement, you can use **JSON Schema** to validate response structure for account information requests, product recommendations, and transaction details.
+
+This entire verification system performs semantic similarity checks between responses and knowledge base, calculates confidence scores for response accuracy, and flags potential hallucinations for human review.
+
+**Defense-in-Depth Security Architecture**
+
+The defense-in-depth architecture implements multiple security layers, including the following:
+- The pre-processing layer can use **Amazon API Gateway** to implement request throttling and basic **AWS WAF** rules.
+- **Amazon Comprehend** can classify in common content for risk assessment, and **Lambda functions** to sanitize inputs to prevent injection attacks.
+- The model layer can use **Amazon Bedrock** to apply guardrails to enforce content safety, and knowledge base grounds for responses in verified financial information.
+- The post-processing layer can use **Lambda functions** to validate responses against security policies and **API Gateway** to filter responses to prevent data leakage.
+- The monitoring layer can use **Amazon CloudWatch** to track metrics and trigger alarms for suspicious patterns, and **AWS Security Hub** to provide comprehensive threat detection.
+
+
+**Advanced Threat Detection System**
+
+![Advanced Threat Detection System](3.2.adv.threats.png)
+
+For adversarial input detection, you can implement specialized classifiers to detect prompt injection attempts targeting financial data extraction, jailbreak attempts to bypass security controls, and social engineering patterns targeting customer information.
+
+You can also implement an automated adversarial testing framework to continuously evaluate the system security with the following: 
+- an attack pattern generator that 
+    - creates financial specific adversarial prompts, 
+    - simulates common attack vectors such as prompt injection and jailbreaking, 
+    - generates edge cases targeting financial data extraction, 
+    
+- an automated testing engine that 
+    - executes attack patterns against the system, 
+    - measures system response to attacks, 
+    - documents successful and failed attack attempts.
+- a vulnerability analyzer that 
+    - evaluates system responses to identify weaknesses, 
+    - measures effectiveness of security controls, 
+    - identifies patterns in successful attacks, 
+- security reporting that 
+    - generates compliance reports for regulatory requirements, 
+    - provides actionable security insights, 
+    - creates a feedback loop for continuous improvement.
+
+
+### Knowledge Check
+
+01/05
+
+**A company is implementing a content safety system for their AI application.**
+
+**Which components would provide the MOST effective real-time protection against harmful inputs? (Select TWO.)**
+
+- Amazon S3 bucket policies for content storage
+- Amazon Bedrock guardrails with pre-configured content filtering
+- AWS Lambda functions with custom validation rules
+- Amazon CloudWatch Logs for content monitoring
+
+02/05
+
+**Which approach would be MOST effective for implementing a defense-in-depth safety system for an AI application?**
+
+- Using only Amazon Bedrock guardrails with strict settings
+- Implementing multiple security layers with Amazon Comprehend, Amazon Bedrock, AWS Lambda, and Amazon API Gateway
+- Relying solely on Amazon API Gateway request validation
+- Single-layer protection does not constitute a defense-in-depth approach.
+- Using only AWS Lambda functions for validation
+
+03/05
+
+**When implementing accuracy verification for an AI system, what is the primary purpose of using Amazon Bedrock Knowledge Bases?**
+
+- To store user credentials
+- To provide grounding and fact-checking for AI responses
+- To manage API endpoints
+- To handle user authentication
+
+04/05
+
+**Which combination of components is MOST effective for preventing hallucinations in foundation model (FM) responses?**  
+
+- Only using strict Amazon API Gateway controls
+- Amazon Bedrock Knowledge Bases grounding with JSON Schema validation
+- Only implementing Amazon CloudWatch monitoring
+- Using only AWS Lambda functions
+
+
+05/05
+
+**What is the MOST effective approach for implementing content moderation in a real-time AI chat application?**
+
+- Using only post-processing validation
+- Implementing AWS Step Functions with custom moderation workflows and real-time validation
+- Relying solely on Amazon CloudWatch Logs
+- Using only Amazon S3 bucket policies
+
+
+### Bonus Assignment
+
+**Build a secure generative AI assistant that:**
+ - Filters harmful user inputs
+ - Ensures safe outputs
+ - Reduces hallucinations
+ - Implements defense-in-depth safety
+ - Detects and mitigates adversarial threats.
+
+Bonus assignments are an open-ended way for you to assess your overall knowledge of this task. You can share your answers on social media and tag #awsexamprep for us to review.
+
+**Best practices**
+
+ - **Layered defense**: Implement multiple safety mechanisms at different stages of the processing pipeline
+ - **Continuous evaluation**: Regularly test safety systems against new attack vectors
+ - **Human oversight**: Maintain human review processes for edge cases and system improvements
+ - **Transparency**: Document safety mechanisms and communicate them to users
+ - **Proportional controls**: Balance safety requirements with usability and performance
+
+#### Part 1. Project infrastructure
+
+**Step 1: Set Up Project Infrastructure**
+
+Create project structure and install dependencies:
+
+```bash
+# Create project directory
+mkdir safe-genai-assistant
+cd safe-genai-assistant
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install required packages
+pip install boto3 aws-cdk-lib constructs aws-cdk.aws-lambda aws-cdk.aws-stepfunctions \
+  aws-cdk.aws-apigateway aws-cdk.aws-iam aws-cdk.aws-comprehend
+```
+
+**Step 2: Implement input safety controls**
+
+Step 1: Create a a system to filter harmful user inputs using Amazon Bedrock guardrails:
+
+```python
+# bedrock_guardrails.py
+import boto3
+import json
+
+class InputSafetyFilter:
+    def __init__(self, guardrail_id):
+        self.bedrock = boto3.client('bedrock-runtime')
+        self.guardrail_id = guardrail_id
+    
+    def filter_input(self, user_input):
+        """
+        Apply guardrails to filter harmful user inputs
+        """
+        try:
+            response = self.bedrock.apply_guardrail(
+                guardrailIdentifier=self.guardrail_id,
+                contentType='text/plain',
+                content=user_input,
+                acceptType='application/json'
+            )
+            
+            result = json.loads(response['output'])
+            
+            # Check if content was blocked by guardrails
+            if result['blocked']:
+                return {
+                    'is_safe': False,
+                    'reason': result['blockReasons'],
+                    'filtered_input': None
+                }
+            else:
+                return {
+                    'is_safe': True,
+                    'filtered_input': result['filteredContent']
+                }
+        except Exception as e:
+            print(f"Error applying guardrails: {str(e)}")
+            # Fail closed - reject input if guardrail check fails
+            return {
+                'is_safe': False,
+                'reason': ['Error processing input safety check'],
+                'filtered_input': None
+            }
+```
+
+**Step 2: Create a Step Function workflow for custom moderation:**
+
+```python
+# moderation_workflow.py
+from aws_cdk import (
+    Stack,
+    aws_stepfunctions as sfn,
+    aws_stepfunctions_tasks as tasks,
+    aws_lambda as lambda_,
+    Duration
+)
+from constructs import Construct
+
+class ModerationWorkflowStack(Stack):
+    def __init__(self, scope: Construct, id: str, **kwargs) -> None:
+        super().__init__(scope, id, **kwargs)
+        
+        # Lambda for initial content analysis
+        content_analyzer = lambda_.Function(
+            self, "ContentAnalyzer",
+            runtime=lambda_.Runtime.PYTHON_3_9,
+            handler="content_analyzer.handler",
+            code=lambda_.Code.from_asset("./lambda"),
+            timeout=Duration.seconds(30)
+        )
+        
+        # Lambda for detailed moderation
+        detailed_moderator = lambda_.Function(
+            self, "DetailedModerator",
+            runtime=lambda_.Runtime.PYTHON_3_9,
+            handler="detailed_moderator.handler",
+            code=lambda_.Code.from_asset("./lambda"),
+            timeout=Duration.seconds(60)
+        )
+        
+        # Step Functions definition
+        analyze_content = tasks.LambdaInvoke(
+            self, "AnalyzeContent",
+            lambda_function=content_analyzer,
+            output_path="$.Payload"
+        )
+        
+        moderate_content = tasks.LambdaInvoke(
+            self, "ModerateContent",
+            lambda_function=detailed_moderator,
+            output_path="$.Payload"
+        )
+        
+        approve_content = sfn.Pass(
+            self, "ApproveContent",
+            result=sfn.Result.from_object({"status": "approved"})
+        )
+        
+        reject_content = sfn.Pass(
+            self, "RejectContent",
+            result=sfn.Result.from_object({"status": "rejected"})
+        )
+        
+        # Create workflow
+        definition = analyze_content.next(
+            sfn.Choice(self, "NeedsFurtherModeration")
+                .when(sfn.Condition.string_equals("$.risk_level", "HIGH"), 
+                      moderate_content.next(
+                          sfn.Choice(self, "ModerationDecision")
+                              .when(sfn.Condition.boolean_equals("$.is_approved", True), approve_content)
+                              .otherwise(reject_content)
+                      ))
+                .when(sfn.Condition.string_equals("$.risk_level", "MEDIUM"),
+                      moderate_content.next(
+                          sfn.Choice(self, "MediumRiskDecision")
+                              .when(sfn.Condition.boolean_equals("$.is_approved", True), approve_content)
+                              .otherwise(reject_content)
+                      ))
+                .otherwise(approve_content)
+        )
+        
+        # Create state machine
+        self.state_machine = sfn.StateMachine(
+            self, "ModerationWorkflow",
+            definition=definition,
+            timeout=Duration.minutes(5)
+        )
+```
+
+**Step 3: Implement the Lambda functions for content analysis:**
+
+```python
+# lambda/content_analyzer.py
+import boto3
+import json
+import os
+
+comprehend = boto3.client('comprehend')
+
+def handler(event, context):
+    """
+    Analyze content for risk factors and determine if further moderation is needed
+    """
+    user_input = event.get('input', '')
+    
+    # Check for harmful content using Comprehend
+    sentiment_response = comprehend.detect_sentiment(
+        Text=user_input,
+        LanguageCode='en'
+    )
+    
+    # Detect PII
+    pii_response = comprehend.detect_pii_entities(
+        Text=user_input,
+        LanguageCode='en'
+    )
+    
+    # Custom logic to determine risk level
+    sentiment = sentiment_response['Sentiment']
+    sentiment_score = sentiment_response['SentimentScore']
+    
+    pii_entities = pii_response['Entities']
+    has_pii = len(pii_entities) > 0
+    
+    # Determine risk level based on content analysis
+    risk_level = "LOW"
+    if sentiment == "NEGATIVE" and sentiment_score['Negative'] > 0.7:
+        risk_level = "HIGH"
+    elif has_pii or sentiment == "NEGATIVE" and sentiment_score['Negative'] > 0.4:
+        risk_level = "MEDIUM"
+    
+    return {
+        "input": user_input,
+        "risk_level": risk_level,
+        "has_pii": has_pii,
+        "sentiment": sentiment
+    }
+
+# lambda/detailed_moderator.py
+import boto3
+import json
+import os
+
+bedrock = boto3.client('bedrock-runtime')
+
+def handler(event, context):
+    """
+    Perform detailed moderation on potentially harmful content
+    """
+    user_input = event.get('input', '')
+    risk_level = event.get('risk_level', 'LOW')
+    
+    # Use a foundation model to evaluate content
+    prompt = f"""
+    Please analyze the following text for harmful content, including but not limited to:
+    - Hate speech
+    - Violence
+    - Sexual content
+    - Personal attacks
+    - Illegal activities
+    
+    Text to analyze: "{user_input}"
+    
+    Respond with a JSON object with the following structure:
+    {{
+        "is_harmful": true/false,
+        "categories": ["category1", "category2"],
+        "explanation": "brief explanation"
+    }}
+    """
+    
+    response = bedrock.invoke_model(
+        modelId='anthropic.claude-v2',
+        contentType='application/json',
+        accept='application/json',
+        body=json.dumps({
+            "prompt": prompt,
+            "max_tokens_to_sample": 500,
+            "temperature": 0,
+            "top_p": 0.9,
+        })
+    )
+    
+    response_body = json.loads(response.get('body').read())
+    model_output = response_body.get('completion', '')
+    
+    # Extract JSON from model output
+    try:
+        start_idx = model_output.find('{')
+        end_idx = model_output.rfind('}') + 1
+        json_str = model_output[start_idx:end_idx]
+        analysis = json.loads(json_str)
+        
+        # Decision logic
+        is_approved = not analysis.get('is_harmful', False)
+        
+        # If high risk, be more conservative
+        if risk_level == "HIGH" and len(analysis.get('categories', [])) > 0:
+            is_approved = False
+            
+        return {
+            "is_approved": is_approved,
+            "analysis": analysis,
+            "risk_level": risk_level
+        }
+    except Exception as e:
+        # Fail closed - reject if we can't parse the analysis
+        return {
+            "is_approved": False,
+            "error": str(e),
+            "risk_level": risk_level
+        }
+```
+
+**Step 3: Implement output safety controls**
+
+Step 1: Create a a system to ensure the outputs from foundation models are safe:
+
+```python
+# output_safety.py
+import boto3
+import json
+import re
+
+class OutputSafetyFilter:
+    def __init__(self, guardrail_id):
+        self.bedrock = boto3.client('bedrock-runtime')
+        self.guardrail_id = guardrail_id
+    
+    def filter_output(self, model_output):
+        """
+        Apply guardrails to filter potentially harmful model outputs
+        """
+        try:
+            response = self.bedrock.apply_guardrail(
+                guardrailIdentifier=self.guardrail_id,
+                contentType='text/plain',
+                content=model_output,
+                acceptType='application/json'
+            )
+            
+            result = json.loads(response['output'])
+            
+            # Check if content was blocked by guardrails
+            if result['blocked']:
+                return {
+                    'is_safe': False,
+                    'reason': result['blockReasons'],
+                    'filtered_output': "I'm sorry, I can't provide that information."
+                }
+            else:
+                return {
+                    'is_safe': True,
+                    'filtered_output': result['filteredContent']
+                }
+        except Exception as e:
+            print(f"Error applying output guardrails: {str(e)}")
+            # Fail closed - provide safe alternative response
+            return {
+                'is_safe': False,
+                'reason': ['Error processing output safety check'],
+                'filtered_output': "I'm sorry, I can't provide a response at this time."
+            }
+    
+    def evaluate_toxicity(self, content):
+        """
+        Use a specialized FM to evaluate content for toxicity
+        """
+        prompt = f"""
+        Analyze the following text for toxicity, bias, or harmful content.
+        Respond with a JSON object containing:
+        1. A toxicity score from 0 to 1
+        2. Categories of potential issues detected
+        3. A brief explanation
+        
+        Text to analyze: "{content}"
+        """
+        
+        try:
+            response = self.bedrock.invoke_model(
+                modelId='anthropic.claude-v2',
+                contentType='application/json',
+                accept='application/json',
+                body=json.dumps({
+                    "prompt": prompt,
+                    "max_tokens_to_sample": 500,
+                    "temperature": 0,
+                    "top_p": 0.9,
+                })
+            )
+            
+            response_body = json.loads(response.get('body').read())
+            model_output = response_body.get('completion', '')
+            
+            # Extract JSON from model output
+            start_idx = model_output.find('{')
+            end_idx = model_output.rfind('}') + 1
+            json_str = model_output[start_idx:end_idx]
+            analysis = json.loads(json_str)
+            
+            return analysis
+        except Exception as e:
+            print(f"Error evaluating toxicity: {str(e)}")
+            # Fail closed
+            return {
+                'toxicity_score': 1.0,
+                'categories': ['error'],
+                'explanation': 'Error evaluating content'
+            }
+```
+
+**Step 2: Add a function to enforce structured outputs using JSON Schema:**
+
+
+```python
+# structured_output.py
+import json
+import jsonschema
+
+class StructuredOutputValidator:
+    def __init__(self, schema):
+        self.schema = schema
+    
+    def validate_and_fix(self, output):
+        """
+        Validate output against JSON schema and attempt to fix if invalid
+        """
+        try:
+            # Try to parse output as JSON
+            if isinstance(output, str):
+                try:
+                    parsed_output = json.loads(output)
+                except json.JSONDecodeError:
+                    # Extract JSON if embedded in text
+                    import re
+                    json_match = re.search(r'(\{.*\})', output, re.DOTALL)
+                    if json_match:
+                        try:
+                            parsed_output = json.loads(json_match.group(1))
+                        except:
+                            return {
+                                'is_valid': False,
+                                'error': 'Could not parse JSON from output',
+                                'fixed_output': None
+                            }
+                    else:
+                        return {
+                            'is_valid': False,
+                            'error': 'Output is not valid JSON',
+                            'fixed_output': None
+                        }
+            else:
+                parsed_output = output
+            
+            # Validate against schema
+            jsonschema.validate(instance=parsed_output, schema=self.schema)
+            
+            return {
+                'is_valid': True,
+                'validated_output': parsed_output
+            }
+        except jsonschema.exceptions.ValidationError as e:
+            # Output doesn't match schema
+            return {
+                'is_valid': False,
+                'error': str(e),
+                'fixed_output': None
+            }
+```
+
+**Step 4: Implement hallucination reduction**
+
+Step 1: Create a system to reduce hallucinations using Amazon Bedrock Knowledge Base:
+
+```python
+# hallucination_reduction.py
+import boto3
+import json
+
+class HallucinationReducer:
+    def __init__(self, knowledge_base_id, model_id):
+        self.bedrock = boto3.client('bedrock-runtime')
+        self.knowledge_base_id = knowledge_base_id
+        self.model_id = model_id
+    
+    def ground_response(self, query):
+        """
+        Generate a response grounded in knowledge base to reduce hallucinations
+        """
+        try:
+            # Query the knowledge base
+            kb_response = self.bedrock.retrieve(
+                knowledgeBaseId=self.knowledge_base_id,
+                retrievalQuery={
+                    'text': query
+                },
+                numberOfResults=3
+            )
+            
+            # Extract retrieved documents
+            retrieved_docs = kb_response['retrievalResults']
+            context = "\n\n".join([doc['content'] for doc in retrieved_docs])
+            
+            # Generate response using retrieved context
+            prompt = f"""
+            You are an AI assistant that only provides factual information based on the provided context.
+            If the context doesn't contain the information needed to answer the question, say "I don't have enough information to answer that question."
+            
+            Context:
+            {context}
+            
+            Question: {query}
+            
+            Answer:
+            """
+            
+            response = self.bedrock.invoke_model(
+                modelId=self.model_id,
+                contentType='application/json',
+                accept='application/json',
+                body=json.dumps({
+                    "prompt": prompt,
+                    "max_tokens_to_sample": 500,
+                    "temperature": 0,
+                    "top_p": 0.9,
+                })
+            )
+            
+            response_body = json.loads(response.get('body').read())
+            answer = response_body.get('completion', '')
+            
+            # Include sources for verification
+            sources = [
+                {
+                    'source_id': doc['retrievalId'],
+                    'source_name': doc.get('location', {}).get('s3Location', {}).get('uri', 'Unknown'),
+                    'relevance_score': doc.get('score', 0)
+                }
+                for doc in retrieved_docs
+            ]
+            
+            return {
+                'answer': answer,
+                'sources': sources,
+                'is_grounded': True
+            }
+        except Exception as e:
+            print(f"Error grounding response: {str(e)}")
+            return {
+                'answer': "I'm unable to provide a response at this time.",
+                'sources': [],
+                'is_grounded': False,
+                'error': str(e)
+            }
+    
+    def verify_with_semantic_search(self, claim, corpus):
+        """
+        Verify a claim against a corpus using semantic similarity
+        """
+        # Implement semantic search to find supporting evidence
+        # This is a simplified example
+        try:
+            # Convert claim to embedding
+            claim_embedding_response = self.bedrock.invoke_model(
+                modelId='amazon.titan-embed-text-v1',
+                contentType='application/json',
+                accept='application/json',
+                body=json.dumps({
+                    "inputText": claim,
+                })
+            )
+            
+            claim_embedding = json.loads(claim_embedding_response.get('body').read()).get('embedding')
+            
+            # Find most similar passages in corpus
+            # In a real implementation, you would use a vector database
+            # This is simplified for demonstration
+            highest_similarity = 0
+            most_similar_passage = ""
+            
+            for passage in corpus:
+                passage_embedding_response = self.bedrock.invoke_model(
+                    modelId='amazon.titan-embed-text-v1',
+                    contentType='application/json',
+                    accept='application/json',
+                    body=json.dumps({
+                        "inputText": passage,
+                    })
+                )
+                
+                passage_embedding = json.loads(passage_embedding_response.get('body').read()).get('embedding')
+                
+                # Calculate cosine similarity
+                similarity = self._cosine_similarity(claim_embedding, passage_embedding)
+                
+                if similarity > highest_similarity:
+                    highest_similarity = similarity
+                    most_similar_passage = passage
+            
+            return {
+                'verified': highest_similarity > 0.8,  # Threshold for verification
+                'confidence': highest_similarity,
+                'supporting_evidence': most_similar_passage if highest_similarity > 0.8 else None
+            }
+        except Exception as e:
+            print(f"Error in semantic verification: {str(e)}")
+            return {
+                'verified': False,
+                'confidence': 0,
+                'error': str(e)
+            }
+    
+    def _cosine_similarity(self, vec1, vec2):
+        """Calculate cosine similarity between two vectors"""
+        import numpy as np
+        dot_product = np.dot(vec1, vec2)
+        norm_a = np.linalg.norm(vec1)
+        norm_b = np.linalg.norm(vec2)
+        return dot_product / (norm_a * norm_b)
+```
+
+**Step 5: Implement defense-in-depth safety system**
+
+Step 1: Integrate all components into a defense-in-depth safety system:
+
+
+```python
+# defense_in_depth.py
+import boto3
+import json
+from input_safety import InputSafetyFilter
+from output_safety import OutputSafetyFilter
+from hallucination_reduction import HallucinationReducer
+from structured_output import StructuredOutputValidator
+
+class DefenseInDepthSystem:
+    def __init__(self, config):
+        self.bedrock = boto3.client('bedrock-runtime')
+        self.comprehend = boto3.client('comprehend')
+        
+        # Initialize safety components
+        self.input_filter = InputSafetyFilter(config['input_guardrail_id'])
+        self.output_filter = OutputSafetyFilter(config['output_guardrail_id'])
+        self.hallucination_reducer = HallucinationReducer(
+            config['knowledge_base_id'], 
+            config['model_id']
+        )
+        
+        # Initialize schema validator if schema is provided
+        self.schema_validator = None
+        if 'output_schema' in config:
+            self.schema_validator = StructuredOutputValidator(config['output_schema'])
+        
+        self.model_id = config['model_id']
+    
+    def process_request(self, user_input, require_grounding=True):
+        """
+        Process user request with multiple layers of safety controls
+        """
+        # LAYER 1: Pre-processing with Comprehend
+        pii_response = self.comprehend.detect_pii_entities(
+            Text=user_input,
+            LanguageCode='en'
+        )
+        
+        # Redact PII if found
+        if pii_response['Entities']:
+            user_input = self._redact_pii(user_input, pii_response['Entities'])
+        
+        # LAYER 2: Input filtering with guardrails
+        input_safety_result = self.input_filter.filter_input(user_input)
+        if not input_safety_result['is_safe']:
+            return {
+                'status': 'rejected',
+                'reason': input_safety_result['reason'],
+                'response': "I'm sorry, but I cannot process that request."
+            }
+        
+        filtered_input = input_safety_result['filtered_input']
+        
+        # LAYER 3: Grounding with Knowledge Base if required
+        if require_grounding:
+            grounded_response = self.hallucination_reducer.ground_response(filtered_input)
+            model_output = grounded_response['answer']
+            is_grounded = grounded_response['is_grounded']
+            sources = grounded_response['sources']
+        else:
+            # Direct model invocation
+            try:
+                response = self.bedrock.invoke_model(
+                    modelId=self.model_id,
+                    contentType='application/json',
+                    accept='application/json',
+                    body=json.dumps({
+                        "prompt": filtered_input,
+                        "max_tokens_to_sample": 500,
+                        "temperature": 0.7,
+                        "top_p": 0.9,
+                    })
+                )
+                
+                response_body = json.loads(response.get('body').read())
+                model_output = response_body.get('completion', '')
+                is_grounded = False
+                sources = []
+            except Exception as e:
+                return {
+                    'status': 'error',
+                    'reason': f"Model invocation failed: {str(e)}",
+                    'response': "I'm sorry, but I cannot generate a response at this time."
+                }
+        
+        # LAYER 4: Output filtering with guardrails
+        output_safety_result = self.output_filter.filter_output(model_output)
+        if not output_safety_result['is_safe']:
+            return {
+                'status': 'filtered',
+                'reason': output_safety_result['reason'],
+                'response': output_safety_result['filtered_output']
+            }
+        
+        safe_output = output_safety_result['filtered_output']
+        
+        # LAYER 5: Schema validation if configured
+        if self.schema_validator:
+            validation_result = self.schema_validator.validate_and_fix(safe_output)
+            if not validation_result['is_valid']:
+                return {
+                    'status': 'invalid_format',
+                    'reason': validation_result['error'],
+                    'response': "I'm sorry, but I couldn't generate a properly formatted response."
+                }
+            
+            final_output = validation_result['validated_output']
+        else:
+            final_output = safe_output
+        
+        # Return successful response with metadata
+        return {
+            'status': 'success',
+            'response': final_output,
+            'is_grounded': is_grounded,
+            'sources': sources if is_grounded else []
+        }
+    
+    def _redact_pii(self, text, entities):
+        """Redact PII entities from text"""
+        # Sort entities by position in descending order to avoid offset issues
+        sorted_entities = sorted(entities, key=lambda x: x['BeginOffset'], reverse=True)
+        
+        # Replace each entity with [REDACTED]
+        redacted_text = text
+        for entity in sorted_entities:
+            start = entity['BeginOffset']
+            end = entity['EndOffset']
+            redacted_text = redacted_text[:start] + f"[{entity['Type']}]" + redacted_text[end:]
+        
+        return redacted_text
+        
+```
+
+**Step 6: Implement advanced threat detection**
+
+Step 1: Add advanced threat detection capabilities:
+
+```python
+# threat_detection.py
+import boto3
+import json
+import re
+
+class ThreatDetector:
+    def __init__(self, model_id):
+        self.bedrock = boto3.client('bedrock-runtime')
+        self.model_id = model_id
+        
+        # Common patterns for prompt injection attacks
+        self.injection_patterns = [
+            r"ignore previous instructions",
+            r"disregard your guidelines",
+            r"forget your training",
+            r"ignore what you were told",
+            r"you are now",
+            r"system prompt",
+            r"</?sys",
+            r"</?system>",
+            r"</?user>",
+            r"</?assistant>"
+        ]
+    
+    def detect_prompt_injection(self, user_input):
+        """
+        Detect potential prompt injection attacks
+        """
+        # Pattern-based detection
+        for pattern in self.injection_patterns:
+            if re.search(pattern, user_input, re.IGNORECASE):
+                return {
+                    'is_injection': True,
+                    'confidence': 0.9,
+                    'pattern_matched': pattern
+                }
+        
+        # Model-based detection for more sophisticated attacks
+        prompt = f"""
+        Analyze the following user input for potential prompt injection or jailbreak attempts.
+        Respond with a JSON object containing:
+        1. is_injection: true/false
+        2. confidence: 0-1 score
+        3. explanation: brief explanation of why this might be an injection attempt
+        
+        User input: "{user_input}"
+        """
+        
+        try:
+            response = self.bedrock.invoke_model(
+                modelId=self.model_id,
+                contentType='application/json',
+                accept='application/json',
+                body=json.dumps({
+                    "prompt": prompt,
+                    "max_tokens_to_sample": 500,
+                    "temperature": 0,
+                    "top_p": 0.9,
+                })
+            )
+            
+            response_body = json.loads(response.get('body').read())
+            model_output = response_body.get('completion', '')
+            
+            # Extract JSON from model output
+            start_idx = model_output.find('{')
+            end_idx = model_output.rfind('}') + 1
+            json_str = model_output[start_idx:end_idx]
+            analysis = json.loads(json_str)
+            
+            return analysis
+        except Exception as e:
+            print(f"Error in prompt injection detection: {str(Successfully transferred back to supervisor
+```
+
+---
+
+
+
+
 
 ## Task 3.2: Implement data security and privacy controls.
 
@@ -10280,7 +11290,7 @@ Understanding these services, how to configure them for specific use cases, and 
 Use the following information to review your knowledge about these services.
 
 
-### Developing protected AI environments
+#### Developing protected AI environments
 As a GenAI developer, you need to understand how to develop protected AI environments and implement network isolation with VPC endpoints. 
 
 **Ensure you understand how to do the following:**
@@ -10292,7 +11302,7 @@ As a GenAI developer, you need to understand how to develop protected AI environ
 - Interface VPC endpoints can be configured with security groups to control which resources within your VPC can access Amazon Bedrock services. 
 
 
-### IAM policies for secure access patterns
+#### IAM policies for secure access patterns
 As a GenAI developer, you need to understand how to configure and implement IAM policies for secure access patterns. 
 
 **Ensure you understand how to do the following:**
@@ -10304,7 +11314,7 @@ As a GenAI developer, you need to understand how to configure and implement IAM 
 - Condition keys in IAM policies can enforce additional security requirements, such as encryption, source VPC, or specific tags. 
 
 
-### Lake Formation for data governance
+#### Lake Formation for data governance
 As a GenAI developer, you need to understand how to implement Lake Formation for data governance. 
 
 **Ensure you understand how to do the following:**
@@ -10316,7 +11326,7 @@ As a GenAI developer, you need to understand how to implement Lake Formation for
 - Data catalogs in Lake Formation can be used to track and control access to AI-related datasets across the organization. 
 
 
-### Monitoring with CloudWatch
+#### Monitoring with CloudWatch
 As a GenAI developer, you need to understand how to monitor with CloudWatch. 
 
 **Ensure you understand how to do the following:**
@@ -10328,7 +11338,7 @@ As a GenAI developer, you need to understand how to monitor with CloudWatch.
 - AWS CloudTrail integration provides comprehensive audit logs of all API calls to Amazon Bedrock and related services. 
 
 
-### Developing privacy-preserving systems
+#### Developing privacy-preserving systems
 As a GenAI developer, you need to understand how to develop privacy-preserving systems and implement PII detection with Amazon Comprehend and Macie. 
 
 **Ensure you understand how to do the following:**
@@ -10340,7 +11350,7 @@ As a GenAI developer, you need to understand how to develop privacy-preserving s
 - Both services can be integrated into AI workflows to identify and protect sensitive information before it reaches foundation models.
 
 
-### Amazon Bedrock native data privacy features
+#### Amazon Bedrock native data privacy features
 As a GenAI developer, you need to understand how to implement Amazon Bedrock native data privacy features. 
 
 **Ensure you understand how to do the following:**
@@ -10352,7 +11362,7 @@ As a GenAI developer, you need to understand how to implement Amazon Bedrock nat
 - Amazon Bedrock Knowledge Bases provides secure storage and retrieval of private data for grounding model responses. 
 
 
-### Output filtering with guardrails
+#### Output filtering with guardrails
 As a GenAI developer, you need to understand how to implement output filtering with guardrails.
 
 **Ensure you understand how to do the following:**
@@ -10364,7 +11374,7 @@ As a GenAI developer, you need to understand how to implement output filtering w
 - Guardrails can be applied to both model inputs and outputs to ensure comprehensive privacy protection. 
 
 
-### Data retention with S3 Lifecycle configurations
+#### Data retention with S3 Lifecycle configurations
 As a GenAI developer, you need to understand how to implement data retention with S3 lifecycles.
 
 **Ensure you understand how to do the following:**
@@ -10376,7 +11386,7 @@ As a GenAI developer, you need to understand how to implement data retention wit
 - Different retention policies can be applied to different categories of data based on sensitivity and regulatory requirements. 
 
 
-### Creating privacy-focused AI systems
+#### Creating privacy-focused AI systems
 As a GenAI developer, you need to understand how to create privacy-focused AI systems and data masking techniques.
 
 **Ensure you understand how to do the following:**
@@ -10388,7 +11398,7 @@ As a GenAI developer, you need to understand how to create privacy-focused AI sy
 - Masked data can still provide utility for AI processing while protecting sensitive information. 
 
 
-### Amazon Comprehend PII detection
+#### Amazon Comprehend PII detection
 As a GenAI developer, you need to understand how to configure and implement Amazon Comprehend PII detection.
 
 **Ensure you understand how to do the following:**
@@ -10400,7 +11410,7 @@ As a GenAI developer, you need to understand how to configure and implement Amaz
 - Custom entity recognition models can be trained to identify organization-specific sensitive information. 
 
 
-### Anonymization strategies
+#### Anonymization strategies
 As a GenAI developer, you need to understand how to configure and implement anonymization strategies.
 
 **Ensure you understand how to do the following:**
@@ -10492,6 +11502,186 @@ For the exam, ensure you understand how to create privacy-focused AI systems.
 9. Configure Amazon Bedrock Guardrails with custom filters to prevent models from revealing sensitive information.
 
 10. Set up guardrails to enforce privacy policies consistently across different foundation models and customize topic filters to protect specific categories of sensitive information relevant to your organization.
+
+### Self Assessment
+
+**3.2.1**
+
+**A healthcare organization is implementing a generative AI solution using Amazon Bedrock. They need to ensure that protected health information (PHI) is not exposed in either user inputs or model responses.**
+
+**Which combination of AWS services should they implement?**
+
+ - Amazon Bedrock Guardrails and Amazon Macie
+ - Amazon Comprehend Medical and Amazon Bedrock Guardrails
+ - AWS CloudTrail and Amazon S3 Lifecycle configurations
+ - AWS Lake Formation and Amazon VPC endpoints
+
+ **3.2.2**
+
+ **A company is implementing a comprehensive security approach for their Amazon Bedrock deployment.**
+
+**Which combination of AWS services provides the MOST complete security solution for monitoring, access control, and data protection?**
+
+ - Amazon CloudWatch, AWS IAM, and Amazon S3 encryption
+ - AWS CloudTrail, Amazon Macie, and AWS KMS
+ - AWS IAM, AWS CloudTrail, and Amazon CloudWatch
+ - Amazon GuardDuty, AWS Shield, and AWS WAF
+
+### Use Case
+
+This use case covers implementing data security and privacy controls for AI applications.
+
+A healthcare organization wants to use FMs to analyze patient records, medical research, and treatment outcomes to improve clinical decision making.
+
+This solution must maintain strict compliance with healthcare regulations, Health Insurance Portability and Accountability Act of 1996(HIPAA), and provide valuable insights to medical professionals.
+
+**Architecture**
+
+One solution and implementation strategy is to first ensure protected AI environment architecture.
+
+![Network Security Architecture](3.2.net.sec.png)
+
+**Network Security
+
+ - For network isolation and security, you can implement **virtual private cloud (VPC) isolation**. Specifically dedicated VPC for the healthcare analytics platform, private subnets for all AI processing components and no direct internet access for AI-processing resources.
+
+ - For VPC endpoints, you can configure **interface endpoints** for Amazon Bedrock, Amazon S3, and other AWS services, **gateway endpoints** for Amazon S3 and Amazon DynamoDB, and ensure all traffic remains within the AWS network.
+
+ - For security groups and **network access control lists (network ACLs)**, you can configure granular security group rules, limiting traffic between components, network ACLs, providing additional network security layer and strict egress rules preventing unauthorized data exfiltration.
+
+**Access Control Framework**
+
+The access control framework includes the following: 
+- AWS Identity and Access Management (IAM) role-based access, such as the following:
+    - Role-based access control for all system components
+    - least privileged principle implementation
+    - attribute-based access control for dynamic permissions.
+
+- AWS Lake Formation configurations using the following: 
+    - fine-grained access control for data lake resources
+    - column-level security for sensitive patient data
+    - role-level security based on user roles and departments.
+
+- Resource-based policies, such as the following:
+    - S3 bucket policies restricting access to authorized roles
+    - AWS Key Management Service (AWS KMS) key policies enforcing encryption requirements
+    - Amazon Simple Queue Service (Amazon SQS) policies limiting message producers and consumers.
+
+**Monitoring and auditing**. Includes
+- **CloudWatch** monitoring, which provides real-time monitoring of API calls to Amazon Bedrock and other services. Custom metrics for data access patterns and anomaly detection for unusual access patterns.
+- **AWS CloudTrail** logging provides comprehensive audit logging of all API activities. Integration with Security Hub for centralized monitoring and log retention policies aligned with healthcare compliance requirements.
+- **Amazon GuardDuty** and **Amazon Macie** integration provide threat detection for potential data breaches, automated remediation workflows for security events, and regular security assessments and reporting.
+
+**Privacy-preserving systems and PII detection and protection**. 
+
+![Privacy Preserving Systems](3.2.priv.pres.png)
+
+The PII detection and protection system includes **Amazon Comprehend medical integration** that provides the following: 
+ - automatic detection of protected health information (PHI)
+ - Identification of medical entities in unstructured text
+ - classification of sensitive medical information.
+
+Amazon Macie for data discovery provides:
+ - automated sensitive data discovery across S3 buckets
+ - regular scans of data repositories
+ - custom data identifiers for healthcare-specific information.
+
+And lastly, data processing pipeline with pre-processing Lambda functions to
+ - sanitize inputs
+ - real-time PII detection and reduction
+ - logging of PII detection events for compliance.
+
+For data lifecycle management, first, you can implement Amazon S3 Lifecycle configurations with automated transition of data to cold storage after defined periods. Data deletion policies aligned with retention requirements and versioning with lifecycle rules for audit purposes.
+
+Next, data retention policies for the following:
+ - Automated enforcement of data retention requirements
+ - differential retention periods based on data sensitivity
+ - compliant deletion processes with audit trails.
+
+Third, encryption management to ensure automatic encryption of all data addressed using AWS KMS, encryption key rotation policies and secure key management with strict access controls.
+
+
+**Data Anonymization**
+
+The data anonymization architecture includes data masking techniques, such as tokenization of patient identifiers, format-preserving encryption of structured data and pseudonymization with secure mapping tables.
+![Data Anonymization](3.2.data.anon.png)
+
+Differential privacy implementation, including the following: 
+ - addition of statistical noise to protect individual records
+ - privacy budget management for aggregate queries
+ - balance between privacy protection and data utility.
+
+Next, de-identification pipeline for the following:
+ - automated workflows for data de-identification
+ - multiple anonymization techniques based on data sensitivity 
+ - quality controls to ensure data utility after anonymization.
+
+For the Amazon Bedrock Guardrails implementation, you can configure
+- content filtering, such as the following: 
+    - custom guardrails preventing disclosure of PHI
+    - topic filtering to prevent model responses on restricted topics 
+    - sensitive information detection in both inputs and outputs.
+
+- response validation, such as the following: 
+    - validation of model outputs against privacy requirements
+    - rejection of responses containing potential PHI
+    - logging of guardrail interventions for compliance reporting.
+
+- contextual controls, such as the following: 
+    - context-aware filtering based on user roles and access levels
+    - customized guardrails for different clinical scenarios 
+    - adaptive controls based on interaction context.
+
+
+### Knowledge Check
+
+01/05
+
+**A company is implementing a protected AI environment for processing sensitive financial data.**
+
+**Which configurations provide the MOST comprehensive security? (Select TWO.)**
+
+- Security groups and AWS Identity and Access Management (IAM) roles
+- Virtual private cloud (VPC) endpoints with AWS Identity and Access Management (IAM) policies and Lake Formation access controls
+- Public subnets with Amazon CloudWatch monitoring
+- AWS Lake Formation with Amazon CloudWatch monitoring and comprehensive logging
+
+02/05
+
+**Which approach BEST ensures privacy preservation in AI model interactions?**
+
+- Amazon Bedrock Guardrails
+- Implementing Amazon Comprehend for personally identifiable information (PII) detection, Amazon Macie for sensitive data discovery, Amazon Bedrock privacy features, and Amazon S3 lifecycle policies
+- Amazon S3 bucket policies with logging
+- Amazon CloudWatch monitoring with basic access controls
+
+
+03/05
+
+**Which approach is MOST effective for maintaining model utility while ensuring privacy?**
+- Implementing only data masking techniques
+- Using data masking, anonymization strategies, and Amazon Bedrock Guardrails with utility monitoring
+- Personally identifiable information (PII) detection without utility consideration
+- Access controls with logging
+
+04/05
+
+**A healthcare organization needs to implement comprehensive privacy controls for their AI system. Which configuration is MOST appropriate?**
+
+- Data encryption and access logs
+- Implementation of personally identifiable information (PII) detection, anonymization, guardrails, and monitoring
+- AWS Identity and Access Management (IAM) roles with Amazon CloudWatch
+- Virtual private cloud (VPC) configuration with security groups
+
+05/05
+
+**Which components are MOST critical for securing foundation model (FM) deployments? (Select TWO.)**
+
+- Virtual private cloud (VPC) endpoints with comprehensive network isolation
+- Security groups only
+- AWS Lake Formation with granular access controls
+- CloudWatch alerts
+
 
 ## Task 3.3: Implement AI governance and compliance mechanisms.
 This lesson is a high-level overview of the third task and how it aligns to the GenAI developer role.
@@ -10599,17 +11789,16 @@ As a GenAI developer, you need to understand additional knowledge and key points
 
 ### Self Assessment
 
+**3.3.1**
+
 **A financial services company is deploying foundation models in their AWS environment and needs to document model characteristics, intended use cases, and limitations for regulatory compliance.**
+
 **Which AWS capability should they use to create and manage this documentation?**
 
 - Amazon SageMaker Model Cards
 - AWS Systems Manager Documents
 - Amazon CloudWatch Dashboards
 - AWS Config Rules
-
-**Correct Answer:**
-
-Amazon SageMaker Model Cards is the correct solution for documenting model characteristics, intended use cases, and limitations. According to AWS documentation, "Amazon SageMaker Model Cards helps you document and track machine learning (ML) model information, such as model inputs and outputs, intended uses, ethical considerations, training details, evaluation results, and more". Model Cards are specifically designed to support governance and compliance requirements by providing a standardized way to document model details, which is essential for regulatory compliance in financial services. The other options (Systems Manager Documents, CloudWatch Dashboards, and Config Rules) don't provide the specialized model documentation capabilities required for this scenario.
 
 
 **Which AWS service should be used to automatically detect and alert on potential bias drift in foundation model outputs over time?**
@@ -10618,9 +11807,7 @@ Amazon SageMaker Model Cards is the correct solution for documenting model chara
 - AWS Config
 - Amazon GuardDuty
 
-**Correct Answer:**
 
-Amazon SageMaker Model Monitor is the correct service for detecting and alerting on bias drift in foundation model outputs. According to AWS documentation, "Amazon SageMaker Model Monitor provides capabilities to monitor models in production. Using SageMaker Model Monitor, you can set alerts to detect when there are deviations in the model quality, such as data drift and anomalies". Specifically, SageMaker Model Monitor includes bias drift monitoring capabilities that can detect changes in model outputs that might indicate increasing bias over time. While Amazon Inspector (option B) focuses on security vulnerabilities, AWS Config (option C) monitors resource configurations, and Amazon GuardDuty (option D) detects security threats, none of these services are designed to monitor model bias drift like SageMaker Model Monitor.
 
 ### AWS Skills
 This lesson reviews AWS skills to implement AI governance and compliance mechanisms.
@@ -10704,7 +11891,9 @@ For the exam, ensure you understand how to implement continuous monitoring and a
 
 ### Self Assessment
 
-1. A company needs to implement a system for tracking model provenance in their foundation model deployments.
+**3.3.3**
+
+**A company needs to implement a system for tracking model provenance in their foundation model deployments.**
 
 **Which AWS feature should they use?**
 
@@ -10713,256 +11902,80 @@ For the exam, ensure you understand how to implement continuous monitoring and a
  - Amazon S3 Versioning
  - AWS Systems Manager Inventory
 
-**Correct Answer:**
-Amazon SageMaker Lineage Tracking is the correct feature for tracking model provenance in foundation model deployments. According to AWS documentation, "Amazon SageMaker ML Lineage Tracking creates and stores information about the steps of a machine learning (ML) workflow from data preparation to model deployment. With the tracking information, you can reproduce the workflow steps, track model and dataset lineage, and establish model governance and audit standards". This feature allows organizations to track the complete lineage of models, including training datasets, hyperparameters, and evaluation metrics. While CloudFormation Templates (option B) define infrastructure, S3 Versioning (option C) tracks object versions, and Systems Manager Inventory (option D) tracks software inventory, none provide the specialized model lineage tracking capabilities of SageMaker Lineage Tracking.
+### Use Case
+
+**Use case for implementing AI governance and compliance mechanisms.**
+
+A multinational financial services organization wants to develop an AI-powered financial advisory system using FMs. The system will 
+- analyze market trends, 
+- provide investment recommendations, 
+- and assist financial advisors in client interactions.
+
+Due to the highly regulated nature of financial services, the organization must implement robust governance and compliance mechanisms to ensure the AI system adheres to regulatory requirements across multiple jurisdictions.
+
+**Architecture**
+
+The implementation strategy uses **Amazon SageMaker AI** to develop programmatic model cards that document model documentation for the following: 
+- model purpose and intended use cases, 
+- training data characteristics and limitations, 
+- performance metrics across different financial scenarios, 
+- known limitations and potential risks.
+
+Also, regulatory alignment with the following:
+- documentation of compliance with financial regulations, such as Securities and Exchange Commission (SEC), or Financial Industry Regulatory Authority (FINRA). 
+- fairness assessments across different demographic 
+- explainability metrics for investment recommendations 
+- version control and approval workflows.
+
+Automated model card generation, such as the following: 
+- SageMaker AI pipelines to automatically generate and update model cards, 
+- integration with continuous integration and continuous delivery, CI/CD, workflows for model deployment, 
+- automated validation against regulatory requirements, 
+- digital signature and approval tracking.
+
+For the data lineage tracking, you can configure AWS Glue to ensure the following: 
+- automated data cataloging, such as AWS Glue crawlers to discover and catalog financial data sources, 
+- automatic schema detection and metadata extraction, 
+- classification of data sensitivity levels, 
+- versioning of datasets used for model training.
+
+Lineage tracking workflows for the following: 
+- AWS Glue extract, transform, and load (ETL) jobs to track data transformation, 
+- data processing history from source to model training, 
+- dependency mapping between datasets and models, 
+- change detection and impact analysis.
+
+Next, metadata management using the following: 
+- systematic tagging of data sources with origin information
+- attribution of market data providers and licensing information
+- tracking of data freshness and quality metrics
+- integration with third-party financial data providers.
+
+The decision logging system implements the following: **Amazon CloudWatch Logs** to 
+- add structured logging of all model inferences and recommendations
+- collect the input parameters and decision factors
+- collect confidence scores and alternative recommendations
+- record time stamping and user context for each decision.
+
+**CloudTrail** Audit trail creation that ensures the following: 
+- end-to-end tracking of user query to final recommendation, 
+- logging of human interventions and overrides, 
+- correction IDs linking related transactions, 
+- retention policies aligned with financial regulations.
+
+- log analysis and reporting using **Amazon CloudWatch Logs Insights** for pattern analysis, automated compliance report generation, anomaly detection for unusual recommendation patterns, and integration with regulatory reporting systems. 
+
+The data source tracking system uses **AWS Glue Data Catalog** for the following: 
+- source registration, such as comprehensive registration of all financial data sources, classification by data type, provider, and jurisdiction, licensing and usage rights, documentation, and data quality and reliability metrics.
+
+- data governance controls, such as: access controls based on data sensitivity, data sharing agreements and restrictions, compliance with data sovereignty requirements, and integration with organizational data governance policies.
+
+- **source attribution in AI outputs**, such as: tracking of which data sources influenced specific recommendations, confidence scores based on data source reliability, citation generation for regulatory documentation, and transparency in client-facing reports. The metadata tagging for source attribution is a key component of this system.
+    - **Tagging framework** for the following: systematic tagging of all data assets with provenance information, version control and temporal validity of data, classification of data sources by regulatory relevance, and attribution of third-party data providers.
+    - **Content attribution system** for the following: tracking of source materials used in FM-generated content, citation generation for financial advice and market analysis, transparency in recommendation origins, and compliance with copyright and licensing requirements.
+    - **Audit and verification** for: verification workflows for source attribution accuracy, periodic audits of attribution completeness, remediation processes for attribution gaps, and integration with compliance reporting.
 
----
 
-
-
-
-## Task 3.4: Implement responsible AI principles.
-
-This lesson is a high-level overview of the fourth task and how it aligns with the GenAI developer role.
-
-As you review these lessons for Task 3.4, check that you understand how to do the following:
-
-1. Develop transparent AI systems in FM outputs (for example, by using reasoning displays to provide user-facing explanations, CloudWatch to collect confidence metrics and quantify uncertainty, evidence presentation for source attribution, Amazon Bedrock agent tracing to provide reasoning traces).
-
-2. Apply fairness evaluations to ensure unbiased FM outputs (for example, by using pre-defined fairness metrics in CloudWatch, Amazon Bedrock Prompt Management and Amazon Bedrock Prompt Flows to perform systematic A/B testing, Amazon Bedrock with LLM-as-a-judge solutions to perform automated model evaluations).
-
-3. Develop policy-compliant AI systems to ensure adherence to responsible AI practices (for example, by using Amazon Bedrock guardrails based on policy requirements, model cards to document FM limitations, Lambda functions to perform automated compliance checks).
-
-### AWS services overview
-
-AWS offers services to implement responsible AI principles. These include CloudWatch, Amazon Bedrock, Lambda, policies, and more.
-
-Understanding these services, how to configure them for specific use cases, and when to use them is crucial to your knowledge as a GenAI developer. 
-
-Use the following information to review your knowledge about these services.
-
-
-#### Develop transparent AI systems in FM outputs
-As a GenAI developer, you need to understand how to develop transparent AI systems in FM outputs. 
-
-**Ensure you understand how to do the following:**
-
-- Amazon Bedrock provides agent tracing capabilities through the InvokeAgent API with tracing enabled, allowing developers to capture and analyze the step-by-step reasoning process of foundation models for transparency and debugging purposes.
-
-- Implement reasoning displays by configuring foundation models to output their reasoning chain using techniques like chain-of-thought (CoT) prompting in Amazon Bedrock, which can be exposed to users through custom UI components to provide transparent explanations of how conclusions were reached.
-
-- Configure CloudWatch custom metrics to capture confidence scores from foundation model outputs by extracting probability distributions or logit values, enabling quantification of uncertainty in model predictions and transparent reporting to users.
-
-- Design and implement evidence presentation frameworks that automatically extract and display source attributions for foundation model outputs, linking generated content back to training data or knowledge sources for verification.
-
-- Use the response streaming capabilities of Amazon Bedrock to expose intermediate reasoning steps to users in real time, providing visibility into how the model is constructing its response rather than only presenting the final output.
-
-- Implement comprehensive logging of foundation model inputs, outputs, and intermediate reasoning steps using CloudWatch Logs with structured logging patterns that facilitate analysis and auditing of model behavior.
-
-Create custom metrics for measuring and monitoring transparency aspects of foundation models, such as citation frequency, reasoning step count, and uncertainty acknowledgment, using CloudWatch custom metrics and dashboards.
-
-
-#### Apply fairness evaluations to ensure unbiased FM outputs
-As a GenAI developer, you need to understand how to apply fairness evaluations to ensure unbiased FM outputs. 
-
-**Ensure you understand how to do the following:**
-
-- Configure Amazon Bedrock Prompt Management to systematically test different prompt formulations and evaluate their impact on fairness across diverse user groups, enabling data-driven optimization of prompts for inclusivity.
-
-- Implement Amazon Bedrock Prompt Flows to create standardized evaluation pipelines that assess foundation model outputs against predefined fairness criteria, ensuring consistent evaluation methodologies across different use cases.
-
-- Design and implement LLM-as-a-judge evaluation frameworks using Amazon Bedrock to automatically assess outputs for bias, stereotyping, or unfair treatment of different groups, creating scalable fairness evaluation systems.
-
-- Configure CloudWatch to track custom fairness metrics across different demographic groups and use cases, establishing baselines and alerting on deviations that might indicate bias in foundation model outputs.
-
-- Implement comprehensive A/B testing frameworks that compare different foundation models, prompting strategies, or guardrail configurations against fairness metrics to identify optimal approaches for minimizing bias.
-
-- Create fairness evaluation datasets that represent diverse perspectives and edge cases, using them with Amazon Bedrock to systematically test foundation models for bias in different contexts and scenarios.
-
-- Design and implement automated fairness auditing workflows that periodically evaluate foundation model outputs against established fairness criteria and generate compliance reports for stakeholders.
-
-
-#### Develop policy-compliant AI systems for responsible AI practices
-As a GenAI developer, you need to understand how to develop policy-compliant AI systems for responsible AI practices. 
-
-**Ensure you understand how to do the following:**
-
-- Configure Amazon Bedrock Guardrails with custom policies that align with organizational responsible AI principles, industry regulations, and ethical guidelines, implementing technical controls that prevent harmful or non-compliant outputs.
-
-- Develop comprehensive model cards using SageMaker Model Card capabilities that document foundation model limitations, biases, intended use cases, and performance characteristics across different scenarios and demographic groups.
-
-- Implement automated compliance checking using Lambda functions that evaluate foundation model inputs and outputs against policy requirements, flagging or blocking interactions that violate established guidelines.
-
-- Design and implement multi-layered policy enforcement architectures that combine pre-processing guardrails, in-processing monitoring, and post-processing filters to ensure comprehensive compliance with responsible AI practices.
-
-- Create custom Amazon Bedrock guardrails that implement specific organizational policies regarding content safety, fairness, privacy protection, and transparency requirements in foundation model interactions.
-
-- Implement continuous compliance monitoring using CloudWatch metrics and alarms that track adherence to responsible AI policies over time and alert on potential violations or drift from established standards.
-
-- Design and implement automated documentation generation workflows that capture policy compliance evidence from foundation model deployments, creating audit trails that demonstrate adherence to responsible AI practices.
-
-
-#### Advanced technical implementation
-As a GenAI developer, you need to understand how to develop advanced technical implementation and transparency implementation techniques.
-
-**Ensure you understand how to do the following:**
-
-- **Agent tracing architecture**: Understand how to implement a comprehensive tracing architecture using the agent tracing capabilities of Amazon Bedrock combined with custom instrumentation that captures the following:
-
-  * Agent execution steps and reasoning paths Knowledge base retrieval operations and relevance scores API calls made during agent execution Decision points and confidence scores at each step
-
-- **Explainability visualization**: Develop expertise in creating interactive visualization components that render foundation model reasoning traces in user-friendly formats, including the following:
-
-  * Step-by-step reasoning breakdowns with confidence metrics Citation networks linking generated content to source materials Uncertainty visualization using confidence intervals or probability distributions Alternative reasoning path exploration interfaces
-
-- **Confidence metric extraction**: Learn techniques for extracting meaningful confidence metrics from foundation model outputs, including the following:
-
-  * Token-level probability analysis for uncertainty quantification Ensemble methods for generating confidence intervals Calibration techniques to align model confidence with actual accuracy Implementation of custom CloudWatch metrics for tracking confidence over time
-
-- **Source attribution systems**: Develop advanced source attribution systems that can do the following:
-
-  * Automatically identify when foundation model outputs are derived from specific sources. Implement retrieval-augmented generation with explicit citation mechanisms. Track attribution through multiple reasoning steps. Provide verifiable links to original source materials.
-
-#### Fairness evaluation implementation:
-As a GenAI developer, you need to understand how to develop fairness evaluation implementation.
-
-**Ensure you understand how to do the following:**
-
-- **Systematic bias testing**: Implement comprehensive bias testing frameworks that do the following:
-
-  * Test foundation models across diverse demographic dimensions. Use counterfactual testing to identify causal biases. Implement statistical significance testing for bias metrics. Track bias metrics over time to identify drift or improvements.
-
-- **Advanced A/B testing**: Design and implement sophisticated A/B testing frameworks for foundation models that do the following:
-
-  * Control for confounding variables in prompt design. Implement stratified sampling to ensure representative evaluation. Use statistical power analysis to determine appropriate test sizes. Analyze interaction effects between model parameters and fairness outcomes.
-
-- **LLM-as-Judge implementation**: Develop expertise in creating robust LLM-as-judge evaluation systems that do the following:
-
-  * Use carefully designed rubrics to ensure consistent evaluation. Implement ensemble judging with multiple foundation models. Control for the judge model's own biases. Calibrate judge assessments against human evaluations.
-
-- **Fairness metric selection**: Understand the mathematical foundations and implementation details of fairness metrics, including the following:
-
-  * Demographic parity and disparate impact Equal opportunity and equalized odds Counterfactual fairness Group and individual fairness metrics
-
-#### Policy compliance implementation
-As a GenAI developer, you need to understand how to implement policy compliance.
-
-**Ensure you understand how to do the following:**
-
-- **Guardrail configuration**: Understand advanced guardrail configuration techniques, including the following:
-
-  * Creating context-aware guardrails that adapt to different use cases Implementing multi-stage filtering pipelines with different sensitivity levels Designing guardrails that balance safety with utility Creating guardrails that implement specific regulatory requirements
-
-- **Model card automation**: Develop expertise in automating model card creation and maintenance through the following:
-
-  * Integration with CI/CD pipelines for automatic updates Automated testing to populate performance metrics across scenarios Version control and change tracking for model documentation Integration with governance workflows for approval and publication
-
-- **Compliance checking systems**: Implement sophisticated compliance checking systems that do the following:
-
-  * Perform real-time analysis of foundation model inputs and outputs. Apply different policy rules based on context and use case. Generate detailed compliance reports with evidence. Integrate with remediation workflows for policy violations.
-
-- **Policy translation**: Develop skills in translating organizational policies and regulatory requirements into technical controls by doing the following:
-
-  * Creating formal specifications of policy requirements Mapping policy requirements to specific technical implementations Implementing verification systems that can prove policy compliance Creating traceability between policies and their technical implementations
-
-
-### Self Assessment
-
-1. A company wants to quantify and display the uncertainty in their foundation model's responses to users.
-
-**Which AWS service should they use to collect and visualize these confidence metrics?**
-  - Amazon CloudWatch
-  - Amazon QuickSight
-  - AWS Glue DataBrew
-  - Amazon Athena
-
-**Answer:** Amazon CloudWatch
-Amazon CloudWatch is the correct service for collecting, tracking, and visualizing confidence metrics from foundation models. According to AWS documentation, "CloudWatch collects monitoring and operational data in the form of logs, metrics, and events, providing a unified view of AWS resources, applications, and services". Developers can publish custom metrics to CloudWatch, including confidence scores and uncertainty measurements from foundation model outputs, and create dashboards to visualize these metrics over time. While Amazon QuickSight (option B) is a business intelligence service that could visualize the data, it doesn't collect metrics directly from applications. AWS Glue DataBrew (option C) is for data preparation, and Amazon Athena (option D) is for querying data in S3, neither of which are designed for real-time metrics collection and visualization.
-
-2. A company wants to ensure their foundation model outputs adhere to their responsible AI policy that prohibits generating harmful content.
-
-**Which AWS feature should they implement?**
-  - Amazon Bedrock Guardrails
-  - Amazon Inspector
-  - AWS Shield
-  - Amazon Macie
-
-**Answer:** Amazon Bedrock Guardrails
-Amazon Bedrock guardrails is the correct feature for ensuring foundation model outputs adhere to responsible AI policies. According to AWS documentation, "Amazon Bedrock guardrails help you implement safeguards that can filter out harmful content across multiple content categories. You can configure guardrails to block, identify, and filter harmful content in both user inputs to foundation models and model responses". Guardrails allow organizations to define policies for acceptable model outputs and automatically enforce these policies during model invocation. While Amazon Inspector (option B) focuses on security vulnerabilities, AWS Shield (option C) is for DDoS protection, and Amazon Macie (option D) is for sensitive data discovery, none of these services are designed specifically for controlling foundation model outputs like Bedrock guardrails.
-
-### Review AWS Skills
-This lesson reviews AWS skills to implement responsible AI principles.
-
-#### Develop transparent AI systems in FM outputs
-
-For the exam, ensure you understand how to develop transparent AI systems in FM outputs.
-
-**Ensure you understand how to configure and implement the following steps:**
-
-1. Configure Amazon Bedrock agent tracing by enabling the tracing parameter in the InvokeAgent API call and implementing custom logging handlers to capture the step-by-step reasoning process of foundation models.
-2. Design and implement reasoning display components that render trace data from Amazon Bedrock in user-friendly formats, showing how the model arrived at its conclusions through intermediate reasoning steps.
-3. Create custom CloudWatch metrics that extract and track confidence scores from foundation model outputs, implementing parsers that identify probability distributions or uncertainty indicators in model responses.
-4. Implement structured logging patterns in CloudWatch Logs that capture model inputs, outputs, and confidence metrics in a standardized format suitable for analysis and transparency reporting.
-5. Develop source attribution mechanisms that track and display the origins of information in foundation model outputs, using techniques like RAG with explicit citation tracking.
-6. Configure Amazon Bedrock streaming responses to expose intermediate reasoning steps to users in real time, implementing client-side rendering components that visualize the model's thought process.
-7. Create automated transparency reports using CloudWatch metrics and logs that quantify and summarize model uncertainty, reasoning patterns, and evidence presentation across different use cases.
-
-#### Apply fairness evaluations
-
-For the exam, ensure you understand how to apply fairness evaluations to ensure unbiased FM outputs.
-
-**Ensure you understand how to configure and implement the following steps:**
-
-1. Define and implement custom fairness metrics in CloudWatch that measure bias across different demographic dimensions, creating dashboards that track these metrics over time and across model versions.
-2. Configure Amazon Bedrock Prompt Management to create controlled experiments that systematically vary prompt components and evaluate their impact on fairness metrics across diverse user groups.
-3. Implement Amazon Bedrock Prompt Flows that standardize evaluation procedures, ensuring consistent assessment of foundation model outputs against predefined fairness criteria.
-4. Design and implement LLM-as-a-judge evaluation systems using Amazon Bedrock that automatically assess outputs for bias, creating rubrics that define fair and unbiased responses across different contexts.
-5. Create comprehensive test suites that evaluate foundation models across diverse scenarios, demographic groups, and edge cases, implementing automated execution through Lambda functions.
-6. Develop A/B testing frameworks that compare different foundation models, prompting strategies, or guardrail configurations against fairness metrics, using statistical analysis to identify significant differences.
-7. Implement continuous fairness monitoring using CloudWatch alarms that detect when bias metrics exceed acceptable thresholds, triggering notifications or remediation workflows.
-
-#### Develop policy compliant AI-systems
-
-For the exam, ensure you understand how to develop policy-compliant AI systems for responsible AI practices.
-
-**Ensure you understand how to configure and implement the following steps:**
-
-1. Configure Amazon Bedrock Guardrails with custom policies that implement specific organizational requirements for content safety, fairness, and transparency, using the guardrails API to apply these policies consistently.
-2. Create comprehensive model cards using SageMaker Model Card APIs that document foundation model limitations, biases, and intended use cases, implementing automated updates as new evaluation data becomes available.
-3. Develop Lambda functions that perform automated compliance checks on foundation model inputs and outputs, implementing rule engines that evaluate content against policy requirements.
-4. Design and implement multi-layered policy enforcement architectures that combine pre-processing guardrails, in-processing monitoring, and post-processing filters to ensure comprehensive compliance.
-5. Create custom Amazon Bedrock guardrails that implement specific organizational policies, configuring topic filters, harmful content detection, and custom blocklists based on policy requirements.
-6. Implement continuous compliance monitoring using CloudWatch metrics and alarms that track adherence to responsible AI policies over time, creating dashboards that visualize compliance status.
-7. Develop automated documentation generation workflows that capture policy compliance evidence from foundation model deployments, creating audit trails that demonstrate adherence to responsible AI practices.
-8. Implement version control for policy configurations and guardrails to ensure that policy changes are tracked, reviewed, and deployed through proper governance processes.
-
-
-### Self Assessment
-1. A company wants to implement automated evaluations of their foundation model outputs for bias.
-
-**Which approach using AWS services is MOST effective?**
- - Amazon Bedrock with LLM-as-a-judge evaluation
- - Amazon Comprehend sentiment analysis
- - Amazon Rekognition image analysis
- - Amazon Transcribe content redaction
-
-**Correct Answer:** 
-**Amazon Bedrock with LLM-as-a-judge evaluation** is the most effective approach for automated bias evaluations of foundation model outputs. According to AWS documentation, "The LLM-as-a-judge pattern uses one foundation model to evaluate the outputs of another, allowing for automated assessment of various quality dimensions including bias, toxicity, and adherence to guidelines". This approach enables systematic evaluation of model outputs against predefined fairness criteria at scale. While Amazon Comprehend sentiment analysis (option B) can detect sentiment but not specifically evaluate bias in complex ways, Amazon Rekognition (option C) is for image and video analysis, and Amazon Transcribe content redaction (option D) is for redacting sensitive information from transcripts, none provide the comprehensive bias evaluation capabilities of the LLM-as-a-judge approach.
-
----
-
-2. A developer is implementing a system to collect confidence metrics from foundation model outputs.
-
-**Which CloudWatch metric namespace should they use to organize these metrics?**
-
-- A custom namespace specific to their application
-- AWS/Bedrock
-- AWS/SageMaker
-- AWS/Lambda
-
-**Correct Answer:**
-**A custom namespace specific to their application** is the correct choice for organizing confidence metrics from foundation model outputs in CloudWatch. 
-According to AWS documentation, "When publishing custom metrics to CloudWatch, you should use a custom namespace that doesn't begin with 'AWS/' to avoid conflicts with AWS service namespaces". Custom namespaces allow developers to organize their metrics logically and separate them from AWS service metrics. While AWS/Bedrock (option B) and AWS/SageMaker (option C) are reserved namespaces for AWS services and shouldn't be used for custom metrics, and AWS/Lambda (option D) is for Lambda service metrics, none are appropriate for organizing application-specific confidence metrics.
 
 
 # Content Domain 4: Operational Efficiency and Optimization for Generative AI Applications
